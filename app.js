@@ -1,11 +1,10 @@
 const express = require("express");
 const path = require("path");
-const mysql = require("mysql");
-
+const mysql = require("./mysql_db");
 const routes = require("./routes");
 const app = express();
 
-var server = {
+let server = {
     port: 3001
 };
 

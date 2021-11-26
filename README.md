@@ -1,7 +1,5 @@
 # FAM-Delivery
 
-##Example from D2L News:
-
 Endpoint 1:
 
 Description: Sign Up User to Database
@@ -25,11 +23,10 @@ Input:
 Output:
 
 ```json
-[
     {
     "status_code": int,
+    "status_message" : string
     }
-]
 ```
 
 Endpoint 2:
@@ -54,11 +51,10 @@ Input:
 Output:
 
 ```json
-[
-    {
+{
     "status_code": int,
-    }
-]
+    "status_message" : string
+}
 ```
 Endpoint 3:
 
@@ -170,7 +166,7 @@ Output:
 ```json
 {
     "status_code" : int,
-    "status_status" : string
+    "status_message" : string
 }
 ```
 Endpoint 7:
@@ -196,7 +192,7 @@ Output:
 ```json
 {
     "status_code" : int,
-    "status_status" : string
+    "status_message" : string
 }
 ```
 Endpoint 8:
@@ -221,7 +217,7 @@ Output:
 ```json
 {
     "status_code" : int,
-    "status_status" : string
+    "status_message" : string
 }
 ```
 Endpoint 9:
@@ -249,7 +245,7 @@ Output:
 ```json
 {
     "status_code" : int,
-    "status_status" : string
+    "status_message" : string
 }
 ```
 Endpoint 10:

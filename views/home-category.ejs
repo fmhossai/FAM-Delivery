@@ -1,0 +1,15 @@
+<%# Category selection on the home page - display: category icon on top of category description%>
+<% const categories = ["Bakery", "Dairy", "Drinks", "Frozen", "Fruits", "Meats", "Veggies"]; %>
+
+<section class="section-1">
+    <ol>
+        <% categories.forEach((val) => { %>
+        <li><a href="#">
+            <figure>
+                <img src="assets/<%= val %>.png"/>
+                <figcaption><%= val %></figcaption>
+            </figure>
+        </a></li>
+        <% }) %>
+    </ol>
+</section>

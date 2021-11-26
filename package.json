@@ -1,19 +1,22 @@
 {
-  "name": "cpsc471_project",
-  "version": "0.0.1",
-  "description": "CPSC 471 Term Project",
+  "name": "fam-delivery",
+  "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Michele Esercitato, Faisal Hossain, Ahmed Abbas",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5",
+    "sass": "^1.43.4"
+  },
   "dependencies": {
-    "body-parser": "^1.19.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
-    "mysql": "^2.18.1",
+    "nodemon": "^2.0.15",
     "path": "^0.12.7"
-  }
+  },
+  "description": ""
 }

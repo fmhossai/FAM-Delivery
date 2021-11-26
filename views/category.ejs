@@ -1,0 +1,36 @@
+<%- include('header'); -%>
+
+<div class="section-3">
+    <div class="container">
+      <div class="header">
+        <div class="headerTitle">
+          <h2>Veggies</h2>
+        </div>
+      </div>
+      <div class="section-3-grid">
+        <div class="section-3-col">
+        <% for(let i = 0; i < 16; i++) { %>
+            <div class="section-3-grid-element">
+                <div class="image">
+                  <img src="assets/listing.jfif" alt="Listing pic" />
+                </div>
+                <div class="text">
+                  <div class="text-title">
+                    <h3>Item</h3>
+                    <div class="info">
+                      <span>4.99$ | 20-30 MINS </span>
+                    </div>
+                  </div>
+                  <div class="rating">
+                    <span class="circle">4.2</span>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+            </div>
+     </div>
+    </div>
+  </div>
+</div>
+
+<%- include('footer'); -%>

@@ -7,7 +7,15 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', path.resolve(__dirname, 'views'));
 app.set('port', process.env.PORT || process.argv[2] || 3001);
 
-app.get('/cat', (req, res) => {
+app.get('/checkout', (req, res) => {
+    res.render('checkout');
+});
+
+app.get('/profile', (req, res) => {
+    res.render('profile');
+});
+
+app.get('/category', (req, res) => {
     res.render('category');
 });
 

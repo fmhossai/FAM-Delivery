@@ -1,0 +1,99 @@
+
+<head>
+    <title>Checkout</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        .pad{
+            padding-bottom: 30px;
+        }
+        .center-body{
+            height:100vh;
+            display:flex;
+            align-items: center;
+        }
+        .list-item{
+            display:flex;
+            flex-direction: row;
+            justify-content: flex-end;
+
+        }
+        .item-1{
+            flex-grow:2;
+        }
+    </style>
+</head>
+<body>
+    <div class="center-body">
+        <div class="container">
+            <a href="#"><img class="mb-4" src="assets/logo-login.png" alt="" width="300" height="72"></a>
+            <div class="row">
+                <div class="col-md-7">
+                    <h2>Card Information</h2>
+                    <div class="row pad">
+                        <div class="col-md-5">
+                            <label for="card-name">Name on Card</label>
+                            <input type="text" class="form-control" id="card-name" required>
+                          </div>
+                          <div class="col-md-5">
+                            <label for="card-number">Card Number</label>
+                            <input type="text" class="form-control" id="card-number" required>
+                        </div>                        
+                    </div>
+                    <div class="row pad">
+                        <div class="col-md-2">
+                            <label for="card-expiry">Expiry Date</label>
+                            <input type="text" class="form-control" id="card-expiry" required>
+                        </div> 
+                        <div class="col-md-2">
+                            <label for="card-cvv">CVV</label>
+                            <input type="text" class="form-control" id="card-cvv" required>
+                        </div> 
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary btn-md ">Checkout</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h2>Cart</h2>
+                    <div class="list-group">
+                        <li class="list-group-item">
+                            <div class="list-item">
+                                <div style="padding-right: 3px;">Banana</div>
+                                <div>Qty: 3</div>
+                                <div class="item-1"></div>
+                                <div>$4</div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="list-item">
+                                <div style="padding-right: 3px;">Apple</div>
+                                <div>Qty: 3</div>
+                                <div class="item-1"></div>
+                                <div>$3</div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="list-item">
+                                <div style="padding-right: 3px;">Bread</div>
+                                <div>Qty: 3</div>
+                                <div class="item-1"></div>
+                                <div>$5</div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="list-item">
+                                <strong>Total:</strong>
+                                <div class="item-1"></div>
+                                <strong>$12</strong>
+                            </div>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

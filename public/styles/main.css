@@ -282,8 +282,8 @@ section {
 }
 
 .section-4 {
-  width: 100%;
-  background: grey;
+  background: black;
+  color: white;
   margin-top: 5rem;
   height: 18rem;
 }
@@ -292,13 +292,58 @@ section {
   width: 15%;
 }
 
-.section-4 .left {
-  left: 0;
-  width: 400px;
+.section-4 .wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  margin: auto 0;
 }
 
-.section-4 .right {
-  right: 0;
-  width: 100px;
+.column {
+  text-align: center;
+  padding: 10px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  float: left;
+  width: 20%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.btn {
+  color: #FFFFFF;
+  background: #060606;
+  border: solid 2px #060606;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  -webkit-transition: all .2s linear;
+  transition: all .2s linear;
+  font-family: 'Ropa Sans';
+}
+
+.btn:hover {
+  color: #060606;
+  background: #FFFFFF;
+}
+
+.profileLogo {
+  text-align: center;
+  padding: 4rem;
 }
 /*# sourceMappingURL=main.css.map */

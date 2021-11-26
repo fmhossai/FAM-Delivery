@@ -17,7 +17,6 @@ body {
 }
 
 hr {
-
   width: 70%;
   color: var(--color-grey);
   border-bottom: 0;
@@ -228,25 +227,63 @@ section {
   }
 
 .section-4 {
-  width: 100%;
-  background: grey;
+  background: black;
+  color: white;
   margin-top: 5rem;
   height: 18rem;
+
   img {
     width: 15%;
   }
-  .left {
-    left: 0;
-    width: 400px;
 
+  .wrapper {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center; 
+    text-align: center;
+    margin: auto 0;
   }
-  .right {
-    right: 0;
-    width: 100px;
-
-  }
-
 }
 
+.column {
+  text-align: center;
+  padding: 10px;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 
+  float: left;
+  width: 20%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.btn {
+  color: #FFFFFF;
+  background: #060606;
+  border: solid 2px #060606;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  -webkit-transition: all .2s linear;
+  transition: all .2s linear;
+  font-family: 'Ropa Sans';
+}
+
+.btn:hover {
+  color: #060606;
+  background: #FFFFFF;
+}
+
+.profileLogo {
+  text-align: center;
+  padding: 4rem;
+}
 

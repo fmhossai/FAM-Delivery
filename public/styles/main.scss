@@ -276,6 +276,10 @@ img.huechange { filter: hue-rotate(160deg); }
     color: white;
     font-weight: 100;
     font-family: 'Poppins', sans-serif;
+    span {
+      font-weight: 300;
+      font-size: 14px;
+    }
   }
 
   img {

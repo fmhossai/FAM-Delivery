@@ -329,6 +329,11 @@ img.huechange {
   font-family: 'Poppins', sans-serif;
 }
 
+.section-4 p span {
+  font-weight: 300;
+  font-size: 14px;
+}
+
 .section-4 img {
   width: 15%;
 }

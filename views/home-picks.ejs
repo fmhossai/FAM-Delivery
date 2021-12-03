@@ -1,8 +1,8 @@
+
 <% const pick0a = ["Top Picks", "Our Customers Favourites"];
    const pick1a = ["Healthy", "Our Healthiest Selections"]; %>
 
 <div class="section-3">
-  <div class="container">
     <% for(let i = 0; i < 2; i++) { %>
     <div class="header">
       <div class="headerTitle">
@@ -14,24 +14,35 @@
       <div class="section-3-col">
         <% for(let j = 0; j < 4; j++) { %>
         <div class="section-3-grid-element">
-          <div class="image">
-            <img src="assets/listing.jfif" alt="Listing pic"/>
-          </div>
-          <div class="text">
-            <div class="text-title">
-              <h3>Item</h3>
-              <div class="info">
-                <span>4.99$ | 20-30 MINS </span>
-              </div>
-            </div>
-            <div class="rating">
-              <span class="circle">4.2</span>
-            </div>
+          <div class="container">
+          <div class="card">
+                <div class="content-1">
+                  <div class="mainImage">
+                    <img src="assets/fruits-12112.png" alt="">
+                  </div>
+                </div>
+                <div class="content-2">
+                  <div class="kind">
+                    <span>Green's Mix</span>
+                    <h4>Fruits</h4>
+                  </div>
+                  <div class="description">
+                    <p>This product is blah blah blah blah</p>
+                  </div>
+                  <div class="price">
+                    <span>$</span>
+                    <span>40</span>
+                    <div class="space"></div>
+                    <button class="btn">Add to Cart</button>
+                  </div>
+                </div>
           </div>
         </div>
+        </div>
         <% } %>
-      </div>
+    </div>
     </div>
       <% } %>
   </div>
-</div>
+
+

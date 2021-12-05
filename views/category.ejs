@@ -1,34 +1,43 @@
 <%- include('header'); -%>
 
 <div class="section-3">
-    <div class="container">
-      <div class="header">
-        <div class="headerTitle">
-          <h2>Veggies</h2>
+  <div class="header">
+    <div class="headerTitle">
+      <h2>Fruits</h2>
+      <span>Whatever you want, we got it</span>
+    </div>
+  </div>
+  <div class="section-3-grid">
+    <div class="section-3-col">
+      <% for(let j = 0; j < 12; j++) { %>
+      <div class="section-3-grid-element">
+        <div class="container">
+          <div class="card">
+            <div class="content-1">
+              <div class="mainImage">
+                <img src="assets/fruits-12112.png" alt="">
+              </div>
+            </div>
+            
+            <div class="content-2">
+              <div class="kind">
+                <span>Green Mix</span>
+                <h4>Fruits</h4>
+              </div>
+              <div class="description">
+                <p>This product is blah blah blah blah</p>
+              </div>
+              <div class="price">
+                <span>$</span>
+                <span>40</span>
+                <div class="space"></div>
+                <button class="btn">Add to Cart</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="section-3-grid">
-        <div class="section-3-col">
-        <% for(let i = 0; i < 16; i++) { %>
-            <div class="section-3-grid-element">
-                <div class="image">
-                  <img src="assets/listing.jfif" alt="Listing pic" />
-                </div>
-                <div class="text">
-                  <div class="text-title">
-                    <h3>Item</h3>
-                    <div class="info">
-                      <span>4.99$ | 20-30 MINS </span>
-                    </div>
-                  </div>
-                  <div class="rating">
-                    <span class="circle">4.2</span>
-                  </div>
-                </div>
-              </div>
-              <% } %>
-            </div>
-     </div>
+      <% } %>
     </div>
   </div>
 </div>

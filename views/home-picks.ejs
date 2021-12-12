@@ -1,13 +1,13 @@
 
-<% const pick0a = ["Top Picks", "Our Customers Favourites"];
-   const pick1a = ["Healthy", "Our Healthiest Selections"]; %>
+<% const pick0a = ["Top Picks", "Healthy"];
+   const pick1a = ["Our Customers Favourites", "Our Healthiest Selections"]; %>
 
 <div class="section-3">
     <% for(let i = 0; i < 2; i++) { %>
     <div class="header">
       <div class="headerTitle">
-        <h2>Top Picks</h2>
-        <span>Our Customers Favourites</span>
+        <h2><%= pick0a[i] %></h2>
+        <span><%= pick1a[i] %></span>
       </div>
     </div>
     <div class="section-3-grid">
@@ -23,15 +23,15 @@
               </div>
               <div class="content-2">
                 <div class="kind">
-                  <span>Green Mix</span>
-                  <h4>Fruits</h4>
+                  <span><%= products[pick0a[i]][j].product_name%></span>
+                  <h4><%= products[pick0a[i]][j].product_category%></h4>
                 </div>
                 <div class="description">
-                  <p>This product is blah blah blah blah</p>
+                  <p><%= products[pick0a[i]][j].product_description%></p>
                 </div>
                 <div class="price">
                   <span>$</span>
-                  <span>40</span>
+                  <span><%= parseFloat(products[pick0a[i]][j].product_price).toFixed(2)%></span>
                   <div class="space"></div>
                   <button class="btn">Add to Cart</button>
                 </div>

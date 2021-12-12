@@ -1,6 +1,6 @@
 const mysql_conn = require('../../mysql_conn');
 
-const productsQuery = "SELECT pName, price, category, description, name AS supplier_name, stock, image_link \
+const productsQuery = "SELECT pname, price, category, description, name AS supplier_name, stock, image_link \
     FROM product INNER JOIN account ON product.supplier_id = account.id";
 
 var data = [];

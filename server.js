@@ -3,8 +3,8 @@ const path = require('path');
 const app = express();
 const apiRoutes = require("./routes/api");
 const axios = require('axios');
-// const mysql_conn = require('./mysql_conn');
-// const mysql_queries = require('./mysql_queries');
+const mysql_conn = require('./mysql_conn');
+const mysql_queries = require('./mysql_queries');
 
 app.set('port', process.env.PORT || process.argv[2] || 3000);
 app.use(express.static(__dirname + '/public'));

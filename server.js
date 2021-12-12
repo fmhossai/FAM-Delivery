@@ -3,8 +3,8 @@ const path = require('path');
 const app = express();
 const apiRoutes = require("./routes/api");
 const axios = require('axios');
-// const mysql_conn = require('./mysql_conn');
-// const mysql_queries = require('./mysql_queries');
+const mysql_conn = require('./mysql_conn');
+const mysql_queries = require('./mysql_queries');
 
 app.set('port', process.env.PORT || process.argv[2] || 3000);
 app.use(express.static(__dirname + '/public'));
@@ -22,6 +22,13 @@ app.get('/checkout', (req, res) => {
     res.render('checkout');
 });
 
+app.get('/cart', (req, res) => {
+    res.render('cart');
+});
+
+app.get('/login', (req, res) => {
+    res.render('login');
+});
 
 app.get('/', async(req, res) => {
     const resp = await axios.get("http://localhost:3000/api/products")

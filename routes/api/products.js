@@ -7,7 +7,7 @@ var data = [];
 
 mysql_conn.query(productsQuery, function (err, result, fields) {
     if(err) throw err;
-    console.log(result[1].pName);
+    console.log(result[1].pname);
     data = result;
 });
 

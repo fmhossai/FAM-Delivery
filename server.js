@@ -26,6 +26,7 @@ app.get('/checkout', (req, res) => {
 app.get('/', async(req, res) => {
     const resp = await axios.get("http://localhost:3000/api/products")
     const foundProducts = resp.data;
+    console.log(foundProducts)
     let sendToIndex = {
         "Top Picks" : [],
         "Healthy" : []
@@ -38,11 +39,12 @@ app.get('/', async(req, res) => {
         if(j == 4){
             break;
         }
-        if(foundProducts[i].product_category == "Veggies"){
+        if(foundProducts[i].category == "veggies"){
             sendToIndex["Healthy"].push(foundProducts[i]);
             j++;
         }
     }
+    console.log(sendToIndex)
     res.render('index', {
         products: sendToIndex
     });

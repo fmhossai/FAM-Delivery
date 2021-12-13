@@ -1,10 +1,11 @@
 const express = require("express");
 const { send } = require("express/lib/response");
-const productData = require("./api/products")
+const {getData} = require("./api/products")
 const router = express.Router();
 
-router.get("/products", (req,res) => {
+router.get("/products", async(req,res) => {
     const params = req.query;
+    const productData = await getData();
     res.send(productData);
 
 })

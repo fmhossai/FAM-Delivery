@@ -21,18 +21,17 @@
                   <img src="assets/fruits-12112.png" alt="">
                 </div>
               </div>
-              
               <div class="content-2">
                 <div class="kind">
-                  <span><%= products[pick0a[i]][j].product_name%></span>
-                  <h4><%= products[pick0a[i]][j].product_category%></h4>
+                  <span><%= products[pick0a[i]][j].pname%></span>
+                  <h4><%= products[pick0a[i]][j].category%></h4>
                 </div>
                 <div class="description">
-                  <p><%= products[pick0a[i]][j].product_description%></p>
+                  <p><%= products[pick0a[i]][j].description%></p>
                 </div>
                 <div class="price">
                   <span>$</span>
-                  <span><%= parseFloat(products[pick0a[i]][j].product_price).toFixed(2)%></span>
+                  <span><%= parseFloat(products[pick0a[i]][j].price).toFixed(2)%></span>
                   <div class="space"></div>
                   <button class="btn">Add to Cart</button>
                 </div>

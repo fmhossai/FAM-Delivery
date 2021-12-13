@@ -4,7 +4,7 @@
 <section class="section-1">
     <ol>
         <% categories.forEach((val) => { %>
-        <li><a href="#">
+        <li><a href="categories/<%=val.toLowerCase() %>">
             <figure>
                 <img src="assets/<%= val %>.png"/>
                 <figcaption><%= val %></figcaption>

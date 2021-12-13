@@ -10,14 +10,9 @@ function initRoutes(app, axios) {
     app.get('/categories/:category', categoriesController().index)
     app.post('/update-cart', cartController().update)
 
-    
-    
-    
     app.get('/checkout', (req, res) => {
         res.render('checkout');
     });
-    
-    
 }
 
 module.exports = initRoutes

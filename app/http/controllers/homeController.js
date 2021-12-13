@@ -1,4 +1,3 @@
-const Menu = require("../../models/menu");
 const {getData} = require("../../models/menu")
 function homeController(axios) {
 

@@ -21,15 +21,15 @@
             
             <div class="content-2">
               <div class="kind">
-                <span><%= products[j].product_name%></span>
-                <h4><%= products[j].product_description%></h4>
+                <span><%= products[j].pname%></span>
+                <h4><%= products[j].description%></h4>
               </div>
               <div class="description">
-                <p><%= products[j].product_category%></p>
+                <p><%= products[j].category%></p>
               </div>
               <div class="price">
                 <span>$</span>
-                <span><%= parseFloat(products[j].product_price).toFixed(2)%></span>
+                <span><%= parseFloat(products[j].price).toFixed(2)%></span>
                 <div class="space"></div>
                 <button class="btn">Add to Cart</button>
               </div>

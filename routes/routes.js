@@ -7,7 +7,7 @@ function initRoutes(app, axios) {
     app.get('/', homeController(axios).index);
     app.get('/login', authController().login);
     app.get('/cart', cartController().index);
-
+    app.post('/update-cart', cartController().update)
 
 
 

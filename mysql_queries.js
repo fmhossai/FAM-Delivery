@@ -53,7 +53,7 @@ async function display() {
     // console.log(await getProducts());
     // console.log(await searchProducts("s"));
     // console.log(await getCategorizedProducts("Bakery"));
-    console.log(await getCategories());
+    // console.log(await getCategories());
     // console.log(await getCart("demoCustomer"));
     // console.log(await usernameExists("demoCustomer"));
 }

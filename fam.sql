@@ -35,7 +35,7 @@ CREATE TABLE `account` (
   `address_country` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'','admin','admin@example.com','(123) 456-7890',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `account` VALUES (1,'','admin','admin@example.com','(123) 456-7890',NULL,NULL,NULL,NULL,NULL),(2,'fc','Fruit Company','',NULL,NULL,NULL,NULL,NULL,NULL),(3,'vc','Veggie Company','',NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,30 +98,6 @@ LOCK TABLES `cart` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `category`
---
-
-DROP TABLE IF EXISTS `category`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `category` (
-  `supplier_id` int unsigned NOT NULL,
-  `category` enum('bakery','veggies','drinks','frozen','fruits','meats','dairy') NOT NULL,
-  PRIMARY KEY (`supplier_id`),
-  CONSTRAINT `s_id` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`supplier_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `category`
---
-
-LOCK TABLES `category` WRITE;
-/*!40000 ALTER TABLE `category` DISABLE KEYS */;
-/*!40000 ALTER TABLE `category` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `customer`
 --
 
@@ -151,56 +127,56 @@ LOCK TABLES `customer` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `order`
+-- Table structure for table `order_content`
 --
 
-DROP TABLE IF EXISTS `order`;
+DROP TABLE IF EXISTS `order_content`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `order` (
+CREATE TABLE `order_content` (
+  `order_id` int unsigned NOT NULL,
+  `product_id` int unsigned NOT NULL,
+  PRIMARY KEY (`order_id`,`product_id`),
+  KEY `p_id_idx` (`product_id`),
+  CONSTRAINT `oc_oid` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+  CONSTRAINT `oc_pid` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_content`
+--
+
+LOCK TABLES `order_content` WRITE;
+/*!40000 ALTER TABLE `order_content` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order_content` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `orders` (
   `order_id` int unsigned NOT NULL AUTO_INCREMENT,
   `customer_id` int unsigned NOT NULL,
   `date_of_purchase` timestamp NULL DEFAULT NULL,
   `total` decimal(16,2) DEFAULT NULL,
   PRIMARY KEY (`order_id`),
   KEY `owner_id_idx` (`customer_id`),
-  CONSTRAINT `owner_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
+  CONSTRAINT `order_cid` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `order`
+-- Dumping data for table `orders`
 --
 
-LOCK TABLES `order` WRITE;
-/*!40000 ALTER TABLE `order` DISABLE KEYS */;
-/*!40000 ALTER TABLE `order` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `order_contents`
---
-
-DROP TABLE IF EXISTS `order_contents`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `order_contents` (
-  `order_id` int unsigned NOT NULL,
-  `product_id` int unsigned NOT NULL,
-  PRIMARY KEY (`order_id`,`product_id`),
-  KEY `oc_pid_idx` (`product_id`),
-  CONSTRAINT `oc_oid` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`),
-  CONSTRAINT `oc_pid` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `order_contents`
---
-
-LOCK TABLES `order_contents` WRITE;
-/*!40000 ALTER TABLE `order_contents` DISABLE KEYS */;
-/*!40000 ALTER TABLE `order_contents` ENABLE KEYS */;
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -214,14 +190,14 @@ CREATE TABLE `product` (
   `product_id` int unsigned NOT NULL AUTO_INCREMENT,
   `pname` varchar(255) NOT NULL,
   `price` decimal(16,2) DEFAULT NULL,
-  `category` enum('bakery','veggies','drinks','frozen','fruits','meats','dairy') DEFAULT NULL,
-  `description` text,
+  `category` enum('Bakery','Veggies','Drinks','Frozen','Fruits','Meats','Dairy') DEFAULT NULL,
+  `description` varchar(512) DEFAULT NULL,
   `supplier_id` int unsigned DEFAULT NULL,
   `stock` int DEFAULT '0',
   `image_link` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`product_id`),
   KEY `supplier_id_idx` (`supplier_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -230,6 +206,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (1,'Frozen Banana',3.50,'Frozen','Frozen Yellow Fruit',2,12,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(2,'Strawberry Cake',12.30,'Bakery','cake with vanilla and strawberry flavour',2,32,'https://images.pexels.com/photos/10311446/pexels-photo-10311446.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'),(3,'Banana',12.34,'Fruits','A yellow fruit',2,14,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(4,'Strawberry',3.00,'Fruits','A red fruit',2,4,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(5,'Blueberry',1.00,'Fruits','A blue fruit',2,1,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(6,'Watermelon',5.00,'Fruits','A spherical fruit',2,5,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(7,'Broccoli',2.00,'Veggies','A very ymmy food',2,5,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(8,'Califlower',5.00,'Veggies','Similar to broccoli',2,6,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(9,'Carrot',1.00,'Veggies','An orange vegetable',2,4,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(10,'Tomato',1.30,'Veggies','A red vegetable',2,2,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -271,13 +248,6 @@ DROP TABLE IF EXISTS `supplier`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `supplier` (
   `supplier_id` int unsigned NOT NULL,
-  `cat_bakery` tinyint NOT NULL DEFAULT '0',
-  `cat_veggies` tinyint NOT NULL DEFAULT '0',
-  `cat_drinks` tinyint NOT NULL DEFAULT '0',
-  `cat_frozen` tinyint NOT NULL DEFAULT '0',
-  `cat_fruits` tinyint NOT NULL DEFAULT '0',
-  `cat_meats` tinyint NOT NULL DEFAULT '0',
-  `cat_dairy` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`supplier_id`),
   CONSTRAINT `supplier_id` FOREIGN KEY (`supplier_id`) REFERENCES `account` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -289,7 +259,33 @@ CREATE TABLE `supplier` (
 
 LOCK TABLES `supplier` WRITE;
 /*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
+INSERT INTO `supplier` VALUES (2);
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `supplier_category`
+--
+
+DROP TABLE IF EXISTS `supplier_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `supplier_category` (
+  `supplier_id` int unsigned NOT NULL,
+  `category` enum('Bakery','Veggies','Drinks','Frozen','Fruits','Meats','Dairy') NOT NULL,
+  PRIMARY KEY (`supplier_id`,`category`),
+  CONSTRAINT `s_id` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`supplier_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `supplier_category`
+--
+
+LOCK TABLES `supplier_category` WRITE;
+/*!40000 ALTER TABLE `supplier_category` DISABLE KEYS */;
+INSERT INTO `supplier_category` VALUES (2,'Bakery'),(2,'Veggies'),(2,'Drinks'),(2,'Frozen'),(2,'Fruits'),(2,'Meats'),(2,'Dairy');
+/*!40000 ALTER TABLE `supplier_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -335,4 +331,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-11 22:33:55
+-- Dump completed on 2021-12-12 23:28:10

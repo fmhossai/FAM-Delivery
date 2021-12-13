@@ -8,12 +8,8 @@ function initRoutes(app, axios) {
     app.get('/login', authController().login);
     app.get('/cart', cartController().index);
     app.get('/categories/:category', categoriesController().index)
-    app.post('/update-cart', (res,req) =>{
-        console.log("POST REQUEST")
-    })
-    // app.get('/category', (req, res) => {
-    //     res.render('category');
-    // });
+    app.post('/update-cart', cartController().update)
+
     
     
     

@@ -1,41 +1,68 @@
 const mysql_conn = require('./mysql_conn');
+const util = require('util');
+const query = util.promisify(mysql_conn.query).bind(mysql_conn);
 
-const productsQuery = "SELECT pname, price, category, description, name AS supplier_name, stock, image_link \
-    FROM product INNER JOIN account ON product.supplier_id = account.id";
+async function getProducts() {
+    const productsQuery = "SELECT product_id, pname, price, category, description, name AS supplier_name, stock, image_link \
+        FROM product INNER JOIN account ON product.supplier_id = account.id";
+    
+    return await query(productsQuery);
+}
 
-const bakeryProductsQuery = "SELECT pname, price, category, description, name AS supplier_name, stock, image_link \
-    FROM product INNER JOIN account ON product.supplier_id = account.id \
-    WHERE category = 'Bakery'";
+async function searchProducts(search) {
+    const searchQuery = "SELECT product_id, pname, price, category, description, name AS supplier_name, stock, image_link \
+        FROM product INNER JOIN account ON product.supplier_id = account.id \
+        WHERE pname LIKE ?";
+    
+    return await query(searchQuery, "%" + [search] + "%");
+}
 
-const veggiesProductsQuery = "SELECT pname, price, category, description, name AS supplier_name, stock, image_link \
-    FROM product INNER JOIN account ON product.supplier_id = account.id \
-    WHERE category = 'Veggies'";
+async function getCategorizedProducts(catName) {
+    const categorizedProductsQuery = "SELECT product_id, pname, price, category, description, name AS supplier_name, stock, image_link \
+        FROM product INNER JOIN account ON product.supplier_id = account.id \
+        WHERE category = ?";
+    
+    return await query(categorizedProductsQuery, [catName]);
+}
 
-const drinksProductsQuery = "SELECT pname, price, category, description, name AS supplier_name, stock, image_link \
-    FROM product INNER JOIN account ON product.supplier_id = account.id \
-    WHERE category = 'Drinks'";
+async function getCategories() {
+    const categoriesQuery = "SELECT DISTINCT category \
+    FROM supplier_category";
+    
+    return await query(categoriesQuery);
+}
 
-const frozenProductsQuery = "SELECT pname, price, category, description, name AS supplier_name, stock, image_link \
-    FROM product INNER JOIN account ON product.supplier_id = account.id \
-    WHERE category = 'Frozen'";
+async function getCart(username) {
+    const cartQuery = "SELECT product_id, pname, price, category, image_link \
+    FROM customer JOIN account ON customer_id = id NATURAL JOIN cart NATURAL JOIN product \
+    WHERE username = ?";
 
-const fruitsProductsQuery = "SELECT pname, price, category, description, name AS supplier_name, stock, image_link \
-    FROM product INNER JOIN account ON product.supplier_id = account.id \
-    WHERE category = 'Fruits'";
+    return await query(cartQuery, [username]);
+}
 
-const meatsProductsQuery = "SELECT pname, price, category, description, name AS supplier_name, stock, image_link \
-    FROM product INNER JOIN account ON product.supplier_id = account.id \
-    WHERE category = 'Meats'";
+// exists queries to check if an account with a certain username already exists
+async function usernameExists(username) {
+    const cartQuery = "SELECT 1 \
+    FROM account \
+    WHERE username = ?";
+    let res = await query(cartQuery, [username]);
+    return (res.length) ? true : false;
+}
 
-const dairyProductsQuery = "SELECT pname, price, category, description, name AS supplier_name, stock, image_link \
-    FROM product INNER JOIN account ON product.supplier_id = account.id \
-    WHERE category = 'Dairy'";
+async function display() {
+    // console.log(await getProducts());
+    // console.log(await searchProducts("s"));
+    // console.log(await getCategorizedProducts("Bakery"));
+    console.log(await getCategories());
+    // console.log(await getCart("demoCustomer"));
+    // console.log(await usernameExists("demoCustomer"));
+}
 
-// products in a certain user's cart name price category image
-const cartProducts = "";
+display();
 
-// test purposes only
-// mysql_conn.query(productsQuery, function (err, result, fields) {
-//   if(err) throw err;
-//   console.log(result[1].pName);
-// });
+module.exports.getProducts = getProducts;
+module.exports.searchProducts = searchProducts;
+module.exports.getCategorizedProducts = getCategorizedProducts;
+module.exports.getCategories = getCategories;
+module.exports.getCart = getCart;
+module.exports.usernameExists = usernameExists;

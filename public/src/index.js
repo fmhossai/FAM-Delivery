@@ -1,4 +1,5 @@
-//map
+
+// Map
 var mymap = L.map('map').setView([51.05, -114.11], 13);
     
 L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
@@ -24,3 +25,20 @@ const m3 = L.marker([51.055, -114.09]).addTo(mymap).
 m3.on('mouseover', function (e) { this.openPopup(); });
 m3.on('mouseout', function (e) { this.closePopup(); });
 m3._icon.classList.add("huechange");
+
+
+// Cart
+function updateCart(choice) {
+    axios.post('/update-cart', choice).then((res) => {
+
+    })
+}
+
+let addToCart = document.querySelectorAll(".add-to-cart");
+addToCart.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+        let choice = JSON.parse(btn.dataset.choice);
+        console.log(choice);
+       updateCart(choice);
+    })
+})

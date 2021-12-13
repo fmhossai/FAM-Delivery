@@ -1,6 +1,5 @@
 const express = require("express");
 const { send } = require("express/lib/response");
-const {getData} = require("./api/products")
 const router = express.Router();
 
 router.get("/products", async(req,res) => {

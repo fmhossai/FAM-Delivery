@@ -1,7 +1,11 @@
+const Menu = require("../../models/menu");
+
 function homeController(axios) {
 
     return {
         async index(req, res) {
+            //link model to controller
+            
             const resp = await axios.get("http://localhost:3000/api/products")
             const foundProducts = resp.data;
             let sendToIndex = {
@@ -21,6 +25,8 @@ function homeController(axios) {
                     j++;
                 }
             }
+            
+
             res.render('index', {
                 products: sendToIndex
             });

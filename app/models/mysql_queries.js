@@ -1,4 +1,4 @@
-const mysql_conn = require('./mysql_conn');
+const mysql_conn = require('../../mysql_conn');
 const util = require('util');
 const query = util.promisify(mysql_conn.query).bind(mysql_conn);
 

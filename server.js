@@ -10,7 +10,7 @@ const app = express();
 const apiRoutes = require("./routes/api");
 
 const mysql_conn = require('./mysql_conn');
-const mysql_queries = require('./mysql_queries');
+// const mysql_queries = require('./mysql_queries');
 
 
 app.use(session({

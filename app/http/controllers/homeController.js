@@ -1,11 +1,12 @@
-const {getData} = require("../../models/menu")
+// const {getData} = require("../../models/menu")
+const {getProducts} = require("../../models/mysql_queries")
 function homeController(axios) {
 
     return {
         async index(req, res) {
             //link model to controller
             
-            const foundProducts = await getData();
+            const foundProducts = await getProducts();
             // console.log(foundProducts)
             let sendToIndex = {
                 "Top Picks" : [],

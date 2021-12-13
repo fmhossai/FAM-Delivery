@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
--- Host: localhost    Database: fam_delivery
+-- Host: 127.0.0.1    Database: fam_delivery
 -- ------------------------------------------------------
 -- Server version	8.0.27
 
@@ -27,6 +27,7 @@ CREATE TABLE `account` (
   `username` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `phone_no` varchar(255) DEFAULT NULL,
   `address_street_no` int DEFAULT NULL,
   `address_street_name` varchar(255) DEFAULT NULL,
@@ -35,7 +36,7 @@ CREATE TABLE `account` (
   `address_country` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +45,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'','admin','admin@example.com','(123) 456-7890',NULL,NULL,NULL,NULL,NULL),(2,'fc','Fruit Company','',NULL,NULL,NULL,NULL,NULL,NULL),(3,'vc','Veggie Company','',NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `account` VALUES (1,'admin123','admin','admin@example.com','pw','(123) 456-7890',NULL,NULL,NULL,NULL,NULL),(2,'fc','Fruit Company','','pw',NULL,NULL,NULL,NULL,NULL,NULL),(3,'vc','Veggie Company','','pw',NULL,NULL,NULL,NULL,NULL,NULL),(4,'demoCustomer','John Smith','demo@customer.com','pw','(123) 456-7890',123,'demo street','demo postal code','demo city','demo country');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,6 +82,7 @@ DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
   `customer_id` int unsigned NOT NULL,
   `product_id` int unsigned NOT NULL,
+  `qty` int unsigned DEFAULT '1',
   PRIMARY KEY (`customer_id`,`product_id`),
   KEY `product_id_idx` (`product_id`),
   CONSTRAINT `c_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
@@ -94,6 +96,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
+INSERT INTO `cart` VALUES (4,1,11),(4,2,3);
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,6 +126,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` VALUES (4,'2000-01-01','John Smith','1234 5678 9012 3456','11/24',123);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -331,4 +335,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-12 23:34:46
+-- Dump completed on 2021-12-13  1:14:44

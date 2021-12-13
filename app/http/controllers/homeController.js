@@ -21,12 +21,12 @@ function homeController(axios) {
                 if(j == 4){
                     break;
                 }
-                if((foundProducts[i].category == "fruits")&&(fruitsFound < 2)){
+                if((foundProducts[i].category == "Fruits")&&(fruitsFound < 2)){
                     sendToIndex["Healthy"].push(foundProducts[i]);
                     fruitsFound++;
                     j++;
                 }
-                if((foundProducts[i].category == "veggies")&&(veggiesFound < 2)){
+                if((foundProducts[i].category == "Veggies")&&(veggiesFound < 2)){
                     sendToIndex["Healthy"].push(foundProducts[i]);
                     veggiesFound++;
                     j++;

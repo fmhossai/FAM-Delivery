@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/main.css" />
+    
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Eczar:wght@800&family=Poppins:wght@100;300;400&family=Raleway:wght@100&family=Roboto+Slab:wght@500&family=Roboto:wght@100&family=Shrikhand&display=swap" rel="stylesheet">
-   
+    
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
     <script type='module' src="src/index.js"></script>
+    <link rel="stylesheet" href="/styles/main.css" />
 </head>
 <body>
     <!--Header-->
@@ -25,7 +27,7 @@
                 <input type="text" placeholder="Search">
             </div>
             <ol class="rightSide">
-                <li class="btnHolder"><a href="/cart"><button class="btn">Cart 3</button></a></li>
+                <li class="btnHolder"><a href="/cart"><button class="btn">Cart <span class="cartCtr"><%= session.cart ? session.cart.quantityT : '' %></span></button></a></li>
                 <li class="btnHolder"><a href="/login"><button class="btn">Sign Up</button></a></li>
             </ol>
         </div>

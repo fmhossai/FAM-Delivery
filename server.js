@@ -21,7 +21,10 @@ app.use(session({
     cookie: { maxPage: 1000 * 60 * 60 * 24 }
 }));
 app.use(flash());
-
+app.use((req, res, next) => {
+    res.locals.session = req.session
+    next()
+})
 
 app.set('port', process.env.PORT || process.argv[2] || 3000);
 app.set('views', path.resolve(__dirname, 'views'));

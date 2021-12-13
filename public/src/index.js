@@ -30,7 +30,20 @@ m3._icon.classList.add("huechange");
 // Cart
 function updateCart(choice) {
     axios.post('/update-cart', choice).then((res) => {
-
+        document.querySelector('.cartCtr').innerText = res.data.quantityT
+        new Noty({
+            type: 'success',
+            timeout: 1000,
+            text: 'item added to cart',
+            progressBar: false
+        }).show();
+    }).catch(err => {
+        new Noty({
+            type: 'error',
+            timeout: 1000,
+            text: 'Something went wrong',
+            progressBar: false
+        }).show();
     })
 }
 

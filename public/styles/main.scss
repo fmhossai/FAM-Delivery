@@ -1,3 +1,5 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css');
+
 :root {
     --font-family: sans-serif;
     font-size: 16px;
@@ -342,5 +344,8 @@ img.huechange { filter: hue-rotate(160deg); }
   background: #FFFFFF;
 }
 
-
+.noty_theme__mint {
+  border-radius: 50px!important;
+  padding-left: 8px!important;
+}
 

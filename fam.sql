@@ -27,6 +27,7 @@ CREATE TABLE `account` (
   `username` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `phone_no` varchar(255) DEFAULT NULL,
   `address_street_no` int DEFAULT NULL,
   `address_street_name` varchar(255) DEFAULT NULL,
@@ -44,7 +45,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'','admin','admin@example.com','(123) 456-7890',NULL,NULL,NULL,NULL,NULL),(2,'fc','Fruit Company','',NULL,NULL,NULL,NULL,NULL,NULL),(3,'vc','Veggie Company','',NULL,NULL,NULL,NULL,NULL,NULL),(4,'demoCustomer','John Smith','demo@customer.com','(123) 456-7890',123,'demo street','demo postal code','demo city','demo country');
+INSERT INTO `account` VALUES (1,'admin123','admin','admin@example.com','pw','(123) 456-7890',NULL,NULL,NULL,NULL,NULL),(2,'fc','Fruit Company','','pw',NULL,NULL,NULL,NULL,NULL,NULL),(3,'vc','Veggie Company','','pw',NULL,NULL,NULL,NULL,NULL,NULL),(4,'demoCustomer','John Smith','demo@customer.com','pw','(123) 456-7890',123,'demo street','demo postal code','demo city','demo country');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -334,4 +335,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-13  1:05:50
+-- Dump completed on 2021-12-13  1:14:44

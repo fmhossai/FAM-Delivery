@@ -1,13 +1,13 @@
 const Menu = require("../../models/menu");
-
+const {getData} = require("../../models/menu")
 function homeController(axios) {
 
     return {
         async index(req, res) {
             //link model to controller
             
-            const resp = await axios.get("http://localhost:3000/api/products")
-            const foundProducts = resp.data;
+            const foundProducts = await getData();
+            // console.log(foundProducts)
             let sendToIndex = {
                 "Top Picks" : [],
                 "Healthy" : []
@@ -16,12 +16,20 @@ function homeController(axios) {
                 sendToIndex["Top Picks"].push(foundProducts[i]);
             }
             let j = 0;
+            let fruitsFound = 0;
+            let veggiesFound = 0;
             for(let i =0; i <foundProducts.length; i++){
                 if(j == 4){
                     break;
                 }
-                if(foundProducts[i].product_category == "Veggies"){
+                if((foundProducts[i].category == "fruits")&&(fruitsFound < 2)){
                     sendToIndex["Healthy"].push(foundProducts[i]);
+                    fruitsFound++;
+                    j++;
+                }
+                if((foundProducts[i].category == "veggies")&&(veggiesFound < 2)){
+                    sendToIndex["Healthy"].push(foundProducts[i]);
+                    veggiesFound++;
                     j++;
                 }
             }

@@ -9,27 +9,27 @@
   </div>
   <div class="section-3-grid">
     <div class="section-3-col">
-      <% for(let j = 0; j < 8; j++) { %>
+      <% for(let j = 0; j < products.length; j++) { %>
       <div class="section-3-grid-element">
         <div class="container">
           <div class="card">
             <div class="content-1">
               <div class="mainImage">
-                <img src="assets/fruits-12112.png" alt="">
+                <img src="/assets/fruits-12112.png" alt="">
               </div>
             </div>
             
             <div class="content-2">
               <div class="kind">
-                <span>Green Mix</span>
-                <h4>Fruits</h4>
+                <span><%= products[j].product_name%></span>
+                <h4><%= products[j].product_description%></h4>
               </div>
               <div class="description">
-                <p>This product is blah blah blah blah</p>
+                <p><%= products[j].product_category%></p>
               </div>
               <div class="price">
                 <span>$</span>
-                <span>40</span>
+                <span><%= parseFloat(products[j].product_price).toFixed(2)%></span>
                 <div class="space"></div>
                 <button class="btn">Add to Cart</button>
               </div>

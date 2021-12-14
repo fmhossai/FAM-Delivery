@@ -4,7 +4,7 @@ const { usernameExists } = require('../../models/mysql_queries');
 function authController() {
     return {
         login(req, res) {
-            res.render('login', { login: true})
+            res.render('login')
         },
         async postLogin(req, res) {
             //sign up
@@ -15,7 +15,7 @@ function authController() {
                     req.flash('name', name);
                     req.flash('username', username);
                     req.flash('email', email);
-                    return res.render('login', { login: false });
+                    return res.render('login');
                 }
 
                 //check if username is in database
@@ -41,7 +41,7 @@ function authController() {
                 if(!username || !password){
                     req.flash('errorLogIn', '1 or more invalid fields');
                     req.flash('username', username);
-                    return res.render('login', { login: true });
+                    return res.render('login');
                 }
             }
         }

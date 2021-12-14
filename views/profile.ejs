@@ -1,16 +1,21 @@
 <% const fields = ["Name", "Username", "Email", "Password", "Phone", "Address"]
     const values = ["Bob", "Bob123", "bob@gmail.com", "********", "(123)-456-7890", "123 road"] %>
-<head>
-    <link rel="stylesheet" href="styles/main.css" />
-</head>
 
-    <a href="#"><div class="profileLogo"><img  src="assets/logo.png"></div></a>
+
+<%- include('header'); -%>
+
+
+    <div class="mt-20">
     <% for(let i = 0;i < fields.length; i++) { %>
-    <div class="row">
-        <div class="column"></div>
-        <div class="column"><%= fields[i] %></div>
-        <div class="column"><%= values[i] %></div>
-        <div class="column"><a href="#"><button class="btn">Edit</button></a></div>
-        <div class="column"></div>
-    </div>  
-    <% } %>
+        <div class="row">
+            <div class="column"></div>
+            <div class="column"><%= fields[i] %></div>
+            <div class="column"><%= values[i] %></div>
+            <div class="column"><a href="#"><button class="btn">Edit</button></a></div>
+            <div class="column"></div>
+        </div>  
+        <% } %>
+    </div>
+    
+
+<%- include('footer'); -%>

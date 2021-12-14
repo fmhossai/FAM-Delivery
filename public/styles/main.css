@@ -301,18 +301,11 @@ img.huechange {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  -webkit-box-flex: 0;
-      -ms-flex-positive: 0;
-          flex-grow: 0;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
-  -ms-flex-preferred-size: 100%;
-      flex-basis: 100%;
   scroll-snap-align: start;
 }
 
 .section-3 .section-3-grid .section-3-grid-element {
-  width: calc(1 / 4 * 100% - (1 - 1 / 3) * 40px);
+  padding: 0 1rem;
   margin-top: 1.5rem;
 }
 

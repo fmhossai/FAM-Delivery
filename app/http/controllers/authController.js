@@ -36,28 +36,26 @@ function authController() {
                     //create a user
                     await addCustomer(name, username, email, password);
                     //redirect to home page
-                    return res.render('index');
+                    return res.redirect('/');
                 }
+
             //log in
             }else if(Object.keys(req.body).length === 2){
                 const { username, password } = req.body;
                 if(!username || !password){
                     req.flash('errorLogIn', '1 or more invalid fields');
-                    req.flash('username', username);
-                    return res.render('login', { login: true });
+                    return res.render('login');
                 } else if(await usernameExists(username)) {
                     const customer = await getCustomer(username);
                     if(customer[0].password == password) {
-                        // login successful
-                        console.log("login successful");
-                        res.render('index');
+                        return res.redirect('/');
                     } else {
-                        console.log("login failed - invalid password");
                         req.flash('errorLogIn', 'Invalid password');
+                        return res.render('login');
                     }
                 } else {
-                    console.log("login failed");
                     req.flash('errorLogIn', 'no one by that user exists, try signing up first');
+                    return res.render('login');
                 }
             }
         }

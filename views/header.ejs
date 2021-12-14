@@ -30,7 +30,11 @@
             </div>
             <ol class="rightSide">
                 <li class="btnHolder"><a href="/cart"><button class="btn">Cart <span class="cartCtr"><%= session.cart ? session.cart.quantityT : '' %></span></button></a></li>
+                <% if(session.username) { %>
+                <li class="btnHolder"><a href="/profile"><button class="btn">Hello, <%= session.username %></button></a></li>
+                <% }else { %>
                 <li class="btnHolder"><a href="/login"><button class="btn">Sign Up</button></a></li>
+                <% } %>
             </ol>
         </div>
     </nav>

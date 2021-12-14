@@ -26,6 +26,7 @@ function cartController() {
                 cart.quantityT = cart.quantityT + 1
                 cart.priceT = cart.priceT + req.body.price
             }
+            
 
             return res.json({ quantityT: req.session.cart.quantityT });
         }

@@ -197,14 +197,14 @@ img.huechange { filter: hue-rotate(160deg); }
           h4 {
             font-size: 12px;
             color: black;
-            font-weight: 200;
+            font-weight: 300;
           }
         } 
         
         .description p{
           font-size: 11.5px;
           color: black;
-          font-weight: 100;
+          font-weight: 300;
           margin-top: 10px;
         }
         .price {
@@ -251,13 +251,13 @@ img.huechange { filter: hue-rotate(160deg); }
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-between;
+        //justify-content: space-between;
         scroll-snap-align: start;
- 
       }
   
       .section-3-grid-element {
-        padding: 0 1rem;
+        padding: 1.1rem;
+        width: calc(1 / 4 * 100% - (1 - 1 / 4));
         margin-top: 1.5rem;
         }
         
@@ -327,7 +327,7 @@ img.huechange { filter: hue-rotate(160deg); }
   background: #060606;
   border: solid 2px #060606;
   outline: none;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 1;
   padding: 0.75rem 1rem;
@@ -355,4 +355,18 @@ img.huechange { filter: hue-rotate(160deg); }
 .error { 
   color: red;
   margin-top: 20px;
+}
+
+.signout {
+  margin: 0 auto;
+  margin-top: 4rem;
+  display: block;
+  color: white;
+  background-color: red;
+  border: none;
+}
+
+.signout:hover {
+  color: red;
+  border: black 2px solid;
 }

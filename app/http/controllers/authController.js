@@ -48,6 +48,7 @@ function authController() {
                 } else if(await usernameExists(username)) {
                     const customer = await getCustomer(username);
                     if(customer[0].password == password) {
+                        req.session.username = username
                         return res.redirect('/');
                     } else {
                         req.flash('errorLogIn', 'Invalid password');

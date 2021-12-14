@@ -1,4 +1,4 @@
-// const {getData} = require("../../models/menu")
+
 const {getProducts} = require("../../models/mysql_queries")
 function homeController(axios) {
 
@@ -32,7 +32,6 @@ function homeController(axios) {
                     j++;
                 }
             }
-            
 
             res.render('index', {
                 products: sendToIndex

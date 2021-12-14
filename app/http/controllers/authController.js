@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
-const { usernameExists } = require('../../models/mysql_queries');
+const e = require('express');
+const { usernameExists, addCustomer, getCustomer } = require('../../models/mysql_queries');
 
 function authController() {
     return {
@@ -33,7 +34,9 @@ function authController() {
                     const hashedPassword = await bcrypt.hash(password, 10);
 
                     //create a user
+                    await addCustomer(name, username, email, password);
                     //redirect to home page
+                    return res.render('index');
                 }
             //log in
             }else if(Object.keys(req.body).length === 2){
@@ -42,6 +45,19 @@ function authController() {
                     req.flash('errorLogIn', '1 or more invalid fields');
                     req.flash('username', username);
                     return res.render('login', { login: true });
+                } else if(await usernameExists(username)) {
+                    const customer = await getCustomer(username);
+                    if(customer[0].password != password) {
+                        console.log("login invalid password");
+                        req.flash('errorLogIn', 'Invalid password');
+                    } else {
+                        console.log("login successful");
+                        // login successful
+                        res.render('index');
+                    }
+                } else {
+                    console.log("login failed");
+                    req.flash('errorLogIn', 'no one by that user exists, try signing up first');
                 }
             }
         }

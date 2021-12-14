@@ -1,5 +1,6 @@
 const mysql_conn = require('../../mysql_conn');
 const util = require('util');
+const req = require('express/lib/request');
 const query = util.promisify(mysql_conn.query).bind(mysql_conn);
 
 async function getProducts() {
@@ -98,7 +99,7 @@ async function addAccount(name, username, email, password) {
  * @param {*} password customer password
  * @returns
  */
-async function addCustomerAccount(name, username, email, password) {
+async function addCustomer(name, username, email, password) {
     const userQuery = "INSERT INTO customer (customer_id) VALUES (?)";
 
     let accountId = await addAccount(name, username, email, password);
@@ -114,7 +115,7 @@ async function addCustomerAccount(name, username, email, password) {
  * @param {*} password supplier password
  * @returns
  */
-async function addSupplierAccount(name, username, email, password) {
+async function addSupplier(name, username, email, password) {
     const userQuery = "INSERT INTO supplier (supplier_id) VALUES (?)";
 
     let accountId = await addAccount(name, username, email, password);
@@ -309,6 +310,8 @@ async function queryTest() {
     // console.log(getSupplyRequests("fc"));
     // await updateSupplyRequest(1);
     // await updateProductStock(5, 10);
+    // let customer = await getCustomer("demoCustomer");
+    // console.log(customer[0].password);
 }
 
 queryTest();
@@ -322,8 +325,8 @@ module.exports.usernameExists = usernameExists;
 module.exports.getAccountId = getAccountId;
 module.exports.addToCart = addToCart;
 module.exports.addAccount = addAccount;
-module.exports.addCustomerAccount = addCustomerAccount;
-module.exports.addSupplierAccount = addSupplierAccount;
+module.exports.addCustomer = addCustomer;
+module.exports.addSupplier = addSupplier;
 module.exports.addSupplierCategory = addSupplierCategory;
 module.exports.removeSupplierCategory = removeSupplierCategory;
 module.exports.getCustomer = getCustomer;

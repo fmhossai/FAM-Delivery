@@ -8,12 +8,15 @@ function initRoutes(app, axios) {
 
     app.get('/login', authController().login);
     app.post('/login', authController().postLogin);
-    
+
     app.get('/cart', cartController().index);
     app.post('/update-cart', cartController().update);
 
     app.get('/categories/:category', categoriesController().index);
-    
+
+    app.get('/profile', (req,res) => {
+        res.render('profile');
+    })
 
     app.get('/checkout', (req, res) => {
         res.render('checkout');

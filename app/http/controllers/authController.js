@@ -6,10 +6,10 @@ function authController() {
             res.render('login')
         },
         async postLogin(req, res) {
-            const { name, email, password } = req.body
+            /*const { name, username, email, password } = req.body
 
             //need to restructure
-            if(!name || !email || !password){
+            if(!name || !email || !username || !password){
                 req.flash('error', '1 or more invalid fields');
                 req.flash('name', name);
                 req.flash('email', email);
@@ -31,7 +31,7 @@ function authController() {
 
             //
 
-            //redirect to home page
+            //redirect to home page*/
 
             console.log(req.body)
         }

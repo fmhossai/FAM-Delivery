@@ -15,11 +15,11 @@
     <div class="login">
         <!--LOGIN COMP-->
         <div id="loginContainer" class="container loginContainer">
-            <form class="form" method="" action="">
+            <form action="/login" class="form" method="POST">
               <div class="logo"><a href="/"><h1>FAM<span>Delivery</span></h1></a></div>
-              <input class="field" type="text" placeholder="Email or Phone">
-              <input class="field" type="password" placeholder="Password">
-              <button class="btn submit">SIGN IN</button>
+              <input name="username" class="field" type="text" placeholder="Username">
+              <input name="password" class="field" type="password" placeholder="Password">
+              <button type="submit" class="btn">SIGN IN</button>
             </form>
         </div>
         <!--SIGN UP COMP-->
@@ -27,7 +27,8 @@
             <form action="/login" class="form" method="POST">
               <div class="logo"><a href="/"><h1>FAM<span>Delivery</span></h1></a></div>
               <input name="name" value="<%= messages.name %>" class="field" type="text" placeholder="Name">
-              <input name="email" value="<%= messages.email %>" class="field" type="text" placeholder="Email or Phone">
+              <input name="username" value="<%= messages.name %>" class="field" type="text" placeholder="Username">
+              <input name="email" value="<%= messages.email %>" class="field" type="text" placeholder="Email">
               <input name="password" class="field" type="password" placeholder="Password">
               <button class="btn" type="submit">SIGN UP</button>
               <% if(messages.error) { %>

@@ -36,17 +36,11 @@ function authController() {
                     const hashedPassword = await bcrypt.hash(password, 10);
                     //create a user
                     await addCustomer(name, username, email, password);
+                    req.session.username = username
                     if(req.session.cart){
                         const itemsInCart = Object.values(req.session.cart.items);
-                        console.log(itemsInCart)
-                        // itemsInCart.forEach((e) => {
-                        //     console.log(e.item.pname)
-                        //     console.log(e.qty)
-                        // })
-                        
-                        const customer_id = await getAccountId(username);
                         for(const i of itemsInCart){
-                            await addToCart(customer_id[0].id, i.item.product_id, i.qty)
+                            await addToCart(username, i.item.product_id, i.qty)
                         }
                     }
                     //redirect to home page

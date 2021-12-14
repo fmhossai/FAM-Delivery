@@ -27,15 +27,15 @@ async function getCategorizedProducts(catName) {
 
 async function getCategories() {
     const categoriesQuery = "SELECT DISTINCT category \
-    FROM supplier_category";
+        FROM supplier_category";
     
     return await query(categoriesQuery);
 }
 
 async function getCart(username) {
     const cartQuery = "SELECT product_id, pname, price, category, qty, image_link \
-    FROM customer JOIN account ON customer_id = id NATURAL JOIN cart NATURAL JOIN product \
-    WHERE username = ?";
+        FROM customer JOIN account ON customer_id = id NATURAL JOIN cart NATURAL JOIN product \
+        WHERE username = ?";
 
     return await query(cartQuery, [username]);
 }
@@ -43,8 +43,8 @@ async function getCart(username) {
 // exists queries to check if an account with a certain username already exists
 async function usernameExists(username) {
     const userQuery = "SELECT 1 \
-    FROM account \
-    WHERE username = ?";
+        FROM account \
+        WHERE username = ?";
     let res = await query(userQuery, [username]);
     return (res.length) ? true : false;
 }
@@ -55,8 +55,8 @@ async function usernameExists(username) {
  */
 async function getAccountId(username) {
     const userQuery = "SELECT id \
-    FROM account \
-    WHERE username = ?";
+        FROM account \
+        WHERE username = ?";
     
     return await query(userQuery, [username]);
 }
@@ -69,7 +69,7 @@ async function getAccountId(username) {
  */
 async function addToCart(username, productId) {
     const cartQuery = "INSERT INTO cart (customer_id, product_id, qty) VALUES (?, ?, 1) \
-    ON DUPLICATE KEY UPDATE qty = qty + 1";
+        ON DUPLICATE KEY UPDATE qty = qty + 1";
 
     let accountId = await getAccountId(username);
 
@@ -135,8 +135,8 @@ async function addSupplierCategory(username, category) {
 
 async function removeSupplierCategory(username, category) {
     const categoryQuery = "DELETE FROM category \
-    WHERE supplier_id = ? AND \
-    category = ?";
+        WHERE supplier_id = ? AND \
+        category = ?";
 
     let accountId = await getAccountId(username);
 
@@ -147,16 +147,16 @@ async function removeSupplierCategory(username, category) {
 // get account for cutomer or supplier
 async function getCustomer(username) {
     const userQuery = "SELECT * \
-    FROM account INNER JOIN customer ON id = customer_id \
-    WHERE username = ?";
+        FROM account INNER JOIN customer ON id = customer_id \
+        WHERE username = ?";
 
     return await query(userQuery, [username]);
 }
 
 async function getSupplier(username) {
     const userQuery = "SELECT * \
-    FROM account INNER JOIN supplier ON id = supplier_id \
-    WHERE username = ?";
+        FROM account INNER JOIN supplier ON id = supplier_id \
+        WHERE username = ?";
 
     return await query(userQuery, [username]);
 }
@@ -239,7 +239,62 @@ async function setAddress(username, streetNo, streetName, postalCode, city, coun
     return true;
 }
 
-async function display() {
+/**
+ * @param {*} adminId id of admin who made the request
+ * @param {*} supplierId id of supplier who the request is for
+ * @param {*} productId id of product the request is supplying
+ * @param {*} amount quantity of the supply being added
+ * @returns 
+ */
+ async function addSupplyRequest(adminId, supplierId, productId, amount) {
+    const requestQuery = "INSERT INTO supply_request (admin_id, supplier_id, product_id, amount, ordered_date) VALUES (?,?,?,?,now())";
+
+    await query(requestQuery, [adminId, supplierId, productId, amount]);
+    return true;
+}
+
+/**
+ * @param {*} username username of supplier
+ * @returns 2D array with unfulfilled requests
+ */
+async function getSupplyRequests(username) {
+    const requestQuery = "SELECT request_id, pname, product_id, amount, ordered_date \
+        FROM supply_request NATURAL JOIN product \
+        WHERE supplier_id = ? AND fulfilled_date IS NULL";
+    
+    let accountId = await getAccountId(username);
+
+    return await query(requestQuery, [accountId[0].id]);
+}
+
+/**
+ * @param {*} requestId id of request to update
+ * @returns 
+ */
+ async function updateSupplyRequest(requestId) {
+    const cartQuery = "UPDATE supply_request \
+        SET fulfilled_date = now() \
+        WHERE request_id = ?";
+
+    await query(cartQuery, [requestId]);
+    return true;
+}
+
+/**
+ * @param {*} productId id of target product
+ * @param {*} amount amount used to increase the stock of target product
+ * @returns 
+ */
+async function updateProductStock(productId, amount) {
+    const cartQuery = "UPDATE product \
+        SET stock = stock + ? \
+        WHERE product_id = ?";
+
+    await query(cartQuery, [amount, productId]);
+    return true;
+}
+
+async function queryTest() {
     // console.log(await getProducts());
     // console.log(await searchProducts("s"));
     // console.log(await getCategorizedProducts("Bakery"));
@@ -250,9 +305,13 @@ async function display() {
     // await addToCart("demoCustomer", 2);
     // await setName("demoCustomer", "Bob The Great");
     // await setAddress("demoCustomer", 77, "Awesome Street", "H8V 6G3", "Calgary", "Canada");
+    // await addSupplyRequests(1, 2, 5, 15); // request for Blueberry
+    // console.log(getSupplyRequests("fc"));
+    // await updateSupplyRequest(1);
+    // await updateProductStock(5, 10);
 }
 
-display();
+queryTest();
 
 module.exports.getProducts = getProducts;
 module.exports.searchProducts = searchProducts;
@@ -274,3 +333,7 @@ module.exports.setEmail = setEmail;
 module.exports.setPassword = setPassword;
 module.exports.setPhoneNo = setPhoneNo;
 module.exports.setAddress = setAddress;
+module.exports.addSupplyRequest = addSupplyRequest;
+module.exports.getSupplyRequests = getSupplyRequests;
+module.exports.updateSupplyRequest = updateSupplyRequest;
+module.exports.updateProductStock = updateProductStock;

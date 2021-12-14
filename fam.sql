@@ -60,7 +60,7 @@ CREATE TABLE `admin` (
   `admin_id` int unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`admin_id`),
   CONSTRAINT `admin_id` FOREIGN KEY (`admin_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,6 +69,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+INSERT INTO `admin` VALUES (1);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +97,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` VALUES (4,1,11),(4,2,3);
+INSERT INTO `cart` VALUES (4,1,12),(4,2,3);
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,7 +211,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'Frozen Banana',3.50,'Frozen','Frozen Yellow Fruit',2,12,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(2,'Strawberry Cake',12.30,'Bakery','cake with vanilla and strawberry flavour',2,32,'https://images.pexels.com/photos/10311446/pexels-photo-10311446.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'),(3,'Banana',12.34,'Fruits','A yellow fruit',2,14,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(4,'Strawberry',3.00,'Fruits','A red fruit',2,4,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(5,'Blueberry',1.00,'Fruits','A blue fruit',2,1,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(6,'Watermelon',5.00,'Fruits','A spherical fruit',2,5,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(7,'Broccoli',2.00,'Veggies','A very ymmy food',2,5,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(8,'Califlower',5.00,'Veggies','Similar to broccoli',2,6,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(9,'Carrot',1.00,'Veggies','An orange vegetable',2,4,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(10,'Tomato',1.30,'Veggies','A red vegetable',2,2,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');
+INSERT INTO `product` VALUES (1,'Frozen Banana',3.50,'Frozen','Frozen Yellow Fruit',2,12,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(2,'Strawberry Cake',12.30,'Bakery','cake with vanilla and strawberry flavour',2,32,'https://images.pexels.com/photos/10311446/pexels-photo-10311446.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'),(3,'Banana',12.34,'Fruits','A yellow fruit',2,14,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(4,'Strawberry',3.00,'Fruits','A red fruit',2,4,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(5,'Blueberry',1.00,'Fruits','A blue fruit',2,21,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(6,'Watermelon',5.00,'Fruits','A spherical fruit',2,5,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(7,'Broccoli',2.00,'Veggies','A very ymmy food',2,5,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(8,'Califlower',5.00,'Veggies','Similar to broccoli',2,6,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(9,'Carrot',1.00,'Veggies','An orange vegetable',2,4,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(10,'Tomato',1.30,'Veggies','A red vegetable',2,2,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -314,7 +315,7 @@ CREATE TABLE `supply_request` (
   CONSTRAINT `sr_aid` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`),
   CONSTRAINT `sr_pid` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
   CONSTRAINT `sr_sid` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`supplier_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -323,6 +324,7 @@ CREATE TABLE `supply_request` (
 
 LOCK TABLES `supply_request` WRITE;
 /*!40000 ALTER TABLE `supply_request` DISABLE KEYS */;
+INSERT INTO `supply_request` VALUES (1,1,2,5,10,'2021-12-13 22:20:16','2021-12-13 22:26:30'),(2,1,2,1,10,'2021-12-13 22:30:30',NULL),(4,1,2,3,15,'2021-12-13 22:31:18',NULL),(5,1,2,4,15,'2021-12-13 22:31:25',NULL),(6,1,2,6,15,'2021-12-13 22:31:30',NULL),(7,1,2,7,15,'2021-12-13 22:31:32',NULL),(8,1,2,9,15,'2021-12-13 22:31:38',NULL);
 /*!40000 ALTER TABLE `supply_request` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -335,4 +337,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-13 20:17:37
+-- Dump completed on 2021-12-13 22:35:49

@@ -12,27 +12,30 @@
 </head>
 <body>
     <!--LOGIN PAGE-->
-    <div class="login">
+    <div class="login" data="<%= login %>">
         <!--LOGIN COMP-->
         <div id="loginContainer" class="container loginContainer">
-            <form action="/login" class="form" method="POST">
+            <form action="login" class="form" method="POST">
               <div class="logo"><a href="/"><h1>FAM<span>Delivery</span></h1></a></div>
               <input name="username" class="field" type="text" placeholder="Username">
               <input name="password" class="field" type="password" placeholder="Password">
               <button type="submit" class="btn">SIGN IN</button>
+              <% if(messages.errorLogIn) { %>
+                <span class="error"><%= messages.errorLogIn %></span>
+                <% } %>
             </form>
         </div>
         <!--SIGN UP COMP-->
         <div id="signUpContainer" class="container signUpContainer">
-            <form action="/login" class="form" method="POST">
+            <form action="login" class="form" method="POST">
               <div class="logo"><a href="/"><h1>FAM<span>Delivery</span></h1></a></div>
               <input name="name" value="<%= messages.name %>" class="field" type="text" placeholder="Name">
               <input name="username" value="<%= messages.name %>" class="field" type="text" placeholder="Username">
               <input name="email" value="<%= messages.email %>" class="field" type="text" placeholder="Email">
               <input name="password" class="field" type="password" placeholder="Password">
               <button class="btn" type="submit">SIGN UP</button>
-              <% if(messages.error) { %>
-              <span class="error"><%= messages.error %></span>
+              <% if(messages.errorSignUp) { %>
+              <span class="error"><%= messages.errorSignUp %></span>
               <% } %>
             </form>
         </div>

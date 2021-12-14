@@ -75,7 +75,16 @@ async function addToCart(username, productId, qty) {
 
     let accountId = await getAccountId(username);
 
-    await query(cartQuery, [username, productId, qty]);
+    await query(cartQuery, [accountId[0].id, productId, qty]);
+    return true;
+}
+async function addToCartDuplicate(username, productId) {
+    const cartQuery = "INSERT INTO cart (customer_id, product_id, qty) VALUES (?, ?, 1) \
+        ON DUPLICATE KEY UPDATE qty = qty + 1";
+
+    let accountId = await getAccountId(username);
+
+    await query(cartQuery, [accountId[0].id, productId]);
     return true;
 }
 
@@ -325,6 +334,7 @@ module.exports.getCart = getCart;
 module.exports.usernameExists = usernameExists;
 module.exports.getAccountId = getAccountId;
 module.exports.addToCart = addToCart;
+module.exports.addToCartDuplicate = addToCartDuplicate;
 module.exports.addAccount = addAccount;
 module.exports.addCustomer = addCustomer;
 module.exports.addSupplier = addSupplier;

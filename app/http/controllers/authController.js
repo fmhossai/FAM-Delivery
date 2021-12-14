@@ -1,14 +1,16 @@
 const bcrypt = require('bcrypt');
 const e = require('express');
-const { usernameExists, addCustomer, getCustomer } = require('../../models/mysql_queries');
+const { usernameExists, addCustomer, getCustomer, addToCart, getAccountId, getCart } = require('../../models/mysql_queries');
 
 function authController() {
     return {
         login(req, res) {
-            res.render('login')
+            res.render('login', {login:false})
         },
         async postLogin(req, res) {
             //sign up
+            // console.log(req.session.cart);
+            
             if(Object.keys(req.body).length === 4 ){
                 const { name, username, email, password } = req.body;
                 if(!name || !email || !username || !password){
@@ -16,7 +18,7 @@ function authController() {
                     req.flash('name', name);
                     req.flash('username', username);
                     req.flash('email', email);
-                    return res.render('login');
+                    return res.render('login', {login:false});
                 }
 
                 //check if username is in database
@@ -28,13 +30,25 @@ function authController() {
                     req.flash('name', name);
                     req.flash('username', username);
                     req.flash('email', email);
-                    return res.render('login');
+                    return res.render('login', {login:false});
                 }else {
                     //hash password
                     const hashedPassword = await bcrypt.hash(password, 10);
-
                     //create a user
                     await addCustomer(name, username, email, password);
+                    if(req.session.cart){
+                        const itemsInCart = Object.values(req.session.cart.items);
+                        console.log(itemsInCart)
+                        // itemsInCart.forEach((e) => {
+                        //     console.log(e.item.pname)
+                        //     console.log(e.qty)
+                        // })
+                        
+                        const customer_id = await getAccountId(username);
+                        for(const i of itemsInCart){
+                            await addToCart(customer_id[0].id, i.item.product_id, i.qty)
+                        }
+                    }
                     //redirect to home page
                     return res.redirect('/');
                 }
@@ -44,19 +58,38 @@ function authController() {
                 const { username, password } = req.body;
                 if(!username || !password){
                     req.flash('errorLogIn', '1 or more invalid fields');
-                    return res.render('login');
+                    return res.render('login', {login:true});
                 } else if(await usernameExists(username)) {
                     const customer = await getCustomer(username);
                     if(customer[0].password == password) {
                         req.session.username = username
+                        const userCart = await getCart(username)
+                        if(userCart.length > 0){
+                            let itemsCart = {}
+                            let qtyT = 0;
+                            let priceT = 0;
+                            for(let i of userCart){
+                                itemsCart[`${i.product_id}`] = {
+                                    item: i,
+                                    qty: i.qty
+                                }
+                                qtyT += i.qty
+                                priceT += i.price
+                            }
+                            req.session.cart = {
+                                items: itemsCart,
+                                quantityT: qtyT,
+                                priceT: priceT
+                            }
+                        }
                         return res.redirect('/');
                     } else {
                         req.flash('errorLogIn', 'Invalid password');
-                        return res.render('login');
+                        return res.render('login', {login:true});
                     }
                 } else {
                     req.flash('errorLogIn', 'no one by that user exists, try signing up first');
-                    return res.render('login');
+                    return res.render('login', {login:true});
                 }
             }
         }

@@ -68,13 +68,14 @@ async function getAccountId(username) {
  * @param {*} productId product id of item to be added to the cart
  * @returns 
  */
-async function addToCart(username, productId) {
-    const cartQuery = "INSERT INTO cart (customer_id, product_id, qty) VALUES (?, ?, 1) \
-        ON DUPLICATE KEY UPDATE qty = qty + 1";
+async function addToCart(username, productId, qty) {
+    // const cartQuery = "INSERT INTO cart (customer_id, product_id, qty) VALUES (?, ?, 1) \
+    //     ON DUPLICATE KEY UPDATE qty = qty + 1";
+    const cartQuery = "INSERT INTO cart (customer_id, product_id, qty) VALUES (?, ?, ?)";
 
     let accountId = await getAccountId(username);
 
-    await query(cartQuery, [accountId[0].id, productId]);
+    await query(cartQuery, [username, productId, qty]);
     return true;
 }
 

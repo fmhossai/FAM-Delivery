@@ -31,7 +31,7 @@
                 <span>$</span>
                 <span><%= parseFloat(products[j].price).toFixed(2)%></span>
                 <div class="space"></div>
-                <button class="btn">Add to Cart</button>
+                <button data-choice="<%= JSON.stringify(products[j]) %>" class="add-to-cart btn">Add to Cart</button>
               </div>
             </div>
           </div>

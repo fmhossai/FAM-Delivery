@@ -13,8 +13,20 @@ function cartController() {
                 }
             }
 
-            req.session.cart.quantityT++;
-            console.log(req.body);
+            let cart = req.session.cart;
+            if(!cart.items[req.body.product_id]){
+                cart.items[req.body.product_id] = {
+                    item: req.body,
+                    qty: 1
+                }
+                cart.quantityT = cart.quantityT + 1;
+                cart.priceT = cart.priceT + req.body.price
+            }else {
+                cart.items[req.body.product_id].qty = cart.items[req.body.product_id].qty + 1
+                cart.quantityT = cart.quantityT + 1
+                cart.priceT = cart.priceT + req.body.price
+            }
+
             return res.json({ quantityT: req.session.cart.quantityT });
         }
     }

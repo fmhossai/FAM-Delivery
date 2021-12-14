@@ -5,7 +5,7 @@ const { usernameExists, addCustomer, getCustomer } = require('../../models/mysql
 function authController() {
     return {
         login(req, res) {
-            res.render('login', { login: true})
+            res.render('login')
         },
         async postLogin(req, res) {
             //sign up
@@ -16,7 +16,7 @@ function authController() {
                     req.flash('name', name);
                     req.flash('username', username);
                     req.flash('email', email);
-                    return res.render('login', { login: false });
+                    return res.render('login');
                 }
 
                 //check if username is in database

@@ -7,7 +7,6 @@ function homeController(axios) {
             //link model to controller
             
             const foundProducts = await getProducts();
-            // console.log(foundProducts)
             let sendToIndex = {
                 "Top Picks" : [],
                 "Healthy" : []

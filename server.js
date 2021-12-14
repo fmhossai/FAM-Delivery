@@ -33,6 +33,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use('/api/', apiRoutes);
+app.use(express.urlencoded({ extended: false }));
 
 
 require('./routes/routes')(app, axios)

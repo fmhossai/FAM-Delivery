@@ -5,10 +5,15 @@ const categoriesController = require('../app/http/controllers/categoriesControll
 function initRoutes(app, axios) {
 
     app.get('/', homeController(axios).index);
+
     app.get('/login', authController().login);
+    app.post('/login', authController().postLogin);
+    
     app.get('/cart', cartController().index);
-    app.get('/categories/:category', categoriesController().index)
-    app.post('/update-cart', cartController().update)
+    app.post('/update-cart', cartController().update);
+
+    app.get('/categories/:category', categoriesController().index);
+    
 
     app.get('/checkout', (req, res) => {
         res.render('checkout');

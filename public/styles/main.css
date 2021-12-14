@@ -398,4 +398,13 @@ img.huechange {
   border-radius: 50px !important;
   padding-left: 8px !important;
 }
+
+.cart {
+  font-family: 'Poppins', sans-serif;
+}
+
+.error {
+  color: red;
+  margin-top: 20px;
+}
 /*# sourceMappingURL=main.css.map */

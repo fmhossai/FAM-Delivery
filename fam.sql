@@ -45,7 +45,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'admin123','admin','admin@example.com','pw','(123) 456-7890',NULL,NULL,NULL,NULL,NULL),(2,'fc','Fruit Company','','pw',NULL,NULL,NULL,NULL,NULL,NULL),(3,'vc','Veggie Company','','pw',NULL,NULL,NULL,NULL,NULL,NULL),(4,'demoCustomer','John Smith','demo@customer.com','pw','(123) 456-7890',123,'demo street','demo postal code','demo city','demo country');
+INSERT INTO `account` VALUES (1,'admin123','admin','admin@example.com','pw','(123) 456-7890',NULL,NULL,NULL,NULL,NULL),(2,'fc','Fruit Company','','pw',NULL,NULL,NULL,NULL,NULL,NULL),(3,'vc','Veggie Company','','pw',NULL,NULL,NULL,NULL,NULL,NULL),(4,'demoCustomer','Bob The Great','demo@customer.com','pw','(123) 456-7890',77,'Awesome Street','H8V 6G3','Calgary','Canada');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -335,4 +335,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-13  1:14:44
+-- Dump completed on 2021-12-13 20:17:37

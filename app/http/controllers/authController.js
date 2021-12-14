@@ -47,13 +47,13 @@ function authController() {
                     return res.render('login', { login: true });
                 } else if(await usernameExists(username)) {
                     const customer = await getCustomer(username);
-                    if(customer[0].password != password) {
-                        console.log("login invalid password");
-                        req.flash('errorLogIn', 'Invalid password');
-                    } else {
-                        console.log("login successful");
+                    if(customer[0].password == password) {
                         // login successful
+                        console.log("login successful");
                         res.render('index');
+                    } else {
+                        console.log("login failed - invalid password");
+                        req.flash('errorLogIn', 'Invalid password');
                     }
                 } else {
                     console.log("login failed");

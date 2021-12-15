@@ -9,7 +9,6 @@
 
 * {
   padding: 0;
-  margin: auto 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
@@ -37,7 +36,7 @@ hr {
   font-family: 'Eczar', serif;
   color: black;
   font-size: 50px;
-  width: 150px;
+  width: 140px;
 }
 
 .logo a span {
@@ -59,6 +58,10 @@ nav .container {
   margin-top: 1rem;
 }
 
+nav .search {
+  margin: auto;
+}
+
 nav .search input {
   border-radius: 30px;
   border: solid 0.5px;
@@ -76,23 +79,6 @@ nav ol {
 
 nav ol li a {
   text-decoration: none;
-}
-
-nav .btn {
-  display: block;
-  color: #FFFFFF;
-  background: #060606;
-  border: solid 2px #060606;
-  outline: none;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1;
-  padding: 0.75rem 1rem;
-  border-radius: 30px;
-  cursor: pointer;
-  -webkit-transition: all .2s linear;
-  transition: all .2s linear;
-  font-family: 'Trirong';
 }
 
 nav .btn:hover {

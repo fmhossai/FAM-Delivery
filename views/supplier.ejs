@@ -1,0 +1,39 @@
+<%- include('header'); -%>
+
+<section class="supplier pt-20">
+    <% if(requests) { %>
+    <div class="order container mx-auto w-1/2">
+        <div class=" flex items-center border-b border-gray-300 pb-4">
+            <h1 class="font-bold ml-4 text-2xl">Requests:</h1>
+        </div>
+        
+        <div class="list">
+            <% for(let i = 0; i < requests.length; i++) { %>
+                <div class="flex items-stretch my-8 ml-4">
+                    <span class="w-1/4"><%= requests[i].request_id %></span>
+                    <!-- <div class="w-2/4">
+                        <h1><%= requests[i].pname %></h1>
+                        <span><%= requests[i].category %></span>
+                    </div> -->
+                    <span class="w-1/4"><%= requests[i].pname %> (<%= requests[i].category %>)</span>
+                    <span class="w-1/4">Product ID: <%= requests[i].product_id %></span>
+                    <span class="w-1/4">Amount: <%= requests[i].amount %></span>
+                    <span class="w-1/4"><%= requests[i].ordered_date %></span>
+                    <button class="btn px-6 py-2 rounded-full">Accept</button>
+                </div>
+            <% } %>
+        </div>
+    
+    </div>
+    <% } else { %>
+    <div class="no-requests">
+        <div class="container mx-auto text-center">
+            <h1 class="text-3xl font-bold mb-2">You don't have any supply requests at the moment.</h1>
+            <p class="text-gray-500 text-lg mb-12">Please check back later.</p>
+        </div>
+    </div>
+    <% } %>
+</section>
+
+
+<%- include('footer'); -%>

@@ -34,7 +34,7 @@ function homeController(axios) {
             }
 
             res.render('index', {
-                products: sendToIndex
+                products: sendToIndex, login: true
             });
         }
     }

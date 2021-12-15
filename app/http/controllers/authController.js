@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const e = require('express');
-const { usernameExists, addCustomer, getCustomer, addToCart, getCart } = require('../../models/mysql_queries');
+const { usernameExists, addCustomer, getCustomer, addToCart, getAccountId, getCart, isCustomer, getSupplier } = require('../../models/mysql_queries');
 
 function authController() {
     return {
@@ -54,33 +54,49 @@ function authController() {
                     req.flash('errorLogIn', '1 or more invalid fields');
                     return res.render('login', {login:true});
                 } else if(await usernameExists(username)) {
-                    const customer = await getCustomer(username);
-                    if(customer[0].password == password) {
-                        req.session.username = username
-                        const userCart = await getCart(username)
-                        if(userCart.length > 0){
-                            let itemsCart = {}
-                            let qtyT = 0;
-                            let priceT = 0;
-                            for(let i of userCart){
-                                itemsCart[`${i.product_id}`] = {
-                                    item: i,
-                                    qty: i.qty
+                    let account;
+                    if(await isCustomer(username)) {
+                        account = await getCustomer(username);
+
+                        if(account[0].password == password) {
+                            req.session.username = username
+                            const userCart = await getCart(username)
+                            if(userCart.length > 0){
+                                let itemsCart = {}
+                                let qtyT = 0;
+                                let priceT = 0;
+                                for(let i of userCart){
+                                    itemsCart[`${i.product_id}`] = {
+                                        item: i,
+                                        qty: i.qty
+                                    }
+                                    qtyT += i.qty
+                                    priceT += i.price
                                 }
-                                qtyT += i.qty
-                                priceT += i.price
+                                req.session.cart = {
+                                    items: itemsCart,
+                                    quantityT: qtyT,
+                                    priceT: priceT
+                                }
                             }
-                            req.session.cart = {
-                                items: itemsCart,
-                                quantityT: qtyT,
-                                priceT: priceT
-                            }
+                            return res.redirect('/');
+                        } else {
+                            req.flash('errorLogIn', 'Invalid password');
+                            return res.render('login', {login:true});
                         }
-                        return res.redirect('/');
+
                     } else {
-                        req.flash('errorLogIn', 'Invalid password');
-                        return res.render('login', {login:true});
+                        account = await getSupplier(username);
+
+                        if(account[0].password == password) {
+                            req.session.username = username
+                            return res.redirect('/supplier');
+                        } else {
+                            req.flash('errorLogIn', 'Invalid password');
+                            return res.render('login', {login:true});
+                        }
                     }
+                    
                 } else {
                     req.flash('errorLogIn', 'no one by that user exists, try signing up first');
                     return res.render('login', {login:true});

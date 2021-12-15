@@ -4,7 +4,6 @@ let switchC2 = document.querySelector("#altSignUp");
 let switchBtn = document.querySelectorAll(".alternateBtn");
 let aContainer = document.querySelector("#signUpContainer");
 let bContainer = document.querySelector("#loginContainer");
-// let allButtons = document.querySelectorAll(".submit");
 let login = document.querySelector("#loginContainer").getAttribute("data");
 
 console.log(login)
@@ -12,12 +11,7 @@ console.log(login)
 let changeForm = (e) => {
     let root = document.querySelector(":root")
     root.style.setProperty("--transitionvalue", "1.25s")
-    // switchCtn.classList.remove("is-txr");
-    // switchC1.classList.add("is-hidden");
-    // switchC2.classList.remove("is-hidden");
-    // aContainer.classList.remove("is-txl");
-    // bContainer.classList.remove("is-txl");
-    // bContainer.classList.remove("is-z200"); 
+
 
     switchCtn.classList.add("is-gx");
     setTimeout(function(){

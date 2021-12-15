@@ -46,6 +46,46 @@ async function usernameExists(username) {
     const userQuery = "SELECT 1 \
         FROM account \
         WHERE username = ?";
+
+    let res = await query(userQuery, [username]);
+    return (res.length) ? true : false;
+}
+
+/**
+ * @param {*} username username of target account
+ * @returns true if the username belongs to a customer account
+ */
+async function isCustomer(username) {
+    const userQuery = "SELECT 1 \
+        FROM account INNER JOIN customer ON id = customer_id \
+        WHERE username = ?";
+
+    let res = await query(userQuery, [username]);
+    return (res.length) ? true : false;
+}
+
+/**
+ * @param {*} username username of target account
+ * @returns true if the username belongs to a supplier account
+ */
+ async function isSupplier(username) {
+    const userQuery = "SELECT 1 \
+        FROM account INNER JOIN supplier ON id = supplier_id \
+        WHERE username = ?";
+
+    let res = await query(userQuery, [username]);
+    return (res.length) ? true : false;
+}
+
+/**
+ * @param {*} username username of target account
+ * @returns true if the username belongs to an admin account
+ */
+ async function isAdmin(username) {
+    const userQuery = "SELECT 1 \
+        FROM account INNER JOIN admin ON id = admin_id \
+        WHERE username = ?";
+
     let res = await query(userQuery, [username]);
     return (res.length) ? true : false;
 }
@@ -251,13 +291,83 @@ async function setAddress(username, streetNo, streetName, postalCode, city, coun
 }
 
 /**
+ * @param {*} username username of target user for change
+ * @param {*} streetNo field of change (+ve int)
+ * @returns 
+ */
+async function setAddressStreetNo(username, streetNo) {
+    const addressQuery = "UPDATE account \
+        SET address_street_no = ? \
+        WHERE username = ?";
+
+    await query(addressQuery, [streetNo, username]);
+    return true;
+}
+
+/**
+ * @param {*} username username of target user for change
+ * @param {*} streetName field of change (string)
+ * @returns 
+ */
+async function setAddressStreetName(username, streetName) {
+    const addressQuery = "UPDATE account \
+        SET address_street_name = ? \
+        WHERE username = ?";
+
+    await query(addressQuery, [streetName, username]);
+    return true;
+}
+
+/**
+ * @param {*} username username of target user for change
+ * @param {*} postalCode field of change (string)
+ * @returns 
+ */
+async function setAddressPostalCode(username, postalCode) {
+    const addressQuery = "UPDATE account \
+        SET address_postal_code = ? \
+        WHERE username = ?";
+
+    await query(addressQuery, [postalCode, username]);
+    return true;
+}
+
+/**
+ * @param {*} username username of target user for change
+ * @param {*} city field of change (string)
+ * @returns 
+ */
+async function setAddressCity(username, city) {
+    const addressQuery = "UPDATE account \
+        SET address_city = ? \
+        WHERE username = ?";
+
+    await query(addressQuery, [city, username]);
+    return true;
+}
+
+/**
+ * @param {*} username username of target user for change
+ * @param {*} country field of change (string)
+ * @returns 
+ */
+async function setAddressCountry(username, country) {
+    const addressQuery = "UPDATE account \
+        SET address_country = ? \
+        WHERE username = ?";
+
+    await query(addressQuery, [country, username]);
+    return true;
+}
+
+/**
  * @param {*} adminId id of admin who made the request
  * @param {*} supplierId id of supplier who the request is for
  * @param {*} productId id of product the request is supplying
  * @param {*} amount quantity of the supply being added
  * @returns 
  */
- async function addSupplyRequest(adminId, supplierId, productId, amount) {
+async function addSupplyRequest(adminId, supplierId, productId, amount) {
     const requestQuery = "INSERT INTO supply_request (admin_id, supplier_id, product_id, amount, ordered_date) VALUES (?,?,?,?,now())";
 
     await query(requestQuery, [adminId, supplierId, productId, amount]);
@@ -269,7 +379,7 @@ async function setAddress(username, streetNo, streetName, postalCode, city, coun
  * @returns 2D array with unfulfilled requests
  */
 async function getSupplyRequests(username) {
-    const requestQuery = "SELECT request_id, pname, product_id, amount, ordered_date \
+    const requestQuery = "SELECT request_id, pname, category, product_id, amount, ordered_date \
         FROM supply_request NATURAL JOIN product \
         WHERE supplier_id = ? AND fulfilled_date IS NULL";
     
@@ -282,7 +392,7 @@ async function getSupplyRequests(username) {
  * @param {*} requestId id of request to update
  * @returns 
  */
- async function updateSupplyRequest(requestId) {
+async function updateSupplyRequest(requestId) {
     const cartQuery = "UPDATE supply_request \
         SET fulfilled_date = now() \
         WHERE request_id = ?";
@@ -332,6 +442,9 @@ module.exports.getCategorizedProducts = getCategorizedProducts;
 module.exports.getCategories = getCategories;
 module.exports.getCart = getCart;
 module.exports.usernameExists = usernameExists;
+module.exports.isCustomer = isCustomer;
+module.exports.isSupplier = isSupplier;
+module.exports.isAdmin = isAdmin;
 module.exports.getAccountId = getAccountId;
 module.exports.addToCart = addToCart;
 module.exports.addToCartDuplicate = addToCartDuplicate;
@@ -347,6 +460,11 @@ module.exports.setEmail = setEmail;
 module.exports.setPassword = setPassword;
 module.exports.setPhoneNo = setPhoneNo;
 module.exports.setAddress = setAddress;
+module.exports.setAddressStreetNo = setAddressStreetNo;
+module.exports.setAddressStreetName = setAddressStreetName;
+module.exports.setAddressPostalCode = setAddressPostalCode;
+module.exports.setAddressCity = setAddressCity;
+module.exports.setAddressCountry = setAddressCountry;
 module.exports.addSupplyRequest = addSupplyRequest;
 module.exports.getSupplyRequests = getSupplyRequests;
 module.exports.updateSupplyRequest = updateSupplyRequest;

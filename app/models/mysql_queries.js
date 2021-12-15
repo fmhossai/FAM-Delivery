@@ -46,6 +46,46 @@ async function usernameExists(username) {
     const userQuery = "SELECT 1 \
         FROM account \
         WHERE username = ?";
+
+    let res = await query(userQuery, [username]);
+    return (res.length) ? true : false;
+}
+
+/**
+ * @param {*} username username of target account
+ * @returns true if the username belongs to a customer account
+ */
+async function isCustomer(username) {
+    const userQuery = "SELECT 1 \
+        account INNER JOIN customer ON id = customer_id \
+        WHERE username = ?";
+
+    let res = await query(userQuery, [username]);
+    return (res.length) ? true : false;
+}
+
+/**
+ * @param {*} username username of target account
+ * @returns true if the username belongs to a supplier account
+ */
+ async function isSupplier(username) {
+    const userQuery = "SELECT 1 \
+        account INNER JOIN supplier ON id = supplier_id \
+        WHERE username = ?";
+
+    let res = await query(userQuery, [username]);
+    return (res.length) ? true : false;
+}
+
+/**
+ * @param {*} username username of target account
+ * @returns true if the username belongs to an admin account
+ */
+ async function isAdmin(username) {
+    const userQuery = "SELECT 1 \
+        account INNER JOIN admin ON id = admin_id \
+        WHERE username = ?";
+
     let res = await query(userQuery, [username]);
     return (res.length) ? true : false;
 }
@@ -332,6 +372,9 @@ module.exports.getCategorizedProducts = getCategorizedProducts;
 module.exports.getCategories = getCategories;
 module.exports.getCart = getCart;
 module.exports.usernameExists = usernameExists;
+module.exports.isCustomer = isCustomer;
+module.exports.isSupplier = isSupplier;
+module.exports.isAdmin = isAdmin;
 module.exports.getAccountId = getAccountId;
 module.exports.addToCart = addToCart;
 module.exports.addToCartDuplicate = addToCartDuplicate;

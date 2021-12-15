@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const e = require('express');
-const { usernameExists, addCustomer, getCustomer, addToCart, getAccountId, getCart } = require('../../models/mysql_queries');
+const { usernameExists, addCustomer, getCustomer, addToCart, getCart } = require('../../models/mysql_queries');
 
 function authController() {
     return {

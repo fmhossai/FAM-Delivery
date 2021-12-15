@@ -29,6 +29,7 @@ function initRoutes(app, axios) {
     });
 
     app.get('/supplier', requestsController().index);
+    app.post('/supplier', requestsController().update);
 }
 
 module.exports = initRoutes

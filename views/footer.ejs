@@ -6,7 +6,12 @@
             Phone Number: 132 404 4309<br>
             Email Address: fam_delivery@fam.ca <br>
         </p>
-        <div class="logo"><a href="/"><h1>FAM<span>Delivery</span></h1></a></div>
+
+        <% if(session.supplierFlag) { %>
+            <div class="logo"><a href="/supplier"><h1>FAM<span>Delivery</span></h1></a></div>
+        <% } else { %>
+            <div class="logo"><a href="/"><h1>FAM<span>Delivery</span></h1></a></div>
+        <% } %>
         <p><span>About Us</span><br><br>
             FAM Delivery is an advanced delivery system, <br>
             where cusomters are able to efficiently and easily <br>

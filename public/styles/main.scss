@@ -35,7 +35,7 @@ hr {
       font-family: 'Eczar', serif;
       color: black;
       font-size: 50px;
-      width: 150px;
+      width: 140px;
     } 
     span {
       font-family: 'Roboto', sans-serif;
@@ -58,6 +58,7 @@ nav {
     }
 
     .search {
+      margin: auto;
         input {
             border-radius: 30px;
             border: solid 0.5px;
@@ -73,21 +74,7 @@ nav {
             text-decoration: none;
         }
     }
-    .btn {
-        display: block;
-        color: #FFFFFF;
-        background: #060606;
-        border: solid 2px #060606;
-        outline: none;
-        font-size: 12px;
-        font-weight: 500;
-        line-height: 1;
-        padding: 0.75rem 1rem;
-        border-radius: 30px;
-        cursor: pointer;
-        transition: all .2s linear;
-        font-family: 'Trirong';
-    }
+  
     .btn:hover {
         color: #060606;
         background: #FFFFFF;

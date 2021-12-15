@@ -1,57 +1,49 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/main.css" />
-    <link rel="stylesheet" type="text/css" href="styles/login.css"><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
-    <title>Sign In/Up</title>
-    <script defer src="src/login.js"></script>
-   
-</head>
-<body>
-    <!--LOGIN PAGE-->
-    <div class="login">
-        <!--LOGIN COMP-->
-        <div id="loginContainer"  data="<%= login %>" class="container loginContainer">
-            <form action="login" class="form" method="POST">
-              <div class="logo"><a href="/"><h1>FAM<span>Delivery</span></h1></a></div>
-              <input name="username" class="field" type="text" placeholder="Username">
-              <input name="password" class="field" type="password" placeholder="Password">
-              <button type="submit" class="btn">SIGN IN</button>
-              <% if(messages.errorLogIn) { %>
-                <span class="error"><%= messages.errorLogIn %></span>
-                <% } %>
-            </form>
-        </div>
-        <!--SIGN UP COMP-->
-        <div id="signUpContainer" class="container signUpContainer">
-            <form action="login" class="form" method="POST">
-              <div class="logo"><a href="/"><h1>FAM<span>Delivery</span></h1></a></div>
-              <input name="name" value="<%= messages.name %>" class="field" type="text" placeholder="Name">
-              <input name="username" value="<%= messages.name %>" class="field" type="text" placeholder="Username">
-              <input name="email" value="<%= messages.email %>" class="field" type="text" placeholder="Email">
-              <input name="password" class="field" type="password" placeholder="Password">
-              <button class="btn" type="submit">SIGN UP</button>
-              <% if(messages.errorSignUp) { %>
-              <span class="error"><%= messages.errorSignUp %></span>
+<script type='module' src="/src/login.js"></script>
+<link rel="stylesheet" href="/styles/login.css" />
+
+  <%- include('header'); -%>
+  <div class="surr">
+     <!--LOGIN PAGE-->
+     <div class="login">
+      <!--LOGIN COMP-->
+      <div id="loginContainer"  data="<%= login %>" class="con loginContainer">
+          <form action="login" class="form" method="POST">
+            <div class="logo"><a href="/"><h1>FAM<span>Delivery</span></h1></a></div>
+            <input name="username" class="field" type="text" placeholder="Username">
+            <input name="password" class="field" type="password" placeholder="Password">
+            <button type="submit" class="btnL">SIGN IN</button>
+            <% if(messages.errorLogIn) { %>
+              <span class="error"><%= messages.errorLogIn %></span>
               <% } %>
-            </form>
-        </div>
-        <!--SWITCHING-->
-        <div class="alternate" id="alternate">
-            <div id="altLogin" class="containerAlternate">
-              <h2 class="title">Welcome Back!</h2>
-              <p class="description">Login to get all your needs right to your footstep</p>
-              <button class="altbtn btn alternateBtn">SIGN IN</button>
-            </div>
-            <div id="altSignUp" class="containerAlternate is-hidden">
-              <h2 class="title">Hello There!</h2>
-              <p class="description">Enter your personal details and join the FAM</p>
-              <button class="altbtn btn alternateBtn">SIGN UP</button>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+          </form>
+      </div>
+      <!--SIGN UP COMP-->
+      <div id="signUpContainer" class="con signUpContainer">
+          <form action="login" class="form" method="POST">
+            <div class="logo"><a href="/"><h1>FAM<span>Delivery</span></h1></a></div>
+            <input name="name" value="<%= messages.name %>" class="field" type="text" placeholder="Name">
+            <input name="username" value="<%= messages.name %>" class="field" type="text" placeholder="Username">
+            <input name="email" value="<%= messages.email %>" class="field" type="text" placeholder="Email">
+            <input name="password" class="field" type="password" placeholder="Password">
+            <button class="btnL" type="submit">SIGN UP</button>
+            <% if(messages.errorSignUp) { %>
+            <span class="error"><%= messages.errorSignUp %></span>
+            <% } %>
+          </form>
+      </div>
+      <!--SWITCHING-->
+      <div class="alternate" id="alternate">
+          <div id="altLogin" class="containerAlternate">
+            <h2 class="title">Welcome Back!</h2>
+            <p class="description">Login to get all your needs right to your footstep</p>
+            <button class="altbtn btnL alternateBtn">SIGN IN</button>
+          </div>
+          <div id="altSignUp" class="containerAlternate is-hidden">
+            <h2 class="title">Hello There!</h2>
+            <p class="description">Enter your personal details and join the FAM</p>
+            <button class="altbtn btnL alternateBtn">SIGN UP</button>
+          </div>
+      </div>
+  </div>
+  </div>
+   

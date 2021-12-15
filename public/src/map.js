@@ -11,7 +11,6 @@ m1._icon.classList.add("huechange");
 m1.on('mouseover', function (e) { this.openPopup(); });
 m1.on('mouseout', function (e) { this.closePopup(); });
 
-
 const m2 = L.marker([51.053, -114.13]).addTo(mymap).
                 bindPopup("<b>Supplier 2</b><br />Hours: 9am - 11pm");
 m2.on('mouseover', function (e) { this.openPopup(); });

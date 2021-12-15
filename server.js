@@ -36,7 +36,7 @@ app.use('/api/', apiRoutes);
 app.use(express.urlencoded({ extended: false }));
 
 
-require('./routes/routes')(app, axios)
+require('./routes/routes')(app, axios);
 
 app.listen(app.get('port'), () => {
     console.log(`Listening on port ${app.get('port')}`)

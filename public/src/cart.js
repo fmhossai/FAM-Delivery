@@ -24,4 +24,21 @@ addToCart.forEach((btn) => {
         console.log(choice);
        updateCart(choice);
     })
+});
+
+
+let orderBtn = document.querySelector(".orderBtn").getAttribute("data-in");
+document.querySelector('.orderBtn').addEventListener('click', (e) => {
+    console.log(orderBtn);
+    if(orderBtn){
+        
+    }else {
+        //not logged in
+        new Noty({
+            type: 'error',
+            timeout: 1000,
+            text: 'Create an account before checking out',
+            progressBar: false
+        }).show();
+    }
 })

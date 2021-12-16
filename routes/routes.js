@@ -22,8 +22,8 @@ function initRoutes(app, axios) {
 
     app.get('/categories/:category', categoriesController().index);
 
-    app.get('/profile', profileController().index);
-
+    app.get('/profile', profileController().index)
+    app.post('/update-profile', profileController().update)
     app.get('/checkout', (req, res) => {
         res.render('checkout');
     });

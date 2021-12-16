@@ -1,4 +1,5 @@
-var mymap = L.map('map', {attributionControl: false, zoomControl: false} ).setView([51.05, -114.11], 10);
+//map
+var mymap = L.map('map').setView([51.05, -114.11], 13);
     
 L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
         maxZoom: 20,
@@ -8,11 +9,9 @@ L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
 const m1 = L.marker([51.05, -114.11]).addTo(mymap).
                 bindPopup("<b>Supplier 1</b><br />Hours: 24hrs");
 m1._icon.classList.add("huechange");
-var icon = m1.options.icon;
-icon.options.iconSize = [mymap.getZoom()*2, mymap.getZoom()*3];
-m1.setIcon(icon);
 m1.on('mouseover', function (e) { this.openPopup(); });
 m1.on('mouseout', function (e) { this.closePopup(); });
+
 
 const m2 = L.marker([51.053, -114.13]).addTo(mymap).
                 bindPopup("<b>Supplier 2</b><br />Hours: 9am - 11pm");
@@ -25,5 +24,3 @@ const m3 = L.marker([51.055, -114.09]).addTo(mymap).
 m3.on('mouseover', function (e) { this.openPopup(); });
 m3.on('mouseout', function (e) { this.closePopup(); });
 m3._icon.classList.add("huechange");
-
-

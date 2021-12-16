@@ -6,8 +6,6 @@ let aContainer = document.querySelector("#signUpContainer");
 let bContainer = document.querySelector("#loginContainer");
 let login = document.querySelector("#loginContainer").getAttribute("data");
 
-console.log(login)
-
 let changeForm = (e) => {
     let root = document.querySelector(":root")
     root.style.setProperty("--transitionvalue", "1.25s")

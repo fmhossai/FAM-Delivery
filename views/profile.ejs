@@ -10,7 +10,7 @@
 <!-- Modal HTML embedded directly into document -->
   
 
-    <div class="mt-20">
+    <div class="profile">
     <% for(let i = 0;i < fields.length; i++) { %>
         <div id="modal<%= fields[i].replace(/ /g,'')  %>" class="modal">
             <form action="/update-profile" class="form-profile" method="POST" novalidate>

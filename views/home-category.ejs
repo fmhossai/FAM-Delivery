@@ -2,14 +2,14 @@
 <% const categories = ["Bakery", "Veggies", "Drinks", "Frozen", "Fruits", "Meats", "Dairy"]; %>
 
 <section class="section-1">
-    <ol>
-        <% categories.forEach((val) => { %>
-        <li><a href="categories/<%=val.toLowerCase() %>">
-            <figure>
-                <img src="assets/<%= val %>.png"/>
-                <figcaption><%= val %></figcaption>
-            </figure>
-        </a></li>
-        <% }) %>
-    </ol>
+        <ol class="flex">
+            <% categories.forEach((val) => { %>
+            <li><a href="categories/<%=val.toLowerCase() %>">
+                <figure>
+                    <img src="assets/<%= val %>.png"/>
+                    <figcaption><%= val %></figcaption>
+                </figure>
+            </a></li>
+            <% }) %>
+        </ol>
 </section>

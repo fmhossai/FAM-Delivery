@@ -1,13 +1,17 @@
 <section class="section-4">
-    <div class="wrapper">
-        <p><span>Contact</span><br><br>
+    <div class="wrapper flex">
+        <p class="w-1/3"><span>Contact</span><br><br>
             1345 Go SE<br>
             Calgary, Alberta N5V 6Y5<br>
             Phone Number: 132 404 4309<br>
             Email Address: fam_delivery@fam.ca <br>
         </p>
-        <div class="logo"><a href="/"><h1>FAM<span>Delivery</span></h1></a></div>
-        <p><span>About Us</span><br><br>
+        <% if(session.supplierFlag) { %>
+            <div class="w-2/3 logo"><a href="/supplier"><h1>FAM<span>Delivery</span></h1></a></div>
+        <% } else { %>
+            <div class="w-2/3 logo"><a href="/"><h1>FAM<span>Delivery</span></h1></a></div>
+        <% } %>
+        <p class="w-1/3"><span>About Us</span><br><br>
             FAM Delivery is an advanced delivery system, <br>
             where cusomters are able to efficiently and easily <br>
             order groceries from their home <br>

@@ -1,51 +1,49 @@
-<%- include('header'); -%>
 
-<section class="cart pt-20">
-    <% if(session.cart) { %>
-    <div class="order container mx-auto w-1/2">
-        <div class=" flex items-center border-b border-gray-300 pb-4">
-            <img src="assets/cart-black.png" alt="">
-            <h1 class="font-bold ml-4 text-2xl">Order Summary</h1>
-        </div>
-        <!--Copy this for multiple items in cart-->
-        <div class="list">
-            <% for(let i of Object.values(session.cart.items)) { %>
-            <div class="flex items-stretch my-8 ml-4">
-                <div class="w-.5/4"><img class="w-24" src="assets/fruits-12112.png" alt=""></div>
-                <div class="w-2/4">
-                    <h1><%= i.item.pname %></h1>
-                    <span><%= i.item.category %></span>
+    <%- include('header'); -%>
+
+    <section class="cart pt-20">
+        <% if(session.cart) { %>
+        <div class="order container mx-auto w-1/2">
+            <div class=" flex items-center border-b border-gray-300 pb-4">
+                <img src="assets/cart-black.png" alt="">
+                <h1 class="font-bold ml-4 text-2xl">Order Summary</h1>
+            </div>
+            <!--Copy this for multiple items in cart-->
+            <div class="list">
+                <% for(let i of Object.values(session.cart.items)) { %>
+                <div class="flex items-stretch my-8 ml-4">
+                    <div class="w-.5/4"><img class="w-24" src="assets/fruits-12112.png" alt=""></div>
+                    <div class="w-2/4">
+                        <h1><%= i.item.pname %></h1>
+                        <span><%= i.item.category %></span>
+                    </div>
+                    <span class="w-1/4"><%= i.qty %> pcs</span>
+                    <span class="w-1/4 font-bold text-lg">$<%= parseFloat(i.item.price * i.qty).toFixed(2) %></span>
                 </div>
-                <span class="w-1/4"><%= i.qty %> pcs</span>
-                <span class="w-1/4 font-bold text-lg">$<%= parseFloat(i.item.price * i.qty).toFixed(2) %></span>
+                <% } %>
             </div>
-            <% } %>
+            <div class="text-right py-4">
+                <div>
+                    <span class="text-lg font-bold">Total Amount:</span>
+                    <span class="amount text-2xl text-green-600 font-bold">$<%= parseFloat(session.cart.priceT).toFixed(2) %></span>
+                </div>
+                <div>
+                    <button data-in="<%= loggedIn %>" class="orderBtn btn px-6 py-2 rounded-full mt-3">Order Now</button>
+                </div>
+            </div>
+        
         </div>
-        <!--TEMP-->
+        <% } else { %>
+        <div class="empty-cart">
+            <div class="container mx-auto text-center">
+                <h1 class="text-3xl font-bold mb-2">Cart Empty</h1>
+                <p class="text-gray-500 text-lg mb-12">You have not added anything to your cart. <br>
+                    To order go backto the main page</p>
+                    <img class="w-2/6 mx-auto" src="assets/empty-cart.png" alt="">
+                    <a href="/" class="inline-block px-6 py-2 rounded-full btn mt-12">Go back</a>
+            </div>
+        </div>
+        <% } %>
+    </section>
 
-        <!--TEMP-->
-        <div class="text-right py-4">
-            <div>
-                <span class="text-lg font-bold">Total Amount:</span>
-                <span class="amount text-2xl text-green-600 font-bold">$<%= parseFloat(session.cart.priceT).toFixed(2) %></span>
-            </div>
-            <div>
-                <button class="btn px-6 py-2 rounded-full mt-3">Order Now</button>
-            </div>
-        </div>
-    
-    </div>
-    <% } else { %>
-    <div class="empty-cart">
-        <div class="container mx-auto text-center">
-            <h1 class="text-3xl font-bold mb-2">Cart Empty</h1>
-            <p class="text-gray-500 text-lg mb-12">You have not added anything to your cart. <br>
-                To order go backto the main page</p>
-                <img class="w-2/6 mx-auto" src="assets/empty-cart.png" alt="">
-                <a href="/" class="inline-block px-6 py-2 rounded-full btn mt-12">Go back</a>
-        </div>
-    </div>
-    <% } %>
-</section>
-
-<%- include('footer'); -%>
+    <%- include('footer'); -%>

@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Eczar:wght@800&family=Poppins:wght@100;300;400&family=Raleway:wght@100&family=Roboto+Slab:wght@500&family=Roboto:wght@100&family=Shrikhand&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
@@ -22,28 +21,33 @@
 
     <!-- jQuery Modal -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <script src="https://cdn.tailwindcss.com/"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <script type='module' src="/src/cart.js"></script>
     <script type='module' src="/src/map.js"></script>
     <script type='module' src="/src/search.js"></script>
     <script type='module' src="/src/tooltip.js"></script>
+    <script type='module' src="/src/acceptRequest.js"></script>
+
     <link rel="stylesheet" href="/styles/main.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <!--Header-->
+
     <nav>
-        <div class="container" >
+        <div class="flex space-x-20 items-stretch container" >
             <div class="logo"><a href="/"><h1>FAM<span>Delivery</span></h1></a></div>
             <div class="search">
                 <input type="text" placeholder="Search">
             </div>
-            <ol class="rightSide">
-                <li class="btnHolder"><a href="/cart"><button class="btn">Cart <span class="cartCtr"><%= session.cart ? session.cart.quantityT : '' %></span></button></a></li>
-                <% if(session.username) { %>
-                <li class="btnHolder"><a href="/profile"><button class="btn">Hello, <%= session.username %></button></a></li>
-                <% }else { %>
-                <li class="btnHolder"><a href="/login"><button class="btn">Sign Up</button></a></li>
-                <% } %>
-            </ol>
+            <div>
+                <ol class="rightSide flex space-x-0">
+                    <li class="btnHolder"><a href="/cart"><button class="btn">Cart <span class="cartCtr"><%= session.cart ? session.cart.quantityT : '' %></span></button></a></li>
+                    <% if(session.username) { %>
+                    <li class="btnHolder"><a href="/profile"><button class="btn">Hello, <%= session.username %></button></a></li>
+                    <% }else { %>
+                    <li class="btnHolder"><a href="/login"><button class="btn">Sign Up</button></a></li>
+                    <% } %>
+                </ol>
+            </div>
         </div>
     </nav>

@@ -6,7 +6,6 @@ const searchController = require('../app/http/controllers/searchController')
 const logoutController = require('../app/http/controllers/logoutController');
 const requestsController = require('../app/http/controllers/requestsController');
 const profileController = require('../app/http/controllers/profileController');
-
 function initRoutes(app, axios) {
 
     app.get('/', homeController(axios).index);
@@ -17,8 +16,9 @@ function initRoutes(app, axios) {
     app.get('/logout', logoutController().index);
 
     app.get('/cart', cartController().index);
-    app.get('/search', searchController().index)
     app.post('/update-cart', cartController().update);
+
+    app.get('/search', searchController().index)
 
     app.get('/categories/:category', categoriesController().index);
 
@@ -29,6 +29,7 @@ function initRoutes(app, axios) {
     });
 
     app.get('/supplier', requestsController().index);
+    app.post('/supplier', requestsController().update);
 }
 
 module.exports = initRoutes

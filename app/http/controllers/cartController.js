@@ -2,7 +2,7 @@ const { addToCart, getAccountId, addToCartDuplicate} = require('../../models/mys
 function cartController() {
     return {
         index(req, res) {
-            res.render('cart')
+            res.render('cart', { loggedIn: req.session.username })
         },
         async update(req, res) {
             

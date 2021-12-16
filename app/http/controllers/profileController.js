@@ -1,15 +1,24 @@
-const { getCustomer, setName, setEmail, setPassword, setPhoneNo, setAddressStreetNo, setAddressStreetName, setAddressCity, setAddressPostalCode, setAddressCountry} = require('../../models/mysql_queries');
+const { getCustomer, setName, setEmail, setPassword, setPhoneNo, setAddressStreetNo, setAddressStreetName, setAddressCity, setAddressPostalCode, setAddressCountry, getSupplier} = require('../../models/mysql_queries');
 
 function profileController(){
     return {
         async index(req, res){
-            if(req.session.username){
-                const profileData = await getCustomer(req.session.username);
+            if(req.session.supplierFlag){
+                const profileData = await getSupplier(req.session.username);
                 console.log(profileData)
                 res.render("profile", {
                     profileInfo: profileData[0]
                 })
+                return;
             }
+            if(req.session.username){
+                const profileData = await getCustomer(req.session.username);
+                res.render("profile", {
+                    profileInfo: profileData[0]
+                })
+                return;
+            }
+            res.redirect("/")
 
         },
         async update(req, res){

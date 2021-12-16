@@ -26,7 +26,7 @@
     <script type='module' src="/src/cart.js"></script>
     <script type='module' src="/src/map.js"></script>
     <script type='module' src="/src/search.js"></script>
-    <script type='module' src="/src/tooltip.js"></script>
+    <script type='module' src="/src/profile.js"></script>
     <script type='module' src="/src/acceptRequest.js"></script>
 
     <link rel="stylesheet" href="/styles/main.css" />
@@ -35,17 +35,22 @@
 
     <nav>
         <div class="flex space-x-20 items-stretch container" >
+            <% if(session.supplierFlag) { %>
+            <div class="logo"><a href="/supplier"><h1>FAM<span>Delivery</span></h1></a></div>
+            <% }else { %>
             <div class="logo"><a href="/"><h1>FAM<span>Delivery</span></h1></a></div>
+            <% } %>
             <div class="search">
                 <input type="text" placeholder="Search">
             </div>
             <div>
                 <ol class="rightSide flex space-x-0">
-                    <li class="btnHolder"><a href="/cart"><button class="btn">Cart <span class="cartCtr"><%= session.cart ? session.cart.quantityT : '' %></span></button></a></li>
-                    <% if(session.username) { %>
-                    <li class="btnHolder"><a href="/profile"><button class="btn">Hello, <%= session.username %></button></a></li>
-                    <% }else { %>
-                    <li class="btnHolder"><a href="/login"><button class="btn">Sign Up</button></a></li>
+                    <% if(!session.supplierFlag) { %>
+                        <li class="btnHolder"><a href="/cart"><button class="btn">Cart <span class="cartCtr"><%= session.cart ? session.cart.quantityT : '' %></span></button></a></li>
+                    <% } if(session.username) { %>
+                        <li class="btnHolder"><a href="/profile"><button class="btn">Hello, <%= session.username %></button></a></li>
+                    <% } else { %>
+                        <li class="btnHolder"><a href="/login"><button class="btn">Sign Up</button></a></li>
                     <% } %>
                 </ol>
             </div>

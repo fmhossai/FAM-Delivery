@@ -1,7 +1,7 @@
 <% const fields = ["Name", "Email", "Password", "Phone", "Street No", 
                     "Street Name", "City", "Postal Code", "Country"]
    const database_fields = ["name", "email", "password", "phone_no", "address_street_no", 
-                            "address_street_name", "address_postal_code", "address_city", "address_country"]
+                            "address_street_name", "address_city", "address_postal_code", "address_country"]
     const values = ["Bob", "Bob123", "bob@gmail.com", "********", "(123)-456-7890", "123", "Road way", "Calgary", "R5K 2RN", "Canada"] %>
 
 
@@ -15,14 +15,16 @@
         <div id="modal<%= fields[i].replace(/ /g,'')  %>" class="modal">
             <form action="/update-profile" class="form-profile" method="POST" novalidate>
                 <label for="<%= fields[i].replace(/ /g,'') %>">Set new <%= fields[i] %></label>
-                <input class= "profile-input" type="text" id="<%= fields[i].replace(/ /g,'') %>" name="<%= fields[i].replace(/ /g,'') %>" style="border: 2px solid black;"><br><br>
-                <button class="btn">Submit</button>
+                <input class= "profile-input" type="text" id="<%= fields[i].replace(/ /g,'') %>" name="<%= fields[i].replace(/ /g,'') %>" 
+                data="<%= fields[i] %>" style="border: 2px solid black;margin-top: 20%;"><br><br>
+
+                <button class="btn" style="margin-bottom: 15%;">Submit</button>
             </form>
           </div>
         <div class="row">
             <div class="column"></div>
             <div class="column"><%= fields[i] %></div>
-            <div class="column"><%= profileInfo[database_fields[i]] %></div>
+            <div class="column" id="column<%= fields[i].replace(/ /g,'') %>"><%= profileInfo[database_fields[i]] %></div>
             <div class="column"><a href="#modal<%= fields[i].replace(/ /g,'') %>" rel="modal:open"><button class="btn">Edit</button></a></div>
             <div class="column"></div>
         </div>  

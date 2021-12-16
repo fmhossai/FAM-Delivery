@@ -1,4 +1,4 @@
-const { getCustomer, setName} = require('../../models/mysql_queries');
+const { getCustomer, setName, setEmail, setPassword, setPhoneNo, setAddressStreetNo, setAddressStreetName, setAddressCity, setAddressPostalCode, setAddressCountry} = require('../../models/mysql_queries');
 
 function profileController(){
     return {
@@ -14,33 +14,36 @@ function profileController(){
         },
         async update(req, res){
             if(req.body.Name){
-                await setName(req.session.username);
+                await setName(req.session.username, req.body.Name);
             }
             if(req.body.Email){
-                await setName(req.session.username);
+                await setEmail(req.session.username, req.body.Email);
             }
             if(req.body.Password){
-                await setName(req.session.username);
+                await setPassword(req.session.username, req.body.Password)
             }
             if(req.body.Phone){
-                console.log(req.session.username)
+                await setPhoneNo(req.session.username, req.body.Phone)
             }
             if(req.body.StreetNo){
-                console.log(req.session.username)
+                await setAddressStreetNo(req.session.username, req.body.StreetNo)
             }
             if(req.body.StreetName){
-                console.log("StreetName")
+                await setAddressStreetName(req.session.username, req.body.StreetName)
             }
             if(req.body.City){
-                console.log("City")
+                await setAddressCity(req.session.username, req.body.City)
             }
             if(req.body.PostalCode){
-                console.log("PostalCode")
+                await setAddressPostalCode(req.session.username, req.body.PostalCode)
             }
             if(req.body.Country){
-                console.log("Country")
+                await setAddressCountry(req.session.username, req.body.Country)
             }
-            // console.log("hi")
+            const profileData = await getCustomer(req.session.username);
+            res.render("profile", {
+                profileInfo: profileData[0]
+            })
         }
     }
 }

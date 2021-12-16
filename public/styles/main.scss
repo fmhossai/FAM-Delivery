@@ -33,8 +33,10 @@
 
 //navigation menu
 nav {
+  position: relative;
   .container {
     justify-content: center;
+    align-content: center;
     .search {
         input {
             border-radius: 30px;
@@ -215,6 +217,7 @@ img.huechange { filter: hue-rotate(160deg); }
   background: black;
   margin-top: 5rem;
   padding: 2rem 1rem;
+  margin-top: 2rem;
 
   p {
     font-size: 12px;
@@ -231,6 +234,11 @@ img.huechange { filter: hue-rotate(160deg); }
     align-items: center; 
     text-align: center;
     margin: auto 0;
+  }
+  .logo {
+    h1 {
+      color: white;
+    }
   }
 }
 

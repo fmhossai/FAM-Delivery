@@ -1,45 +1,46 @@
-<%- include('header'); -%>
 
-<div class="section-3">
-  <div class="header">
-    <div class="headerTitle">
-      <h2><%= categoryName%></h2>
-      <span>Whatever you want, we got it</span>
+  <%- include('header'); -%>
+
+  <div class="section-3">
+    <div class="header">
+      <div class="headerTitle">
+        <h2><%= categoryName%></h2>
+        <span>Whatever you want, we got it</span>
+      </div>
     </div>
-  </div>
-  <div class="section-3-grid">
-    <div class="section-3-col">
-      <% for(let j = 0; j < products.length; j++) { %>
-      <div class="section-3-grid-element">
-        <div class="container">
-          <div class="card">
-            <div class="content-1">
-              <div class="mainImage">
-                <img src="/assets/fruits-12112.png" alt="">
+    <div class="section-3-grid">
+      <div class="section-3-col">
+        <% for(let j = 0; j < products.length; j++) { %>
+        <div class="section-3-grid-element">
+          <div class="container">
+            <div class="card">
+              <div class="content-1">
+                <div class="mainImage">
+                  <img src="/assets/fruits-12112.png" alt="">
+                </div>
               </div>
-            </div>
-            
-            <div class="content-2">
-              <div class="kind">
-                <span><%= products[j].pname%></span>
-                <h4><%= products[j].category%></h4>
-              </div>
-              <div class="description">
-                <p>Quantity Left: <%= products[j].stock%></p>
-              </div>
-              <div class="price">
-                <span>$</span>
-                <span><%= parseFloat(products[j].price).toFixed(2)%></span>
-                <div class="space"></div>
-                <button data-choice="<%= JSON.stringify(products[j]) %>" class="add-to-cart btn">Add to Cart</button>
+              
+              <div class="content-2">
+                <div class="kind">
+                  <span><%= products[j].pname%></span>
+                  <h4><%= products[j].category%></h4>
+                </div>
+                <div class="description">
+                  <p>Quantity Left: <%= products[j].stock%></p>
+                </div>
+                <div class="price">
+                  <span>$</span>
+                  <span><%= parseFloat(products[j].price).toFixed(2)%></span>
+                  <div class="space"></div>
+                  <button data-choice="<%= JSON.stringify(products[j]) %>" class="add-to-cart btn">Add to Cart</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <% } %>
       </div>
-      <% } %>
     </div>
   </div>
-</div>
-
-<%- include('footer'); -%>
+  
+  <%- include('footer'); -%>

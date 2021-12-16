@@ -1,4 +1,3 @@
-
 <% const pick0a = ["Top Picks", "Healthy"];
    const pick1a = ["Our Customers Favourites", "Our Healthiest Selections"]; %>
 
@@ -27,7 +26,7 @@
                   <h4><%= products[pick0a[i]][j].category%></h4>
                 </div>
                 <div class="description">
-                  <p>Quantity left: <%= products[pick0a[i]][j].stock%></p>
+                  <p><%= products[pick0a[i]][j].description%></p>
                 </div>
                 <div class="price">
                   <span>$</span>
@@ -44,5 +43,3 @@
     </div>
       <% } %>
   </div>
-
-

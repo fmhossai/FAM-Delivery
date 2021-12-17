@@ -15,9 +15,6 @@ function authController() {
                 const { name, username, email, password } = req.body;
                 if(!name || !email || !username || !password){
                     req.flash('errorSignUp', '1 or more invalid fields');
-                    req.flash('name', name);
-                    req.flash('username', username);
-                    req.flash('email', email);
                     return res.render('login', {login:false});
                 }
 
@@ -27,9 +24,6 @@ function authController() {
                 //if it does will display error and redirect to register page again and if not do what is below
                 if(exists){
                     req.flash('errorSignUp', 'Username Taken');
-                    req.flash('name', name);
-                    req.flash('username', username);
-                    req.flash('email', email);
                     return res.render('login', {login:false});
                 }else {
                     //hash password

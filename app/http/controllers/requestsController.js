@@ -4,14 +4,17 @@ const { getSupplyRequests, updateSupplyRequest } = require('../../models/mysql_q
 function requestsController() {
     return {
         async index(req, res) {
-            const requests = await getSupplyRequests(req.session.username);
-            console.log(requests);
-            res.render('supplier', {
-                requests:requests
-            })
+            if(req.session.supplierFlag){
+                const requests = await getSupplyRequests(req.session.username);
+                res.render('supplier', {
+                    requests:requests
+                })
+            }
+            else{
+                res.redirect("/");
+            }
         },
         async update(req, res) {
-            console.log(req.body.btn);
             await updateSupplyRequest(req.body.btn);
             res.redirect("/supplier");
         }

@@ -20,7 +20,7 @@ function cartController() {
                     return res.json({ 
                         quantityT: -1, 
                         quantity: cart.items[req.body.product_id].qty, 
-                        price: -1 * req.body.price,
+                        price: req.body.price,
                         priceT: cart.priceT
                     });
                 }
@@ -36,7 +36,7 @@ function cartController() {
                     return res.json({
                         quantityT: -1, 
                         quantity: cart.items[req.body.product_id].qty, 
-                        price: -1 * req.body.price,
+                        price: req.body.price,
                         priceT: cart.priceT
                     });
                 }

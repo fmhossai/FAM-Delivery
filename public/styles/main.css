@@ -362,6 +362,38 @@ a .signout {
   margin-top: 6rem;
 }
 
+#modal {
+  display: none;
+  visibility: hidden;
+}
+
+#modal.active {
+  width: 600px;
+  padding: 50px;
+  margin: auto;
+  position: -webkit-sticky;
+  position: sticky;
+  background: white;
+  left: 50%;
+  top: 50%;
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+#blur.active {
+  -webkit-filter: blur(5px);
+          filter: blur(5px);
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
 @media (max-width: 3000px) {
   nav {
     -webkit-transform: scale(0.85);
@@ -395,6 +427,9 @@ a .signout {
     height: 400px;
     margin-left: 25%;
     margin-right: 25%;
+  }
+  .section-3 .headerCat {
+    margin-top: -3rem;
   }
   .section-3 .header .headerTitle h2 {
     font-size: 1.5rem;
@@ -433,6 +468,9 @@ a .signout {
     margin-left: 10%;
     margin-right: 10%;
   }
+  .section-3 .headerCat {
+    margin-top: -3rem;
+  }
 }
 
 @media (max-width: 1000px) {
@@ -465,6 +503,9 @@ a .signout {
     height: 300px;
     margin-left: 5%;
     margin-right: 5%;
+  }
+  .section-3 .headerCat {
+    margin-top: -3rem;
   }
   .section-3 .header .headerTitle h2 {
     font-size: 1.2rem;
@@ -528,6 +569,9 @@ a .signout {
     height: 250px;
     margin-left: 5%;
     margin-right: 5%;
+  }
+  .section-3 .headerCat {
+    margin-top: -3rem;
   }
   .section-3 .header .headerTitle h2 {
     font-size: 1.05rem;
@@ -607,6 +651,9 @@ a .signout {
     height: 225px;
     margin-left: 5%;
     margin-right: 5%;
+  }
+  .section-3 .headerCat {
+    margin-top: -5rem;
   }
   .section-3 .header .headerTitle h2 {
     font-size: .9rem;

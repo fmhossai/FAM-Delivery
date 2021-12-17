@@ -262,7 +262,6 @@ hr {
 }
 
 
-
 .row:after {
   content: "";
   display: table;
@@ -322,6 +321,32 @@ a{
   margin-top: 6rem;
 }
 
+#modal {
+  display: none;
+  visibility: hidden;
+}
+
+#modal.active {
+  width: 600px;
+  padding: 50px;
+  margin: auto;
+  position: sticky;
+  background: white;
+  left: 50%;
+  top: 50%;
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+#blur.active {
+  filter: blur(5px);
+  pointer-events: none;
+  user-select: none;
+}
+
 //responsive
 @media (max-width: 3000px) {
   nav{
@@ -365,6 +390,9 @@ a{
 }  
 //map end
 .section-3 {
+  .headerCat {
+    margin-top: -3rem;
+  }
   .header {
     .headerTitle {
       h2 {
@@ -404,7 +432,12 @@ a{
           margin-right: 10%;
   
       }
-  }  
+  } 
+  .section-3 {
+    .headerCat {
+      margin-top: -3rem;
+    }
+  } 
 }
 
 @media (max-width: 1000px) {
@@ -447,6 +480,9 @@ a{
 //map end
 //picks
 .section-3 {
+  .headerCat {
+    margin-top: -3rem;
+  }
   .header {
     .headerTitle {
       h2 {
@@ -478,7 +514,6 @@ a{
   }
 }
 }
-
 
 @media (max-width: 800px) {
   nav{
@@ -523,6 +558,9 @@ a{
 //map end
 //picks
 .section-3 {
+  .headerCat {
+    margin-top: -3rem;
+  }
   .header {
     .headerTitle {
       h2 {
@@ -555,7 +593,6 @@ a{
   }
 }
 }
-
 
 @media (max-width: 600px) {
   //nav start
@@ -622,6 +659,9 @@ a{
 //map end
 //picks
 .section-3 {
+  .headerCat {
+    margin-top: -5rem;
+  }
   .header {
     .headerTitle {
       h2 {

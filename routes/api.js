@@ -3,7 +3,7 @@ const express = require("express");
 const { route } = require("express/lib/application");
 const res = require("express/lib/response");
 const { send } = require("express/lib/response");
-const {getProducts, getCategorizedProducts, isCustomer, getCustomer, getCategories, addCustomer, getCart, addToCart, addToCartDuplicate, setName, setEmail, setPassword, setPhoneNo, setAddressStreetNo, setAddressStreetName, setAddressPostalCode, setAddressCountry, setAddressCity, isSupplier, getSupplier, updateProductStock, getSupplyRequests, addSupplierCategory, updateSupplyRequest} = require("../app/models/mysql_queries")
+const {getProducts, getCategorizedProducts, isCustomer, getCustomer, getCategories, addCustomer, getCart, addToCart, addToCartDuplicate, setName, setEmail, setPassword, setPhoneNo, setAddressStreetNo, setAddressStreetName, setAddressPostalCode, setAddressCountry, setAddressCity, isSupplier, getSupplier, updateProductStock, getSupplyRequests, addSupplierCategory, updateSupplyRequest, getReviews, addReview} = require("../app/models/mysql_queries")
 const router = express.Router();
 const auth = require("express-basic-auth")
 router.use(auth({
@@ -42,8 +42,8 @@ router.get("/products", async(req,res) => {
     }
 })
 router.put("/products", async(req, res)=>{
-    const {username, password, productid, stock} = req.query
-    if(!username || !password || !productid || !stock){
+    const {username, productid, stock} = req.query
+    if(!username || !productid || !stock){
         res.status(400).json({
             "status_code": 400,
             "status_message": "Invalid values"
@@ -51,21 +51,11 @@ router.put("/products", async(req, res)=>{
         return;
     }
     if(await isSupplier(username)){
-        const account = await getSupplier(username);
-        if(account[0].password == password){
-            await updateProductStock(productid, stock);
-            res.status(200).json({
-                "status_code": 200,
-                "status_message": "Sucessfully updated product stock"
-            })
-        }
-        else{
-            res.status(400).json({
-                "status_code": 400,
-                "status_message": "Invalid Password"
-            })
-            return;
-        }
+        await updateProductStock(productid, stock);
+        res.status(200).json({
+            "status_code": 200,
+            "status_message": "Sucessfully updated product stock"
+        })
     } 
     else{
         res.status(400).json({
@@ -160,8 +150,8 @@ router.post("/user", async(req,res) => {
     
 })
 router.put('/user', async(req, res) => {
-    const {username, password, field, value} = req.query;
-    if(!username || !password || !field || !value){
+    const {username, field, value} = req.query;
+    if(!username || !field || !value){
         res.status(400).json({
             "status_code": 400,
             "status_message": "Invalid values"
@@ -169,44 +159,34 @@ router.put('/user', async(req, res) => {
         return;
     }
     if(await isCustomer(username)){
-        const account = await getCustomer(username);
-        if(account[0].password == password){
-                if(value == ""){
-                res.status(400).json({
-                    "status_code": 400,
-                    "status_message": "Empty value"
-                })
-                return;
-                }
-                if(field == ""){
-                    res.status(400).json({
-                        "status_code": 400,
-                        "status_message": "empty field value"
-                    })
-                    return;
-                }
-                if(field.toLowerCase() == "name") await setName(username, value)
-                if(field.toLowerCase() == "email") await setEmail(username, value)
-                if(field.toLowerCase() == "password") await setPassword(username, value)
-                if(field.toLowerCase() == "phoneno") await setPhoneNo(username, value)
-                if(field.toLowerCase() == "streetno") await setAddressStreetNo(username, parseInt(value)) // check if its decimal
-                if(field.toLowerCase() == "streetname") await setAddressStreetName(username, value)
-                if(field.toLowerCase() == "postalcode") await setAddressPostalCode(username, value)
-                if(field.toLowerCase() == "country") await setAddressCountry(username, value)
-                if(field.toLowerCase() == "city") await setAddressCity(username, value)
-                res.status(200).json({
-                    "status_code" : 200,
-                    "status_message": `Successfully edited ${value}`
-                })
-                return;
+        if(value == ""){
+        res.status(400).json({
+            "status_code": 400,
+            "status_message": "Empty value"
+        })
+        return;
         }
-        else{
+        if(field == ""){
             res.status(400).json({
                 "status_code": 400,
-                "status_message": "Invalid Password"
+                "status_message": "empty field value"
             })
             return;
         }
+        if(field.toLowerCase() == "name") await setName(username, value)
+        if(field.toLowerCase() == "email") await setEmail(username, value)
+        if(field.toLowerCase() == "password") await setPassword(username, value)
+        if(field.toLowerCase() == "phoneno") await setPhoneNo(username, value)
+        if(field.toLowerCase() == "streetno") await setAddressStreetNo(username, parseInt(value)) // check if its decimal
+        if(field.toLowerCase() == "streetname") await setAddressStreetName(username, value)
+        if(field.toLowerCase() == "postalcode") await setAddressPostalCode(username, value)
+        if(field.toLowerCase() == "country") await setAddressCountry(username, value)
+        if(field.toLowerCase() == "city") await setAddressCity(username, value)
+        res.status(200).json({
+            "status_code" : 200,
+            "status_message": `Successfully edited ${value}`
+        })
+        return;
     } 
     else{
         res.status(400).json({
@@ -218,8 +198,8 @@ router.put('/user', async(req, res) => {
 
 })
 router.get("/cart/", async(req,res) => {
-    const {username, password} = req.query;
-    if(!username || !password){
+    const {username} = req.query;
+    if(!username ){
         res.status(400).json({
             "status_code": 400,
             "status_message": "Invalid values"
@@ -227,18 +207,8 @@ router.get("/cart/", async(req,res) => {
         return;
     }
     if(await isCustomer(username)){
-        const account = await getCustomer(username);
-        if(account[0].password == password){
-            const cart = await getCart(username)
-            res.send(cart)
-        }
-        else{
-            res.status(400).json({
-                "status_code": 400,
-                "status_message": "Invalid Password"
-            })
-            return;
-        }
+        const cart = await getCart(username)
+        res.send(cart)
     } 
     else{
         res.status(400).json({
@@ -250,8 +220,8 @@ router.get("/cart/", async(req,res) => {
 
 })
 router.post("/cart/", async(req,res) => {
-    const {username, password, productid} = req.query;
-    if(!username || !password || !parseInt(productid)){
+    const {username, productid, qty} = req.query;
+    if(!username || !parseInt(productid) || !parseInt(qty)){
         res.status(400).json({
             "status_code": 400,
             "status_message": "Invalid values"
@@ -259,21 +229,11 @@ router.post("/cart/", async(req,res) => {
         return;
     }
     if(await isCustomer(username)){
-        const account = await getCustomer(username);
-        if(account[0].password == password){
-            await addToCartDuplicate(username, parseInt(productid));
-            res.status(200).json({
-                "status_code" : 200,
-                "status_message": "Successfully Added item to Cart"
-            })
-        }
-        else{
-            res.status(400).json({
-                "status_code": 400,
-                "status_message": "Invalid Password"
-            })
-            return;
-        }
+        await addToCart(username, parseInt(productid), parseInt(qty));
+        res.status(200).json({
+            "status_code" : 200,
+            "status_message": "Successfully Added item to Cart"
+        })
     } 
     else{
         res.status(400).json({
@@ -286,8 +246,8 @@ router.post("/cart/", async(req,res) => {
 })
 
 router.get("/supplier", async(req, res) => {
-    const {username, password} = req.query
-    if(!username || !password){
+    const {username} = req.query
+    if(!username){
         res.status(400).json({
             "status_code": 400,
             "status_message": "Invalid values"
@@ -295,18 +255,9 @@ router.get("/supplier", async(req, res) => {
         return;
     }
     if(await isSupplier(username)){
-        const account = await getSupplier(username);
-        if(account[0].password == password){
-            const foundRequests = await getSupplyRequests(username);
-            res.send(foundRequests);
-        }
-        else{
-            res.status(400).json({
-                "status_code": 400,
-                "status_message": "Invalid Password"
-            })
-            return;
-        }
+        const foundRequests = await getSupplyRequests(username);
+        res.send(foundRequests);
+
     } 
     else{
         res.status(400).json({
@@ -317,8 +268,8 @@ router.get("/supplier", async(req, res) => {
     }
 })
 router.put("/supplier", async(req,res) => {
-    const {username, password, reqid} = req.query
-    if(!username || !password || !parseInt(reqid)){
+    const {username, reqid} = req.query
+    if(!username || !parseInt(reqid)){
         res.status(400).json({
             "status_code": 400,
             "status_message": "Invalid values"
@@ -326,17 +277,11 @@ router.put("/supplier", async(req,res) => {
         return;
     }
     if(await isSupplier(username)){
-        const account = await getSupplier(username);
-        if(account[0].password == password){
-            await updateSupplyRequest(parseInt(reqid))
-        }
-        else{
-            res.status(400).json({
-                "status_code": 400,
-                "status_message": "Invalid Password"
-            })
-            return;
-        }
+        await updateSupplyRequest(parseInt(reqid))
+        res.status(200).json({
+            "status_code" : 200,
+            "status_message": "Successfully Updated supplier request"
+        })
     } 
     else{
         res.status(400).json({
@@ -345,5 +290,29 @@ router.put("/supplier", async(req,res) => {
         })
         return;
     }
+})
+router.get("/reviews", async(req, res) => {
+    const {product_id} = req.query;
+    if(!product_id){
+        res.status(400).json({
+            "status_code": 400,
+            "status_message": "Invalid values"
+        })
+        return;
+    }
+    const reviews = await getReviews(product_id)
+    res.send(reviews)
+})
+router.post("/reviews", async(req, res) => {
+    const {username, product_id, rating} = req.query;
+    if(!parseInt(product_id) || !username || !parseInt(rating)){
+        res.status(400).json({
+            "status_code": 400,
+            "status_message": "Invalid values"
+        })
+        return;
+    }
+    const reviews = await addReview(username, product_id, rating)
+    res.send(reviews)
 })
 module.exports = router;

@@ -331,30 +331,96 @@ a{
 #modal {
   display: none;
   visibility: hidden;
-  .h2{
-    color:#06c167;
+  .content{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-family: 'Roboto Slab', serif;
+    font-size: 18px;
+    background: rgb(255, 255, 255);
+    width: 650px;
+    height: 420px;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    h2 {
+      font-size: 12px;
+      color:rgb(109, 109, 109)
+    }
+  }
+  .closeBtn {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    background: #222;
+    color: #fff;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 28px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .star {
+    margin-top: 1rem;
+    input {
+      display: none;
+    }
+    label {
+      font-size: 40px;
+      color: #444;
+      padding: 5px;
+      transition: all 0.2s ease;
+      float: right;
+
+    }
+    input:not(:checked) ~ label:hover,
+    input:not(:checked) ~ label:hover ~label {
+      color: #fe7;
+      text-shadow: 0 0 20px #952;
+    }
+    input:checked ~ label {
+      color: #fe7;
+      text-shadow: 0 0 20px #952;
+    }
+    input#rate-5:checked ~ label {
+      color: #fe7;
+      text-shadow: 0 0 20px #952;
+    }
+  }
+  .textA textarea {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: 1px solid #333;
     background: white;
-    // position: absolute;
+    padding: 10px;
+    font-size: 10px;
+    resize: none;
+    text-align: left;
   }
 }
 
 #modal.active{
-  width: 600px;
-  padding: 50px;
-  margin: auto;
-  position: absolute;
   display: block;
-  opacity: 1;
   visibility: visible;
-  transform: translate(-50%, -50%);
-  // z-index: 1000;
 }
 
 #blur.active:not(#modal) {
-  filter: blur(5px);
+  filter: blur(10px);
   pointer-events: none;
   user-select: none;
 }
+
+
 
 //responsive
 @media (max-width: 3000px) {

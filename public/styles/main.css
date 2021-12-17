@@ -374,7 +374,8 @@ a .signout {
 
 #modal {
   display: none;
-  visibility: hidden;
+  visibility: none;
+  color: white;
 }
 
 #modal .content {
@@ -486,6 +487,10 @@ a .signout {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+}
+
+#loadOverlay {
+  display: none;
 }
 
 @media (max-width: 3000px) {

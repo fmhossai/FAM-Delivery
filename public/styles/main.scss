@@ -330,7 +330,8 @@ a{
 }
 #modal {
   display: none;
-  visibility: hidden;
+  visibility: none;
+  color: white;
   .content{
     position: relative;
     top: 50%;
@@ -420,7 +421,7 @@ a{
   user-select: none;
 }
 
-
+#loadOverlay{display: none;}
 
 //responsive
 @media (max-width: 3000px) {

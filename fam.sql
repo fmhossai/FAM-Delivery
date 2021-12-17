@@ -97,7 +97,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` VALUES (4,1,12),(4,2,3),(4,3,1),(4,4,1),(5,3,21),(6,1,5),(6,2,1),(6,3,1),(6,4,1);
+INSERT INTO `cart` VALUES (4,1,1),(4,2,3),(4,3,3),(4,4,7),(5,3,21),(6,1,5),(6,2,1),(6,3,1),(6,4,1);
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,7 +241,7 @@ CREATE TABLE `review` (
 
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
-INSERT INTO `review` VALUES (4,1,5,'Yum Frozen good'),(5,1,1,'Yuk Frozen bad');
+INSERT INTO `review` VALUES (4,1,5,'MMMMmmm awesome'),(4,7,4,'hello'),(4,13,4,'hello'),(4,14,4,'hello cookie'),(5,1,1,'Yuk Frozen bad'),(5,13,4,'bred2');
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,7 +265,7 @@ CREATE TABLE `supplier` (
 
 LOCK TABLES `supplier` WRITE;
 /*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
-INSERT INTO `supplier` VALUES (2);
+INSERT INTO `supplier` VALUES (2),(3);
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -338,4 +338,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-16 23:46:05
+-- Dump completed on 2021-12-17 14:44:17

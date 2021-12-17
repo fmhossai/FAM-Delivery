@@ -36,7 +36,7 @@
             <div class="list">
                 <% for(let i of Object.values(session.cart.items)) { %>
                 <div class="flex items-stretch my-8 ml-4">
-                    <div class="w-.5/4"><img class="w-24" src="assets/fruits-12112.png" alt=""></div>
+                    <div class="w-.5/4"><img class="w-24" src="<%= i.item.image_link %>" alt=""></div>
                     <div class="w-2/4">
                         <h1><%= i.item.pname %></h1>
                         <span><%= i.item.category %></span>

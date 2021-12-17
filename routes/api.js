@@ -3,7 +3,7 @@ const express = require("express");
 const { route } = require("express/lib/application");
 const res = require("express/lib/response");
 const { send } = require("express/lib/response");
-const {getProducts, getCategorizedProducts, isCustomer, getCustomer, getCategories, addCustomer, getCart, addToCart, addToCartDuplicate, setName, setEmail, setPassword, setPhoneNo, setAddressStreetNo, setAddressStreetName, setAddressPostalCode, setAddressCountry, setAddressCity, isSupplier, getSupplier, updateProductStock, getSupplyRequests, addSupplierCategory, updateSupplyRequest, getReviews, addReview} = require("../app/models/mysql_queries")
+const {getProducts, getCategorizedProducts, isCustomer, getCustomer, getCategories, addCustomer, getCart, addToCart, addToCartDuplicate, setName, setEmail, setPassword, setPhoneNo, setAddressStreetNo, setAddressStreetName, setAddressPostalCode, setAddressCountry, setAddressCity, isSupplier, getSupplier, updateProductStock, getSupplyRequests, addSupplierCategory, updateSupplyRequest, getReviews, addReview, removeCartItem, decreaseProductStock, removeFromCartDuplicate, getRating, getProduct} = require("../app/models/mysql_queries")
 const router = express.Router();
 const auth = require("express-basic-auth")
 router.use(auth({
@@ -65,7 +65,21 @@ router.put("/products", async(req, res)=>{
         return;
     }
 })
-
+router.delete("/products", async(req, res) => {
+    const {product_id, amount} = req.query;
+    if(!parseInt(product_id) || !parseInt(amount)){
+        res.status(400).json({
+            "status_code": 400,
+            "status_message": "Invalid values"
+        })
+        return;
+    }
+    await decreaseProductStock(product_id, amount)
+    res.status(200).json({
+        "status_code": 200,
+        "status_message": "Sucessfully deleted product stock"
+    })
+})
 router.get("/categories", async(req,res) => {
     const categories = await getCategories();
     res.send(categories);
@@ -82,7 +96,7 @@ router.get("/user/", async(req,res) => {
     }
     if(parseInt(supplier)){
         if(await isSupplier(username)){
-            const account = await getCustomer(username);
+            const account = await getSupplier(username);
             if(account[0].password == password){
                 res.status(200).json({
                     "status_code": 200,
@@ -141,7 +155,7 @@ router.post("/user", async(req,res) => {
         })
         return;
     }
-    await addCustomer(name, email, username, password)
+    await addCustomer(name, username, email, password)
     // check if user already exists
     res.status(200).json({
         "status_code" : 200,
@@ -149,7 +163,7 @@ router.post("/user", async(req,res) => {
     })
     
 })
-router.put('/user', async(req, res) => {
+router.put('/profile', async(req, res) => {
     const {username, field, value} = req.query;
     if(!username || !field || !value){
         res.status(400).json({
@@ -158,7 +172,7 @@ router.put('/user', async(req, res) => {
         })
         return;
     }
-    if(await isCustomer(username)){
+    if((await isCustomer(username)) || isSupplier(username)){
         if(value == ""){
         res.status(400).json({
             "status_code": 400,
@@ -184,7 +198,7 @@ router.put('/user', async(req, res) => {
         if(field.toLowerCase() == "city") await setAddressCity(username, value)
         res.status(200).json({
             "status_code" : 200,
-            "status_message": `Successfully edited ${value}`
+            "status_message": `Successfully edited ${field}`
         })
         return;
     } 
@@ -196,6 +210,31 @@ router.put('/user', async(req, res) => {
         return;
     }
 
+})
+router.get("/profile/", async(req, res) => {
+    const {username} = req.query;
+    if(!username){
+        res.status(400).json({
+            "status_code": 400,
+            "status_message": "Invalid values"
+        })
+        return;
+    }
+    if(await isCustomer(username)){
+        const profile = await getCustomer(username)
+        res.send(profile)
+    }
+    else if(await isSupplier(username)){
+        const profile = await getSupplier(username)
+        res.send(profile)
+    } 
+    else{
+        res.status(400).json({
+            "status_code": 400,
+            "status_message": "Invalid Username"
+        })
+        return;
+    }
 })
 router.get("/cart/", async(req,res) => {
     const {username} = req.query;
@@ -220,8 +259,8 @@ router.get("/cart/", async(req,res) => {
 
 })
 router.post("/cart/", async(req,res) => {
-    const {username, productid, qty} = req.query;
-    if(!username || !parseInt(productid) || !parseInt(qty)){
+    const {username, productid} = req.query;
+    if(!username || !parseInt(productid)){
         res.status(400).json({
             "status_code": 400,
             "status_message": "Invalid values"
@@ -229,7 +268,12 @@ router.post("/cart/", async(req,res) => {
         return;
     }
     if(await isCustomer(username)){
-        await addToCart(username, parseInt(productid), parseInt(qty));
+        if(parseInt(req.query.qty)){
+            await addToCart(username, parseInt(productid), parseInt(req.query.qty))
+        }
+        else{
+            await addToCartDuplicate(username, parseInt(productid));
+        }
         res.status(200).json({
             "status_code" : 200,
             "status_message": "Successfully Added item to Cart"
@@ -243,6 +287,36 @@ router.post("/cart/", async(req,res) => {
         return;
     }
 
+})
+router.delete("/cart/", async(req, res) => {
+    const {username, product_id } = req.query
+    if(!username || !parseInt(product_id)){
+        res.status(400).json({
+            "status_code": 400,
+            "status_message": "Invalid values"
+        })
+        return;
+    }
+    if(await isCustomer(username)){
+        if(parseInt(req.query.incart)){
+            await removeFromCartDuplicate(username,product_id)
+        }
+        else{
+            await removeCartItem(username, product_id)
+        }
+        
+        res.status(200).json({
+            "status_code" : 200,
+            "status_message": "Successfully Removed item to Cart"
+        })
+    } 
+    else{
+        res.status(400).json({
+            "status_code": 400,
+            "status_message": "Invalid Username"
+        })
+        return;
+    }
 })
 
 router.get("/supplier", async(req, res) => {
@@ -304,15 +378,46 @@ router.get("/reviews", async(req, res) => {
     res.send(reviews)
 })
 router.post("/reviews", async(req, res) => {
-    const {username, product_id, rating} = req.query;
-    if(!parseInt(product_id) || !username || !parseInt(rating)){
+    const {username, product_id, rating, description} = req.query;
+    if(!parseInt(product_id) || !username || !parseInt(rating || !description)){
         res.status(400).json({
             "status_code": 400,
             "status_message": "Invalid values"
         })
         return;
     }
-    const reviews = await addReview(username, product_id, rating)
-    res.send(reviews)
+    if(await isCustomer(username)){
+        await addReview(username, product_id, rating, description)
+        res.status(200).json({
+            "status_code" : 200,
+            "status_message": "Successfully Added review"
+        })
+    }
+    else{
+        res.status(400).json({
+            "status_code": 400,
+            "status_message": "Invalid Username"
+        })
+        return;
+    }
+    
+})
+router.get("/rating", async(req, res) => {
+    const {product_id} = req.query;
+    if(!parseInt(product_id)){
+        res.status(400).json({
+            "status_code": 400,
+            "status_message": "Invalid values"
+        })
+        return;
+    }
+    const ratings = await getRating(product_id);
+    const productInfo = await getProduct(product_id)
+    res.send({
+        product_name: productInfo[0].pname,
+        product_info: productInfo[0].category,
+        rating: ratings
+    });
+
 })
 module.exports = router;

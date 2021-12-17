@@ -1,3 +1,5 @@
+<script type='module' src="/src/index.js"></script>
+
 <% const pick0a = ["Top Picks", "Healthy"];
    const pick1a = ["Our Customers Favourites", "Our Healthiest Selections"]; %>
 
@@ -15,7 +17,7 @@
         <div class="section-3-grid-element">
           <div class="container">
             <div class="card">
-              <div class="content-1">
+              <div class="content-1" data-pid="<%= products[pick0a[i]][j].product_id %>" data-pn="<%= products[pick0a[i]][j].pname %>" data-pc="<%= products[pick0a[i]][j].category %>" data-pr="<%= products[pick0a[i]][j].rating %>"">
                 <div class="mainImage">
                   <img src="<%= products[pick0a[i]][j].image_link%>" alt="">
                 </div>

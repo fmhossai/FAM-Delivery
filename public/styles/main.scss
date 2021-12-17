@@ -124,8 +124,8 @@ img.huechange { filter: hue-rotate(160deg); }
       #d4d4d4,
       #ffffff);
       .mainImage img {
-        width: 175px;
-        height: 175px;
+        width: 150px;
+        height: 150px;
         position: absolute;
         top: 20%;
         left: 15%;
@@ -369,7 +369,7 @@ a{
     border-radius: 50%;
     cursor: pointer;
   }
-  .star {
+  #star {
     margin-top: 1rem;
     input {
       display: none;

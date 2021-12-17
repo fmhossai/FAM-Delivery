@@ -138,8 +138,8 @@ img.huechange {
 }
 
 .section-3 .container .content-1 .mainImage img {
-  width: 175px;
-  height: 175px;
+  width: 150px;
+  height: 150px;
   position: absolute;
   top: 20%;
   left: 15%;
@@ -428,15 +428,15 @@ a .signout {
   cursor: pointer;
 }
 
-#modal .star {
+#modal #star {
   margin-top: 1rem;
 }
 
-#modal .star input {
+#modal #star input {
   display: none;
 }
 
-#modal .star label {
+#modal #star label {
   font-size: 40px;
   color: #444;
   padding: 5px;
@@ -445,18 +445,18 @@ a .signout {
   float: right;
 }
 
-#modal .star input:not(:checked) ~ label:hover,
-#modal .star input:not(:checked) ~ label:hover ~ label {
+#modal #star input:not(:checked) ~ label:hover,
+#modal #star input:not(:checked) ~ label:hover ~ label {
   color: #fe7;
   text-shadow: 0 0 20px #952;
 }
 
-#modal .star input:checked ~ label {
+#modal #star input:checked ~ label {
   color: #fe7;
   text-shadow: 0 0 20px #952;
 }
 
-#modal .star input#rate-5:checked ~ label {
+#modal #star input#rate-5:checked ~ label {
   color: #fe7;
   text-shadow: 0 0 20px #952;
 }

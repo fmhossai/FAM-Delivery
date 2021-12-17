@@ -10,6 +10,7 @@ function paymentController(){
                 await removeCartItem(req.session.username, i.item.product_id)
             }
             req.session.cart = ''
+            req.session.payment = true;
             res.redirect("/")
         }
     }

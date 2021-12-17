@@ -126,6 +126,7 @@ img.huechange { filter: hue-rotate(160deg); }
       .mainImage img {
         width: 150px;
         height: 150px;
+        object-fit: contain;
         position: absolute;
         top: 20%;
         left: 15%;

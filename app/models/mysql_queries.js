@@ -143,9 +143,6 @@ async function addToCartDuplicate(username, productId) {
     await query(cartQuery, [accountId[0].id, productId]);
     return true;
 }
-async function removeCartItem(username, productId){
-    
-}
 
 /**
  * @param {*} name account name

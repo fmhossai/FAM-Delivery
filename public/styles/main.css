@@ -362,29 +362,40 @@ a .signout {
   margin-top: 6rem;
 }
 
+.outer {
+  height: 0;
+  width: 0;
+  left: 50%;
+  top: 50%;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 999;
+}
+
 #modal {
   display: none;
   visibility: hidden;
+}
+
+#modal .h2 {
+  color: #06c167;
+  background: white;
 }
 
 #modal.active {
   width: 600px;
   padding: 50px;
   margin: auto;
-  position: -webkit-sticky;
-  position: sticky;
-  background: white;
-  left: 50%;
-  top: 50%;
+  position: absolute;
+  background: #ffffff;
   display: block;
   opacity: 1;
   visibility: visible;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  z-index: 1000;
 }
 
-#blur.active {
+#blur.active:not(#modal) {
   -webkit-filter: blur(5px);
           filter: blur(5px);
   pointer-events: none;

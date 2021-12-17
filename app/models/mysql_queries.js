@@ -118,6 +118,22 @@ async function addToCart(username, productId, qty) {
     await query(cartQuery, [accountId[0].id, productId, qty]);
     return true;
 }
+
+/**
+ * @param {*} username username of customer's cart
+ * @param {*} productId target product of removal
+ * @returns 
+ */
+ async function removeCartItem(username, productId) {
+    const cartQuery = "DELETE FROM cart \
+        WHERE customer_id = ? AND product_id = ?"
+
+    let accountId = await getAccountId(username);
+
+    await query(cartQuery, [accountId[0].id, productId]);
+    return true;
+}
+
 async function addToCartDuplicate(username, productId) {
     const cartQuery = "INSERT INTO cart (customer_id, product_id, qty) VALUES (?, ?, 1) \
         ON DUPLICATE KEY UPDATE qty = qty + 1";
@@ -375,6 +391,18 @@ async function addSupplyRequest(adminId, supplierId, productId, amount) {
 }
 
 /**
+ * @param {*} requestId id of request
+ * @returns request
+ */
+ async function getSupplyRequest(requestId) {
+    const requestQuery = "SELECT * \
+        FROM supply_request NATURAL JOIN product \
+        WHERE request_id = ?";
+
+    return await query(requestQuery, [requestId]);
+}
+
+/**
  * @param {*} username username of supplier
  * @returns 2D array with unfulfilled requests
  */
@@ -393,11 +421,15 @@ async function getSupplyRequests(username) {
  * @returns 
  */
 async function updateSupplyRequest(requestId) {
-    const cartQuery = "UPDATE supply_request \
+    const supplyQuery = "UPDATE supply_request \
         SET fulfilled_date = now() \
         WHERE request_id = ?";
 
-    await query(cartQuery, [requestId]);
+    // updates stock of product according to supply request
+    stockUpdate = await getSupplyRequest(requestId);
+    await updateProductStock(stockUpdate[0].product_id, stockUpdate[0].amount);
+
+    await query(supplyQuery, [requestId]);
     return true;
 }
 
@@ -407,12 +439,69 @@ async function updateSupplyRequest(requestId) {
  * @returns 
  */
 async function updateProductStock(productId, amount) {
-    const cartQuery = "UPDATE product \
+    const productQuery = "UPDATE product \
         SET stock = stock + ? \
         WHERE product_id = ?";
 
-    await query(cartQuery, [amount, productId]);
+    await query(productQuery, [amount, productId]);
     return true;
+}
+
+/**
+ * @param {*} productId id of target product
+ * @returns all reviews of target product
+ */
+async function getReviews(productId) {
+    const reviewQuery = "SELECT customer_id, username, product_id, pname, rating, description \
+        FROM product NATURAL JOIN review INNER JOIN account ON id = customer_id \
+        WHERE product_id = ?";
+    
+    return await query(reviewQuery, [productId]);
+}
+
+/**
+ * 
+ * @param {*} username username of target customer
+ * @param {*} productId id of target product
+ * @returns specific review by specified cutomer for specified product
+ */
+async function getReview(username, productId) {
+    const reviewQuery = "SELECT customer_id, username, product_id, pname, rating, description \
+        FROM product NATURAL JOIN review INNER JOIN account ON id = customer_id \
+        WHERE username = ? AND product_id = ?";
+    
+    return await query(reviewQuery, [username, productId]);
+}
+
+/**
+ * adds or updates review of a product
+ * @param {*} username username of customer giving review
+ * @param {*} productId id of product being reviewed
+ * @param {*} rating rating given
+ * @param {*} description descrition of review
+ * @returns 
+ */
+async function addReview(username, productId, rating, description) {
+    const reviewQuery = "INSERT INTO review (customer_id, product_id, rating, description) VALUES (?, ?, ?, ?) \
+    ON DUPLICATE KEY UPDATE rating = ?, description = ?";
+
+    let accountId = await getAccountId(username);
+
+    await query(reviewQuery, [accountId[0].id, productId, rating, description, rating, description]);
+    return true;
+}
+
+/**
+ * @param {*} productId id of target product
+ * @returns rating
+ */
+async function getRating(productId) {
+    const reviewQuery = "SELECT AVG(rating) AS 'rating' \
+        FROM review\
+        WHERE product_id = ?";
+    
+    const r = await query(reviewQuery, [productId]);
+    return r[0].rating;
 }
 
 async function queryTest() {
@@ -432,6 +521,7 @@ async function queryTest() {
     // await updateProductStock(5, 10);
     // let customer = await getCustomer("demoCustomer");
     // console.log(customer[0].password);
+    // console.log(await getRating(1));
 }
 
 queryTest();
@@ -447,6 +537,7 @@ module.exports.isSupplier = isSupplier;
 module.exports.isAdmin = isAdmin;
 module.exports.getAccountId = getAccountId;
 module.exports.addToCart = addToCart;
+module.exports.removeCartItem = removeCartItem
 module.exports.addToCartDuplicate = addToCartDuplicate;
 module.exports.addAccount = addAccount;
 module.exports.addCustomer = addCustomer;
@@ -466,6 +557,11 @@ module.exports.setAddressPostalCode = setAddressPostalCode;
 module.exports.setAddressCity = setAddressCity;
 module.exports.setAddressCountry = setAddressCountry;
 module.exports.addSupplyRequest = addSupplyRequest;
+module.exports.getSupplyRequest = getSupplyRequest;
 module.exports.getSupplyRequests = getSupplyRequests;
 module.exports.updateSupplyRequest = updateSupplyRequest;
 module.exports.updateProductStock = updateProductStock;
+module.exports.getReviews = getReviews
+module.exports.getReview = getReview
+module.exports.addReview = addReview
+module.exports.getRating = getRating

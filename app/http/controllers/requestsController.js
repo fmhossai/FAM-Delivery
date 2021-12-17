@@ -10,7 +10,6 @@ function requestsController() {
             })
         },
         async update(req, res) {
-            console.log(req.body.btn);
             await updateSupplyRequest(req.body.btn);
             res.redirect("/supplier");
         }

@@ -9,6 +9,12 @@ async function getProducts() {
     
     return await query(productsQuery);
 }
+async function getProduct(product_id) {
+    const productsQuery = "SELECT product_id, pname, price, category, description, name AS supplier_name, stock, image_link \
+        FROM product INNER JOIN account ON product.supplier_id = account.id WHERE product_id = ?";
+    
+    return await query(productsQuery, [product_id]);
+}
 
 async function searchProducts(search) {
     const searchQuery = "SELECT product_id, pname, price, category, description, name AS supplier_name, stock, image_link \
@@ -137,6 +143,16 @@ async function addToCart(username, productId, qty) {
 async function addToCartDuplicate(username, productId) {
     const cartQuery = "INSERT INTO cart (customer_id, product_id, qty) VALUES (?, ?, 1) \
         ON DUPLICATE KEY UPDATE qty = qty + 1";
+
+    let accountId = await getAccountId(username);
+
+    await query(cartQuery, [accountId[0].id, productId]);
+    return true;
+}
+async function removeFromCartDuplicate(username, productId) {
+    const cartQuery = "INSERT INTO cart (customer_id, product_id, qty) VALUES (?, ?, 1) \
+        ON DUPLICATE KEY UPDATE qty = qty - 1";
+    
 
     let accountId = await getAccountId(username);
 
@@ -513,6 +529,7 @@ async function getRating(productId) {
 }
 
 async function queryTest() {
+    // console.log(await getProduct(1));
     // console.log(await getProducts());
     // console.log(await searchProducts("s"));
     // console.log(await getCategorizedProducts("Bakery"));
@@ -535,6 +552,7 @@ async function queryTest() {
 queryTest();
 
 module.exports.getProducts = getProducts;
+module.exports.getProduct = getProduct;
 module.exports.searchProducts = searchProducts;
 module.exports.getCategorizedProducts = getCategorizedProducts;
 module.exports.getCategories = getCategories;
@@ -546,6 +564,7 @@ module.exports.isAdmin = isAdmin;
 module.exports.getAccountId = getAccountId;
 module.exports.addToCart = addToCart;
 module.exports.removeCartItem = removeCartItem
+module.exports.removeFromCartDuplicate = removeFromCartDuplicate
 module.exports.addToCartDuplicate = addToCartDuplicate;
 module.exports.removeCartItem = removeCartItem;
 module.exports.addAccount = addAccount;

@@ -18,6 +18,7 @@ function initRoutes(app, axios) {
 
     app.get('/cart', cartController().index);
     app.post('/update-cart', cartController().update);
+    app.post('/remove-cart', cartController().remove);
 
     app.get('/search', searchController().index)
 

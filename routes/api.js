@@ -1,11 +1,29 @@
-const e = require("express");
+
 const express = require("express");
 const { route } = require("express/lib/application");
 const res = require("express/lib/response");
 const { send } = require("express/lib/response");
 const {getProducts, getCategorizedProducts, isCustomer, getCustomer, getCategories, addCustomer, getCart, addToCart, addToCartDuplicate, setName, setEmail, setPassword, setPhoneNo, setAddressStreetNo, setAddressStreetName, setAddressPostalCode, setAddressCountry, setAddressCity, isSupplier, getSupplier, updateProductStock, getSupplyRequests, addSupplierCategory, updateSupplyRequest} = require("../app/models/mysql_queries")
 const router = express.Router();
-
+const auth = require("express-basic-auth")
+router.use(auth({
+    users:{
+        "admin" : "secret"
+    },
+    unauthorizedResponse: unAuthResponse
+}))
+function unAuthResponse(req) {
+   if(req.auth){
+       return {
+           "message" : "incorrect username and password"
+       }
+   }
+   else{
+       return {
+           "message": "no credentials input"
+       }
+   }
+}
 router.get("/products", async(req,res) => {
     const query = req.query
     if(Object.keys(query).length > 0){

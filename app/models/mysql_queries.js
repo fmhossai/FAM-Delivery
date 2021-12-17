@@ -143,6 +143,9 @@ async function addToCartDuplicate(username, productId) {
     await query(cartQuery, [accountId[0].id, productId]);
     return true;
 }
+async function removeCartItem(username, productId){
+    
+}
 
 /**
  * @param {*} name account name
@@ -447,6 +450,14 @@ async function updateProductStock(productId, amount) {
     return true;
 }
 
+async function decreaseProductStock(productId, amount) {
+    const cartQuery = "UPDATE product \
+        SET stock = stock - ? \
+        WHERE product_id = ?";
+    await query(cartQuery, [amount, productId]);
+    return true;
+}
+
 /**
  * @param {*} productId id of target product
  * @returns all reviews of target product
@@ -539,6 +550,7 @@ module.exports.getAccountId = getAccountId;
 module.exports.addToCart = addToCart;
 module.exports.removeCartItem = removeCartItem
 module.exports.addToCartDuplicate = addToCartDuplicate;
+module.exports.removeCartItem = removeCartItem;
 module.exports.addAccount = addAccount;
 module.exports.addCustomer = addCustomer;
 module.exports.addSupplier = addSupplier;
@@ -561,7 +573,8 @@ module.exports.getSupplyRequest = getSupplyRequest;
 module.exports.getSupplyRequests = getSupplyRequests;
 module.exports.updateSupplyRequest = updateSupplyRequest;
 module.exports.updateProductStock = updateProductStock;
-module.exports.getReviews = getReviews
-module.exports.getReview = getReview
-module.exports.addReview = addReview
-module.exports.getRating = getRating
+module.exports.decreaseProductStock = decreaseProductStock;
+module.exports.getReviews = getReviews;
+module.exports.getReview = getReview;
+module.exports.addReview = addReview;
+module.exports.getRating = getRating;

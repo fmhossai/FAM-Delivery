@@ -1,3 +1,4 @@
+const e = require('express');
 const { getCustomer, setName, setEmail, setPassword, setPhoneNo, setAddressStreetNo, setAddressStreetName, setAddressCity, setAddressPostalCode, setAddressCountry, getSupplier} = require('../../models/mysql_queries');
 
 function profileController(){
@@ -49,10 +50,19 @@ function profileController(){
             if(req.body.Country){
                 await setAddressCountry(req.session.username, req.body.Country)
             }
-            const profileData = await getCustomer(req.session.username);
-            res.render("profile", {
-                profileInfo: profileData[0]
-            })
+            if(req.session.supplierFlag){
+                const profileData = await getSupplier(req.session.username);
+                res.render("profile", {
+                    profileInfo: profileData[0]
+                })
+            }
+            else{
+                const profileData = await getCustomer(req.session.username);
+                res.render("profile", {
+                    profileInfo: profileData[0]
+                })
+            }
+        
         }
     }
 }

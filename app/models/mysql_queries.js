@@ -4,11 +4,18 @@ const req = require('express/lib/request');
 const query = util.promisify(mysql_conn.query).bind(mysql_conn);
 
 async function getProducts() {
-    const productsQuery = "SELECT product_id, pname, price, category, description, name AS supplier_name, stock, image_link \
-        FROM product INNER JOIN account ON product.supplier_id = account.id";
+    const productsQuery = "SELECT t1.product_id, pname, price, category, description, supplier_name, stock, rating, image_link \
+    FROM (\
+    SELECT product_id, pname, price, category, description, name AS supplier_name, stock, image_link \
+    FROM product INNER JOIN account ON product.supplier_id = account.id) t1 \
+    LEFT JOIN \
+    (SELECT product_id, AVG(rating) AS 'rating' \
+    FROM review) t2 \
+    ON t1.product_id = t2.product_id";
     
     return await query(productsQuery);
 }
+
 async function getProduct(product_id) {
     const productsQuery = "SELECT product_id, pname, price, category, description, name AS supplier_name, stock, image_link \
         FROM product INNER JOIN account ON product.supplier_id = account.id WHERE product_id = ?";
@@ -477,9 +484,9 @@ async function decreaseProductStock(productId, amount) {
  * @returns all reviews of target product
  */
 async function getReviews(productId) {
-    const reviewQuery = "SELECT customer_id, username, product_id, pname, rating, description \
-        FROM product NATURAL JOIN review INNER JOIN account ON id = customer_id \
-        WHERE product_id = ?";
+    const reviewQuery = "SELECT customer_id, username, product.product_id, pname, rating, product.description \
+        FROM product INNER JOIN review ON product.product_id = review.product_id INNER JOIN account ON id = customer_id \
+        WHERE product.product_id = ?;";
     
     return await query(reviewQuery, [productId]);
 }
@@ -491,9 +498,9 @@ async function getReviews(productId) {
  * @returns specific review by specified cutomer for specified product
  */
 async function getReview(username, productId) {
-    const reviewQuery = "SELECT customer_id, username, product_id, pname, rating, description \
-        FROM product NATURAL JOIN review INNER JOIN account ON id = customer_id \
-        WHERE username = ? AND product_id = ?";
+    const reviewQuery = "SELECT customer_id, username, product.product_id, pname, rating, product.description \
+        FROM product INNER JOIN review ON product.product_id = review.product_id INNER JOIN account ON id = customer_id \
+        WHERE username = ? AND product.product_id = ?";
     
     return await query(reviewQuery, [username, productId]);
 }

@@ -2,38 +2,18 @@
 <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div id="loadOverlay" style="background-color:white; position:absolute; top:0px; left:0px; width:100%; height:100%; z-index:2000;"></div>
-<%- include('reviewModal'); -%>
+
 <% if(session.payment) { %>
     <script type="module" src="/src/success.js"></script>
     <%session.payment = false; %>
 <% } %>
-<div class="outer">
-    <div id="modal">
-        <div class="content">
-            <div class="closeBtn">&times;</div>
-            <h1>Add a Review</h1>
-            <h2>Banana | Fruits | 3.7</h2>
-            <form id="star">
-                <input type="radio" name="star" id="rate-5" value="5">
-                <label for="rate-5" class="fa fa-star"></label>
-                <input type="radio" name="star" id="rate-4" value="4">
-                <label for="rate-4" class="fa fa-star"></label>
-                <input type="radio" name="star" id="rate-3" value="3">
-                <label for="rate-3" class="fa fa-star"></label>
-                <input type="radio" name="star" id="rate-2" value="2">
-                <label for="rate-2" class="fa fa-star"></label>
-                <input type="radio" name="star" id="rate-1" value="1">
-                <label for="rate-1" class="fa fa-star"></label>
-            </form>
-            <div class="textA">
-                <textarea class="ta" placeholder="Describe your experience (optional)" cols="40" rows="6"></textarea>
-            </div>
-            <button class="btn reviewBtn">Review</button>
-        </div>
-    </div>
-</div>
 
-<div id="blur">
+<% if(session.username) { %>
+    <%- include('reviewModal'); -%>
+    <div id="blur">
+<% } else { %>
+    <div>
+<% } %>
     <%- include('header'); -%>
     <%- include('home-category'); -%>
     
@@ -45,6 +25,3 @@
     <%- include('home-picks'); -%>
     <%- include('footer'); -%>
 </div>
-
-    
-

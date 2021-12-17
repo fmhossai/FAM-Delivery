@@ -33,9 +33,16 @@ async function searchProducts(search) {
 }
 
 async function getCategorizedProducts(catName) {
-    const categorizedProductsQuery = "SELECT product_id, pname, price, category, description, name AS supplier_name, stock, image_link \
+    const categorizedProductsQuery = "SELECT t1.product_id, pname, price, category, description, supplier_name, stock, rating, image_link \
+        FROM (\
+        SELECT product_id, pname, price, category, description, name AS supplier_name, stock, image_link \
         FROM product INNER JOIN account ON product.supplier_id = account.id \
-        WHERE category = ?";
+        WHERE category = ?) t1 \
+        LEFT JOIN \
+        (SELECT product_id, AVG(rating) AS 'rating' \
+        FROM review \
+        GROUP BY product_id) t2 \
+        ON t1.product_id = t2.product_id";
     
     return await query(categorizedProductsQuery, [catName]);
 }
@@ -530,7 +537,7 @@ async function addReview(username, productId, rating, description) {
  */
 async function getRating(productId) {
     const reviewQuery = "SELECT AVG(rating) AS 'rating' \
-        FROM review\
+        FROM review \
         WHERE product_id = ?";
     
     const r = await query(reviewQuery, [productId]);
@@ -556,6 +563,10 @@ async function queryTest() {
     // let customer = await getCustomer("demoCustomer");
     // console.log(customer[0].password);
     // console.log(await getRating(1));
+    // await addReview('demoCustomer', 13, 5, "bred");
+    // console.log(await getRating(13));
+
+    // console.log(await getProducts());
 }
 
 queryTest();

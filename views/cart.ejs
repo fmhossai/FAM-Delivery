@@ -41,8 +41,10 @@
                         <h1><%= i.item.pname %></h1>
                         <span><%= i.item.category %></span>
                     </div>
-                    <span class="w-1/4"><%= i.qty %> pcs</span>
+                    <span class="w-1/4" id="cart-qty-<%= i.item.product_id%>"><%= i.qty %> pcs</span>
                     <span class="w-1/4 font-bold text-lg">$<%= parseFloat(i.item.price * i.qty).toFixed(2) %></span>
+                    <span class="w-1/12 font-bold text-lg btn add-to-cart" data-choice="<%= JSON.stringify(i.item) %>" style="padding: 0 0 0 0;margin-right:10px">+</span>
+                    <span class="w-1/12 font-bold text-lg btn remove-from-cart" data-choice="<%= JSON.stringify(i.item) %>" style="padding: 0 0 0 0;">-</span>
                 </div>
                 <% } %>
             </div>

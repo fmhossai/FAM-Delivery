@@ -3,8 +3,11 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="exponential.js"></script>
 <script type="module" src="/src/index.js"></script>
-
-<div class="outer">
+<% if(session.payment) { %>
+    <script type="module" src="/src/success.js"></script>
+    <%session.payment = false; %>
+<% } %>
+<!-- <div class="outer">
     <div id="modal">
         <h2>Ratings</h2>
         <h2>Ratings</h2>
@@ -26,7 +29,7 @@
         <h2>Ratings</h2>
         <h2>Ratings</h2>
     </div>
-</div>
+</div> -->
 
 <div id="blur">
     

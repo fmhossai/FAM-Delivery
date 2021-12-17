@@ -5,7 +5,6 @@ const path = require('path');
 const axios = require('axios');
 const session = require('express-session');
 const flash = require('express-flash');
-
 const app = express();
 const apiRoutes = require("./routes/api");
 

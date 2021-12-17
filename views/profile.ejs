@@ -6,8 +6,6 @@
 
 
 <%- include('header'); -%>
-
-<!-- Modal HTML embedded directly into document -->
   
 
     <div class="profile">
@@ -17,10 +15,9 @@
                 <label for="<%= fields[i].replace(/ /g,'') %>">Set new <%= fields[i] %></label>
                 <input class= "profile-input" type="text" id="<%= fields[i].replace(/ /g,'') %>" name="<%= fields[i].replace(/ /g,'') %>" 
                 data="<%= fields[i] %>" style="border: 2px solid black;margin-top: 20%;"><br><br>
-
                 <button class="btn" style="margin-bottom: 15%;">Submit</button>
             </form>
-          </div>
+        </div>
         <div class="row">
             <div class="column"></div>
             <div class="column"><%= fields[i] %></div>

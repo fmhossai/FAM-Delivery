@@ -1,6 +1,30 @@
 
     <%- include('header'); -%>
-
+    <div id="checkoutmodal" class="modal">
+        <form action="/payment" id="payment-form" method="POST">
+            <div class="flex flex-col justify-center">
+                <div>Name on Card</div>
+                <div>
+                    <input type="text" class="rounded" name="card-name" id="card-name" style="border: 2px solid;width:50%">
+                </div>
+                <div>Card Number</div>
+                <div>
+                    <input type="text" class="rounded" name="card-number" id= "card-number" style="border: 2px solid;width:50%">
+                </div>
+                <div class="">Expiry Date</div>
+                <div>
+                    <input type="text" class="rounded grow-1" name="card-date" id="card-date" style="border: 2px solid;width:100px;">
+                </div>
+                <div>CVV</div>
+                <div>
+                    <input type="text" class="rounded" name="card-cvv" id="card-cvv" style="border: 2px solid;width:100px">
+                </div>
+                <div>
+                    <button class="btn" style="margin-bottom: 15%;margin-top: 10px;" >Checkout</button>
+                </div>
+            </div>
+        </form>
+    </div>
     <section class="cart pt-20">
         <% if(session.cart) { %>
         <div class="order container mx-auto w-1/2">
@@ -28,7 +52,7 @@
                     <span class="amount text-2xl text-green-600 font-bold">$<%= parseFloat(session.cart.priceT).toFixed(2) %></span>
                 </div>
                 <div>
-                    <button data-in="<%= loggedIn %>" class="orderBtn btn px-6 py-2 rounded-full mt-3">Order Now</button>
+                    <a href="#checkoutmodal" rel="modal:open"><button data-in="<%= loggedIn %>" class="orderBtn btn px-6 py-2 rounded-full mt-3">Order Now</button></a>
                 </div>
             </div>
         

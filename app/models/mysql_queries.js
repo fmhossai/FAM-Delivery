@@ -127,6 +127,9 @@ async function addToCartDuplicate(username, productId) {
     await query(cartQuery, [accountId[0].id, productId]);
     return true;
 }
+async function removeCartItem(username, productId){
+    
+}
 
 /**
  * @param {*} name account name
@@ -414,6 +417,13 @@ async function updateProductStock(productId, amount) {
     await query(cartQuery, [amount, productId]);
     return true;
 }
+async function decreaseProductStock(productId, amount) {
+    const cartQuery = "UPDATE product \
+        SET stock = stock - ? \
+        WHERE product_id = ?";
+    await query(cartQuery, [amount, productId]);
+    return true;
+}
 
 async function queryTest() {
     // console.log(await getProducts());
@@ -448,6 +458,7 @@ module.exports.isAdmin = isAdmin;
 module.exports.getAccountId = getAccountId;
 module.exports.addToCart = addToCart;
 module.exports.addToCartDuplicate = addToCartDuplicate;
+module.exports.removeCartItem = removeCartItem;
 module.exports.addAccount = addAccount;
 module.exports.addCustomer = addCustomer;
 module.exports.addSupplier = addSupplier;
@@ -469,3 +480,4 @@ module.exports.addSupplyRequest = addSupplyRequest;
 module.exports.getSupplyRequests = getSupplyRequests;
 module.exports.updateSupplyRequest = updateSupplyRequest;
 module.exports.updateProductStock = updateProductStock;
+module.exports.decreaseProductStock = decreaseProductStock;

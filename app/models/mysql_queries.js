@@ -5,13 +5,14 @@ const query = util.promisify(mysql_conn.query).bind(mysql_conn);
 
 async function getProducts() {
     const productsQuery = "SELECT t1.product_id, pname, price, category, description, supplier_name, stock, rating, image_link \
-    FROM (\
-    SELECT product_id, pname, price, category, description, name AS supplier_name, stock, image_link \
-    FROM product INNER JOIN account ON product.supplier_id = account.id) t1 \
-    LEFT JOIN \
-    (SELECT product_id, AVG(rating) AS 'rating' \
-    FROM review) t2 \
-    ON t1.product_id = t2.product_id";
+        FROM (\
+        SELECT product_id, pname, price, category, description, name AS supplier_name, stock, image_link \
+        FROM product INNER JOIN account ON product.supplier_id = account.id) t1 \
+        LEFT JOIN \
+        (SELECT product_id, AVG(rating) AS 'rating' \
+        FROM review \
+        GROUP BY product_id) t2 \
+        ON t1.product_id = t2.product_id";
     
     return await query(productsQuery);
 }
@@ -486,7 +487,7 @@ async function decreaseProductStock(productId, amount) {
 async function getReviews(productId) {
     const reviewQuery = "SELECT customer_id, username, product.product_id, pname, rating, product.description \
         FROM product INNER JOIN review ON product.product_id = review.product_id INNER JOIN account ON id = customer_id \
-        WHERE product.product_id = ?;";
+        WHERE product.product_id = ?";
     
     return await query(reviewQuery, [productId]);
 }

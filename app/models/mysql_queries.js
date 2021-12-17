@@ -526,7 +526,7 @@ async function queryTest() {
     // await addToCart("demoCustomer", 2);
     // await setName("demoCustomer", "Bob The Great");
     // await setAddress("demoCustomer", 77, "Awesome Street", "H8V 6G3", "Calgary", "Canada");
-    // await addSupplyRequests(1, 2, 5, 15); // request for Blueberry
+    // await addSupplyRequest(1, 2, 22, 13);
     // console.log(getSupplyRequests("fc"));
     // await updateSupplyRequest(1);
     // await updateProductStock(5, 10);

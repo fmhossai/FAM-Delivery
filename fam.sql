@@ -36,7 +36,7 @@ CREATE TABLE `account` (
   `address_country` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'admin123','admin','admin@example.com','pw','(123) 456-7890',NULL,NULL,NULL,NULL,NULL),(2,'fc','Fruit Company','','pw',NULL,NULL,NULL,NULL,NULL,NULL),(3,'vc','Veggie Company','','pw',NULL,NULL,NULL,NULL,NULL,NULL),(4,'demoCustomer','Bob The Great','demo@customer.com','pw','(123) 456-7890',77,'Awesome Street','H8V 6G3','Calgary','Canada');
+INSERT INTO `account` VALUES (1,'admin123','admin','admin@example.com','pw','(123) 456-7890',NULL,NULL,NULL,NULL,NULL),(2,'gg','General Goods','gg@gmail.com','pw',NULL,NULL,NULL,NULL,NULL,NULL),(3,'vc','Veggie Company','','pw',NULL,NULL,NULL,NULL,NULL,NULL),(4,'demoCustomer','Bob The Great','demo@customer.com','pw','(123) 456-7890',77,'Awesome Street','H8V 6G3','Calgary','Canada'),(5,'demoCustomer2','Matt Murdock','demo2@customer.com','pw',NULL,NULL,NULL,NULL,NULL,NULL),(6,'demoCustomer3','Jacob Williamson','demo3@customer.com','pw',NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +97,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` VALUES (4,1,12),(4,2,3);
+INSERT INTO `cart` VALUES (4,1,12),(4,2,3),(4,3,1),(4,4,1),(5,3,21),(6,1,5),(6,2,1),(6,3,1),(6,4,1);
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,7 +127,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (4,'2000-01-01','John Smith','1234 5678 9012 3456','11/24',123);
+INSERT INTO `customer` VALUES (4,'2000-01-01','John Smith','1234 5678 9012 3456','11/24',123),(5,NULL,NULL,NULL,NULL,NULL),(6,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +202,7 @@ CREATE TABLE `product` (
   `image_link` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`product_id`),
   KEY `supplier_id_idx` (`supplier_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,7 +211,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'Frozen Banana',3.50,'Frozen','Frozen Yellow Fruit',2,12,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(2,'Strawberry Cake',12.30,'Bakery','cake with vanilla and strawberry flavour',2,32,'https://images.pexels.com/photos/10311446/pexels-photo-10311446.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'),(3,'Banana',12.34,'Fruits','A yellow fruit',2,14,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(4,'Strawberry',3.00,'Fruits','A red fruit',2,4,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(5,'Blueberry',1.00,'Fruits','A blue fruit',2,21,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(6,'Watermelon',5.00,'Fruits','A spherical fruit',2,5,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(7,'Broccoli',2.00,'Veggies','A very ymmy food',2,5,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(8,'Califlower',5.00,'Veggies','Similar to broccoli',2,6,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(9,'Carrot',1.00,'Veggies','An orange vegetable',2,4,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),(10,'Tomato',1.30,'Veggies','A red vegetable',2,2,'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');
+INSERT INTO `product` VALUES (1,'Ice Cream Cone',3.50,'Frozen','Frozen Goodness',2,7,'https://cdn.pixabay.com/photo/2014/04/04/19/47/ice-313942_1280.png'),(2,'Strawberry Cake',12.30,'Bakery','cake with vanilla and strawberry flavour',2,32,'https://cdn.pixabay.com/photo/2021/06/25/18/14/cake-6364361_1280.png'),(3,'Banana',12.34,'Fruits','A yellow fruit',2,26,'https://cdn.pixabay.com/photo/2016/02/23/17/29/banana-1218133_960_720.png'),(4,'Strawberry',3.00,'Fruits','A red fruit',2,7,'https://cdn.pixabay.com/photo/2014/12/22/00/05/strawberry-576772_1280.png'),(5,'Blueberry',1.00,'Fruits','A blue fruit',2,21,'https://cdn.pixabay.com/photo/2014/04/02/16/15/blueberries-306718_1280.png'),(6,'Watermelon',5.00,'Fruits','A spherical fruit',2,20,'https://cdn.pixabay.com/photo/2013/07/12/19/18/watermelon-154510_1280.png'),(7,'Broccoli',2.00,'Veggies','A very yummy food',2,5,'https://cdn.pixabay.com/photo/2020/08/25/19/01/broccoli-5517821_1280.png'),(8,'Cauliflower',5.00,'Veggies','Similar to broccoli',2,6,'https://cdn.pixabay.com/photo/2017/07/24/09/28/cauliflower-2534064_1280.png'),(9,'Carrot',1.00,'Veggies','An orange vegetable',2,4,'https://cdn.pixabay.com/photo/2014/12/21/23/34/carrot-575529_1280.png'),(10,'Tomato',1.30,'Fruits','A red vegetable',2,2,'https://cdn.pixabay.com/photo/2017/01/31/21/56/food-2027563_1280.png'),(11,'Cabbage',2.00,'Veggies','Green ball of grass',2,8,'https://cdn.pixabay.com/photo/2014/12/21/23/33/cabbage-575525_1280.png'),(12,'Bell Pepper',75.00,'Veggies','Red, but not a tomato',2,7,'https://cdn.pixabay.com/photo/2012/04/13/21/00/bell-pepper-33623_1280.png'),(13,'Bread',1.50,'Bakery','Fluffy',2,22,'https://cdn.pixabay.com/photo/2018/05/01/14/55/bread-3365809_960_720.png'),(14,'ChocoChip Cookie',0.50,'Bakery','cookie with chocolate chips',2,99,'https://cdn.pixabay.com/photo/2018/02/25/12/06/cookie-3180329_1280.png'),(15,'Strawberry Cheesecake',9.75,'Bakery','Cheesecake + Strawberry',2,12,'https://cdn.pixabay.com/photo/2021/07/07/05/25/strawberry-cheesecake-6393283_1280.png'),(16,'Grape Wine',5.00,'Drinks','Squished grapes',2,17,'https://cdn.pixabay.com/photo/2017/01/20/11/37/grapes-1994647_1280.png'),(17,'Coffee',1.50,'Drinks','Liquid medium for caffeine',2,33,'https://cdn.pixabay.com/photo/2013/07/13/09/51/drink-156144_1280.png'),(18,'Tea',1.50,'Drinks','Leaf water',2,22,'https://cdn.pixabay.com/photo/2013/07/12/18/21/tea-153336_1280.png'),(19,'Strawberry Smoothie',3.00,'Drinks','Souls of strawberries',2,13,'https://cdn.pixabay.com/photo/2012/04/14/15/57/drinks-34377_1280.png'),(20,'Ice Cream Sandwich',2.75,'Frozen','Cookie + Ice Cream',2,25,'https://cdn.pixabay.com/photo/2021/07/11/06/54/ice-cream-sandwich-6403035_1280.png'),(21,'Popsicle',1.25,'Frozen','Cold thingy',2,18,'https://cdn.pixabay.com/photo/2020/04/29/02/53/popsicle-5106961_1280.png'),(22,'Sundae',2.00,'Frozen','Another cold thingy',2,16,'https://cdn.pixabay.com/photo/2014/04/03/10/02/sundae-309657_1280.png'),(23,'Ribs',12.00,'Meats','Great for BBQ',2,13,'https://cdn.pixabay.com/photo/2014/12/21/23/24/spare-ribs-575310_1280.png'),(24,'Bacon',2.30,'Meats','Strips of meat',2,11,'https://cdn.pixabay.com/photo/2014/12/21/23/25/bacon-575334_1280.png'),(25,'Turkey',8.00,'Meats','Gobble Gobble',2,14,'https://cdn.pixabay.com/photo/2012/04/02/12/48/turkey-24400_1280.png'),(26,'BBQ Skewer',1.00,'Meats','Assorted meat things',2,15,'https://cdn.pixabay.com/photo/2016/03/31/22/36/bbq-1297116_1280.png'),(27,'Milk',2.00,'Dairy','Cow milk',2,22,'https://cdn.pixabay.com/photo/2014/12/21/23/57/milk-576439_1280.png'),(28,'Cheese',3.00,'Dairy','Cheeeese',2,16,'https://cdn.pixabay.com/photo/2014/12/21/23/34/swiss-cheese-575542_1280.png'),(29,'Cream',2.50,'Dairy','Swishy',2,13,'https://cdn.pixabay.com/photo/2020/02/27/11/46/cream-carton-4884366_1280.png'),(30,'Cherry Yogurt',1.25,'Dairy','Yogurt but cherry',2,22,'https://cdn.pixabay.com/photo/2016/09/28/02/17/yogurt-1699648_1280.png');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,6 +241,7 @@ CREATE TABLE `review` (
 
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
+INSERT INTO `review` VALUES (4,1,5,'Yum Frozen good'),(5,1,1,'Yuk Frozen bad');
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -315,7 +316,7 @@ CREATE TABLE `supply_request` (
   CONSTRAINT `sr_aid` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`),
   CONSTRAINT `sr_pid` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
   CONSTRAINT `sr_sid` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`supplier_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -324,7 +325,7 @@ CREATE TABLE `supply_request` (
 
 LOCK TABLES `supply_request` WRITE;
 /*!40000 ALTER TABLE `supply_request` DISABLE KEYS */;
-INSERT INTO `supply_request` VALUES (1,1,2,5,10,'2021-12-13 22:20:16','2021-12-13 22:26:30'),(2,1,2,1,10,'2021-12-13 22:30:30',NULL),(4,1,2,3,15,'2021-12-13 22:31:18',NULL),(5,1,2,4,15,'2021-12-13 22:31:25',NULL),(6,1,2,6,15,'2021-12-13 22:31:30',NULL),(7,1,2,7,15,'2021-12-13 22:31:32',NULL),(8,1,2,9,15,'2021-12-13 22:31:38',NULL);
+INSERT INTO `supply_request` VALUES (1,1,2,5,10,'2021-12-13 22:20:16','2021-12-16 16:12:15'),(2,1,2,1,10,'2021-12-13 22:30:30','2021-12-15 02:47:44'),(4,1,2,3,15,'2021-12-13 22:31:18','2021-12-15 02:47:48'),(5,1,2,4,15,'2021-12-13 22:31:25','2021-12-15 02:47:46'),(6,1,2,6,15,'2021-12-13 22:31:30','2021-12-16 16:45:15'),(7,1,2,7,15,'2021-12-13 22:31:32',NULL),(8,1,2,9,15,'2021-12-13 22:31:38',NULL),(9,1,2,1,6,'2021-12-16 20:53:11',NULL),(10,1,2,2,4,'2021-12-16 20:53:18',NULL),(11,1,2,3,12,'2021-12-16 20:53:24','2021-12-16 20:55:39'),(12,1,2,4,3,'2021-12-16 20:53:31','2021-12-16 20:56:07'),(13,1,2,5,7,'2021-12-16 20:53:39',NULL),(14,1,2,6,33,'2021-12-16 20:53:49',NULL),(15,1,2,22,13,'2021-12-16 20:53:59',NULL);
 /*!40000 ALTER TABLE `supply_request` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -337,4 +338,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-13 23:32:09
+-- Dump completed on 2021-12-16 20:59:19

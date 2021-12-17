@@ -14,6 +14,10 @@
   text-align: center;
 }
 
+body {
+  min-height: 100vh;
+}
+
 .logo a {
   text-decoration: none;
 }
@@ -108,6 +112,7 @@ img.huechange {
 
 .section-3 {
   padding: 2rem 5rem;
+  min-height: 71vh;
 }
 
 .section-3 .container {
@@ -341,6 +346,7 @@ hr {
 
 .cart {
   font-family: 'Poppins', sans-serif;
+  min-height: 71vh;
 }
 
 .error {
@@ -630,6 +636,9 @@ a .signout {
   .section-4 .logo a span {
     font-size: 30px;
   }
+  .section-3 {
+    min-height: 75vh;
+  }
 }
 
 @media (max-width: 800px) {
@@ -696,6 +705,9 @@ a .signout {
   .section-4 .logo a span {
     font-size: 22px;
   }
+  .section-3 {
+    min-height: 80vh;
+  }
 }
 
 @media (max-width: 600px) {
@@ -721,6 +733,9 @@ a .signout {
   nav .container .search input {
     padding: .75rem 7rem;
     font-size: 12px;
+  }
+  nav .section-3 {
+    min-height: 60vh;
   }
   .section-1 ol {
     margin: .5rem;
@@ -788,5 +803,9 @@ a .signout {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+}
+
+.supplier {
+  min-height: 71vh;
 }
 /*# sourceMappingURL=main.css.map */

@@ -54,7 +54,7 @@
                     <span id="cart-amount" class="amount text-2xl text-green-600 font-bold">$<%= parseFloat(session.cart.priceT).toFixed(2) %></span>
                 </div>
                 <div>
-                    <a href="#checkoutmodal" rel="modal:open"><button data-in="<%= loggedIn %>" class="orderBtn btn px-6 py-2 rounded-full mt-3">Order Now</button></a>
+                    <a href="#checkoutmodal" rel="modal:open" id="order-link"><button data-in="<%= loggedIn %>" class="orderBtn btn px-6 py-2 rounded-full mt-3">Order Now</button></a>
                 </div>
             </div>
         

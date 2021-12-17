@@ -60,14 +60,14 @@ function cartController() {
             cart.quantityT = cart.quantityT - 1
             cart.priceT = parseFloat(cart.priceT).toFixed(2);
             cart.priceT = cart.priceT - req.body.price
-            console.log(cart.priceT);
             if(req.session.username){
                 if(cart.items[req.body.product_id].qty == 0) {
                     await removeCartItem(req.session.username, parseInt(req.body.product_id));
                     delete cart.items[req.body.product_id];
-                    // if(Object.keys(req.session.cart.items).length == 0) {
-                    //     req.session.cart = null;
-                    // }
+                    console.log(req.session.cart.items)
+                    if(Object.keys(req.session.cart.items).length == 0) {
+                        req.session.cart = null;
+                    }
                     return res.json({ 
                         quantity: 0, 
                         quantityT: req.session.cart.quantityT, 
@@ -81,9 +81,14 @@ function cartController() {
 
             if(cart.items[req.body.product_id].qty == 0) {
                 delete cart.items[req.body.product_id];
+                let quantityTotal = req.session.cart.quantityT;
+                if(Object.keys(req.session.cart.items).length == 0) {
+                    req.session.cart = null;
+                    quantityTotal = ''
+                }
                 return res.json({ 
                     quantity: 0, 
-                    quantityT: req.session.cart.quantityT, 
+                    quantityT: quantityTotal, 
                     price: 0,
                     priceT: cart.priceT
                 });

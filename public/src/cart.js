@@ -47,6 +47,7 @@ function removeItemCart(choice){
     axios.post('/remove-cart', choice).then((res) => {
         console.log(res)
         if(res.data.quantity == 0) {
+            document.querySelector('.cartCtr').innerText = res.data.quantityT
             let qtyButton = document.querySelector(`#cart-qty-${choice.product_id}`);
             qtyButton.parentNode.remove();
         }
@@ -105,12 +106,13 @@ if(document.querySelectorAll(".remove-from-cart").length > 0){
 }
 
 
-if(document.querySelector(".orderBtn")){
+if(document.querySelector("#order-link")){
     let orderBtn = document.querySelector(".orderBtn").getAttribute("data-in");
-    document.querySelector('.orderBtn').addEventListener('click', (e) => {
+    document.querySelector("#order-link").setAttribute("rel", "modal:close");
+    document.querySelector("#order-link").addEventListener('click', (e) => {
         console.log(orderBtn);
         if(orderBtn){
-            
+            document.querySelector("#order-link").setAttribute("rel", "modal:open");
         }else {
             //not logged in
             new Noty({

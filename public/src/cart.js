@@ -22,6 +22,17 @@ function updateCart(choice) {
                 qtyButton.textContent = `${res.data.quantity} pcs`
             }
         }
+
+        if(document.querySelector(`#cart-amount`)) {
+            let amountButton = document.querySelector(`#cart-amount`);
+            amountButton.textContent = `$${parseFloat(res.data.priceT).toFixed(2)}`;
+        }
+
+        if(document.querySelector(`#row-price-${choice.product_id}`)) {
+            let rowPrice = document.querySelector(`#row-price-${choice.product_id}`);
+            rowPrice.textContent = `$${parseFloat(res.data.price).toFixed(2)}`;
+        }
+
     }).catch(err => {
         console.log(err)
         new Noty({
@@ -35,7 +46,9 @@ function updateCart(choice) {
 function removeItemCart(choice){
     axios.post('/remove-cart', choice).then((res) => {
         console.log(res)
-        if(res.data.quantity== 0){
+        if(res.data.quantity == 0) {
+            let qtyButton = document.querySelector(`#cart-qty-${choice.product_id}`);
+            qtyButton.parentNode.remove();
         }
         else{
             document.querySelector('.cartCtr').innerText = res.data.quantityT
@@ -50,6 +63,17 @@ function removeItemCart(choice){
                 qtyButton.textContent = `${res.data.quantity} pcs`
             }
         }
+
+        if(document.querySelector(`#cart-amount`)) {
+            let amountButton = document.querySelector(`#cart-amount`);
+            amountButton.textContent = `$${parseFloat(res.data.priceT).toFixed(2)}`;
+        }
+
+        if(document.querySelector(`#row-price-${choice.product_id}`)) {
+            let rowPrice = document.querySelector(`#row-price-${choice.product_id}`);
+            rowPrice.textContent = `$${parseFloat(res.data.price).toFixed(2)}`;
+        }
+
     }).catch(err => {
         console.log(err)
         new Noty({

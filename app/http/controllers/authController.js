@@ -84,6 +84,7 @@ function authController() {
 
                         req.session.supplierFlag = true;
 
+                        console.log(account);
                         if(account[0].password == password) {
                             req.session.username = username
                             return res.redirect('/supplier');

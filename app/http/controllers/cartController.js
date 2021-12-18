@@ -20,7 +20,7 @@ function cartController() {
                     return res.json({ 
                         quantityT: -1, 
                         quantity: cart.items[req.body.product_id].qty, 
-                        price: req.body.price*req.session.cart.quantityT,
+                        price: req.body.price*cart.items[req.body.product_id].qty,
                         priceT: cart.priceT
                     });
                 }
@@ -50,7 +50,7 @@ function cartController() {
             return res.json({
                 quantityT: req.session.cart.quantityT, 
                 quantity: cart.items[req.body.product_id].qty, 
-                price: req.session.cart.quantityT * req.body.price,
+                price: cart.items[req.body.product_id].qty * req.body.price,
                 priceT: cart.priceT
             });
         },

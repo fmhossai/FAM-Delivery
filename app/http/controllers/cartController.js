@@ -69,9 +69,9 @@ function cartController() {
                     }
                     return res.json({ 
                         quantity: 0, 
-                        quantityT: req.session.cart.quantityT, 
+                        quantityT: req.session.cart ? req.session.cart.quantityT : '', 
                         price: 0,
-                        priceT: cart.priceT
+                        priceT: req.session.cart ? req.session.cart.priceT : 0
                     });
                 } else {
                     await removeFromCartDuplicate(req.session.username, parseInt(req.body.product_id));
@@ -89,7 +89,7 @@ function cartController() {
                     quantity: 0, 
                     quantityT: quantityTotal, 
                     price: 0,
-                    priceT: cart.priceT
+                    priceT: req.session.cart ? req.session.cart.priceT : 0
                 });
             }
 

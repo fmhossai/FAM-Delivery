@@ -94,7 +94,7 @@ router.get("/user/", async(req,res) => {
         })
         return;
     }
-    if(parseInt(supplier)){
+    if(parseInt(supplier) === 1){
         if(await isSupplier(username)){
             const account = await getSupplier(username);
             if(account[0].password == password){
@@ -298,11 +298,20 @@ router.delete("/cart/", async(req, res) => {
         return;
     }
     if(await isCustomer(username)){
-        if(parseInt(req.query.incart)){
-            await removeFromCartDuplicate(username,product_id)
+        try{
+            if(parseInt(req.query.incart) === 1){
+                await removeFromCartDuplicate(username,product_id)
+            }
+            else{
+                await removeCartItem(username, product_id)
+            }
         }
-        else{
-            await removeCartItem(username, product_id)
+        catch(error){
+            console.log(error)
+            res.status(200).json({
+                "status_code" : 200,
+                "status_message": "An Error has occured when deleting this item from the cart"
+            })
         }
         
         res.status(200).json({

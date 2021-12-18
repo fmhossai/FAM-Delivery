@@ -1,15 +1,10 @@
-const { decreaseProductStock, removeCartItem} = require('../../models/mysql_queries');
+const { decreaseProductStock, removeCartItem, addPaymentInfo, addOrder} = require('../../models/mysql_queries');
 
 function paymentController(){
     return{
         async index(req, res){
-            console.log("Payment success")
-            console.log({
-                card_name: req.body.card_name,
-                card_number: req.body.card_number,
-                card_date: req.body.card_number,
-                card_cvv: req.body.card_cvv
-            })
+            const {card_name, card_number, card_date, card_cvv} = req.body
+            await addPaymentInfo(req.session.username, card_name, card_number, card_date, card_cvv)
             const itemsInCart = Object.values(req.session.cart.items);
             let productIds = []
             for(const i of itemsInCart){
@@ -18,6 +13,7 @@ function paymentController(){
                     qty: i.qty
                 });
             }
+            await addOrder(req.session.username, productIds, req.session.cart.priceT)
             for(const i of itemsInCart){
                 await decreaseProductStock(i.item.product_id, i.qty)
                 await removeCartItem(req.session.username, i.item.product_id)

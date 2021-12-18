@@ -1,6 +1,5 @@
 function updateCart(choice) {
     axios.post('/update-cart', choice).then((res) => {
-        console.log(res)
         if(res.data.quantityT == -1){
             new Noty({
                 type: 'error',
@@ -45,7 +44,6 @@ function updateCart(choice) {
 }
 function removeItemCart(choice){
     axios.post('/remove-cart', choice).then((res) => {
-        console.log(res)
         if(res.data.quantity == 0) {
             document.querySelector('.cartCtr').innerText = res.data.quantityT
             let qtyButton = document.querySelector(`#cart-qty-${choice.product_id}`);
@@ -98,7 +96,6 @@ if(document.querySelectorAll(".remove-from-cart").length > 0){
     let removeFromCart = document.querySelectorAll(".remove-from-cart")
     removeFromCart.forEach((btn) => {
         btn.addEventListener("click", (e) => {
-            console.log(e)
             let choice = JSON.parse(btn.dataset.choice);
             removeItemCart(choice);
         })
@@ -110,7 +107,6 @@ if(document.querySelector("#order-link")){
     let orderBtn = document.querySelector(".orderBtn").getAttribute("data-in");
     document.querySelector("#order-link").setAttribute("rel", "modal:close");
     document.querySelector("#order-link").addEventListener('click', (e) => {
-        console.log(orderBtn);
         if(orderBtn){
             document.querySelector("#order-link").setAttribute("rel", "modal:open");
         }else {

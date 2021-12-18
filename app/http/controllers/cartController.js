@@ -64,7 +64,6 @@ function cartController() {
                 if(cart.items[req.body.product_id].qty == 0) {
                     await removeCartItem(req.session.username, parseInt(req.body.product_id));
                     delete cart.items[req.body.product_id];
-                    console.log(req.session.cart.items)
                     if(Object.keys(req.session.cart.items).length == 0) {
                         req.session.cart = null;
                     }

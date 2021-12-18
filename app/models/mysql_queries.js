@@ -571,7 +571,7 @@ async function addPaymentInfo(username, cardName, cardNo, expiryDate, cvv) {
  */
 async function addOrder(username, productsInfo, total) {
     const orderQuery = "INSERT INTO orders (customer_id, date_of_purchase, total) VALUES(?,now(),?)";
-    const orderIdQuery = "SELECT LAST_INSERT_ID()";
+    const orderIdQuery = "SELECT LAST_INSERT_ID() AS id";
     const orderContentsQuery = "INSERT INTO order_content (order_id, product_id, qty) VALUES (?,?,?)";
 
     let accountId = await getAccountId(username);
@@ -579,7 +579,7 @@ async function addOrder(username, productsInfo, total) {
     let orderId = await query(orderIdQuery);
 
     for(let i = 0; i < productsInfo.length; i++) {
-        await query(orderContentsQuery, [orderId, productsInfo[i].product_id, productsInfo[i].qty]);
+        await query(orderContentsQuery, [orderId[0].id, productsInfo[i].product_id, productsInfo[i].qty]);
     }
 
     return true;

@@ -13,7 +13,7 @@ const mysql_conn = require('./mysql_conn');
 
 
 app.use(session({
-    secret: 'hi',
+    secret: process.env.COOKIE_SECRET,
     resave: false,
     //store: databasename
     saveUninitialized: false,

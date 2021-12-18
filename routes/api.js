@@ -8,7 +8,7 @@ const router = express.Router();
 const auth = require("express-basic-auth")
 router.use(auth({
     users:{
-        "admin" : "secret"
+        "admin" : process.env.ADMIN_PASSWORD
     },
     unauthorizedResponse: unAuthResponse
 }))

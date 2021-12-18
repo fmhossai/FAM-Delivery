@@ -544,6 +544,47 @@ async function getRating(productId) {
     return r[0].rating;
 }
 
+/**
+ * @param {*} username string
+ * @param {*} cardName string
+ * @param {*} cardNo string
+ * @param {*} expiryDate string
+ * @param {*} cvv int
+ * @returns 
+ */
+async function addPaymentInfo(username, cardName, cardNo, expiryDate, cvv) {
+    const paymentQuery = "UPDATE customer \
+        SET card_name = ?, card_no = ?, expiry_date = ?, cvv = ? \
+        WHERE customer_id = ?";
+
+    let accountId = await getAccountId(username);
+
+    await query(paymentQuery, [cardName, cardNo, expiryDate, cvv, accountId[0].id]);
+    return true;
+}
+
+/**
+ * @param {*} username username of customer that placed the order
+ * @param {*} productsInfo array of objects that have the product_id and their quanitity
+ * @param {*} total order's total ($) float
+ * @returns 
+ */
+async function addOrder(username, productsInfo, total) {
+    const orderQuery = "INSERT INTO orders (customer_id, date_of_purchase, total) VALUES(?,now(),?)";
+    const orderIdQuery = "SELECT LAST_INSERT_ID()";
+    const orderContentsQuery = "INSERT INTO order_content (order_id, product_id, qty) VALUES (?,?,?)";
+
+    let accountId = await getAccountId(username);
+    await query(orderQuery, [accountId[0].id, total]);
+    let orderId = await query(orderIdQuery);
+
+    for(let i = 0; i < productsInfo.length; i++) {
+        await query(orderContentsQuery, [orderId, productsInfo[i].product_id, productsInfo[i].qty]);
+    }
+
+    return true;
+}
+
 async function queryTest() {
     // console.log(await getProduct(1));
     // console.log(await getProducts());
@@ -563,7 +604,7 @@ async function queryTest() {
     // let customer = await getCustomer("demoCustomer");
     // console.log(customer[0].password);
     // console.log(await getRating(1));
-    // await addReview('demoCustomer', 13, 5, "bred");
+    // await addReview('demoCustomer', 13, 5, "breddddd2");
     // console.log(await getRating(13));
 
     // console.log(await getProducts());
@@ -614,3 +655,5 @@ module.exports.getReviews = getReviews;
 module.exports.getReview = getReview;
 module.exports.addReview = addReview;
 module.exports.getRating = getRating;
+module.exports.addPaymentInfo = addPaymentInfo;
+module.exports.addOrder = addOrder;

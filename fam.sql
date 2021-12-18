@@ -141,6 +141,7 @@ DROP TABLE IF EXISTS `order_content`;
 CREATE TABLE `order_content` (
   `order_id` int unsigned NOT NULL,
   `product_id` int unsigned NOT NULL,
+  `qty` int unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`order_id`,`product_id`),
   KEY `p_id_idx` (`product_id`),
   CONSTRAINT `oc_oid` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
@@ -172,7 +173,7 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`order_id`),
   KEY `owner_id_idx` (`customer_id`),
   CONSTRAINT `order_cid` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,6 +182,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,4,'2021-12-18 03:03:55',100.00);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,7 +243,7 @@ CREATE TABLE `review` (
 
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
-INSERT INTO `review` VALUES (4,1,5,'MMMMmmm awesome'),(4,7,4,'hello'),(4,13,4,'hello'),(4,14,4,'hello cookie'),(5,1,1,'Yuk Frozen bad'),(5,13,4,'bred2');
+INSERT INTO `review` VALUES (4,1,5,'MMMMmmm awesome'),(4,7,4,'hello'),(4,13,5,'breddddd2'),(4,14,4,'hello cookie'),(5,1,1,'Yuk Frozen bad'),(5,13,4,'bred2');
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -338,4 +340,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-17 14:44:17
+-- Dump completed on 2021-12-17 21:51:42

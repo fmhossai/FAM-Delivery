@@ -10,7 +10,6 @@ const paymentController = require('../app/http/controllers/paymentController');
 const reviewsController = require('../app/http/controllers/reviewsController');
 
 function initRoutes(app, axios) {
-
     app.get('/', homeController(axios).index);
 
     app.get('/login', authController().login);

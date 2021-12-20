@@ -6,12 +6,15 @@ const { send } = require("express/lib/response");
 const {getProducts, getCategorizedProducts, isCustomer, getCustomer, getCategories, addCustomer, getCart, addToCart, addToCartDuplicate, setName, setEmail, setPassword, setPhoneNo, setAddressStreetNo, setAddressStreetName, setAddressPostalCode, setAddressCountry, setAddressCity, isSupplier, getSupplier, updateProductStock, getSupplyRequests, addSupplierCategory, updateSupplyRequest, getReviews, addReview, removeCartItem, decreaseProductStock, removeFromCartDuplicate, getRating, getProduct} = require("../app/models/mysql_queries")
 const router = express.Router();
 const auth = require("express-basic-auth")
+
+// use express baseic auth
 router.use(auth({
     users:{
         "admin" : process.env.ADMIN_PASSWORD
     },
     unauthorizedResponse: unAuthResponse
 }))
+
 function unAuthResponse(req) {
    if(req.auth){
        return {
@@ -24,67 +27,26 @@ function unAuthResponse(req) {
        }
    }
 }
-router.get("/products", async(req,res) => {
-    const query = req.query
-    if(Object.keys(query).length > 0){
-        if(req.query.category == ""){
-            res.status(400).json({
-                error: "Bad Request"
-            })
-            return;
-        }
-        const productData = await getCategorizedProducts(query.category)
-        res.send(productData);
-    }
-    else{
-        const productData = await getProducts();
-        res.send(productData);
-    }
-})
-router.put("/products", async(req, res)=>{
-    const {username, productid, stock} = req.query
-    if(!username || !productid || !stock){
+
+// user sign up
+router.post("/user", async(req,res) => {
+    const {name, email, username, password} = req.query;
+    if(!name || !email || !username || !password){
         res.status(400).json({
             "status_code": 400,
             "status_message": "Invalid values"
         })
         return;
     }
-    if(await isSupplier(username)){
-        await updateProductStock(productid, stock);
-        res.status(200).json({
-            "status_code": 200,
-            "status_message": "Sucessfully updated product stock"
-        })
-    } 
-    else{
-        res.status(400).json({
-            "status_code": 400,
-            "status_message": "Invalid Username"
-        })
-        return;
-    }
-})
-router.delete("/products", async(req, res) => {
-    const {product_id, amount} = req.query;
-    if(!parseInt(product_id) || !parseInt(amount)){
-        res.status(400).json({
-            "status_code": 400,
-            "status_message": "Invalid values"
-        })
-        return;
-    }
-    await decreaseProductStock(product_id, amount)
+    await addCustomer(name, username, email, password)
+    // check if user already exists
     res.status(200).json({
-        "status_code": 200,
-        "status_message": "Sucessfully deleted product stock"
+        "status_code" : 200,
+        "status_message": "Successfully Added account"
     })
 })
-router.get("/categories", async(req,res) => {
-    const categories = await getCategories();
-    res.send(categories);
-})
 
+// user login
 router.get("/user/", async(req,res) => {
     const {username, password, supplier} = req.query;
     if(!username || !password){
@@ -144,25 +106,34 @@ router.get("/user/", async(req,res) => {
         })
         return;
     }
-    
 })
-router.post("/user", async(req,res) => {
-    const {name, email, username, password} = req.query;
-    if(!name || !email || !username || !password){
+
+router.get("/profile/", async(req, res) => {
+    const {username} = req.query;
+    if(!username){
         res.status(400).json({
             "status_code": 400,
             "status_message": "Invalid values"
         })
         return;
     }
-    await addCustomer(name, username, email, password)
-    // check if user already exists
-    res.status(200).json({
-        "status_code" : 200,
-        "status_message": "Successfully Added account"
-    })
-    
+    if(await isCustomer(username)){
+        const profile = await getCustomer(username)
+        res.send(profile)
+    }
+    else if(await isSupplier(username)){
+        const profile = await getSupplier(username)
+        res.send(profile)
+    } 
+    else{
+        res.status(400).json({
+            "status_code": 400,
+            "status_message": "Invalid Username"
+        })
+        return;
+    }
 })
+
 router.put('/profile', async(req, res) => {
     const {username, field, value} = req.query;
     if(!username || !field || !value){
@@ -209,33 +180,9 @@ router.put('/profile', async(req, res) => {
         })
         return;
     }
+})
 
-})
-router.get("/profile/", async(req, res) => {
-    const {username} = req.query;
-    if(!username){
-        res.status(400).json({
-            "status_code": 400,
-            "status_message": "Invalid values"
-        })
-        return;
-    }
-    if(await isCustomer(username)){
-        const profile = await getCustomer(username)
-        res.send(profile)
-    }
-    else if(await isSupplier(username)){
-        const profile = await getSupplier(username)
-        res.send(profile)
-    } 
-    else{
-        res.status(400).json({
-            "status_code": 400,
-            "status_message": "Invalid Username"
-        })
-        return;
-    }
-})
+// get products from users cart
 router.get("/cart/", async(req,res) => {
     const {username} = req.query;
     if(!username ){
@@ -258,6 +205,8 @@ router.get("/cart/", async(req,res) => {
     }
 
 })
+
+// add product to user's cart
 router.post("/cart/", async(req,res) => {
     const {username, productid} = req.query;
     if(!username || !parseInt(productid)){
@@ -286,8 +235,9 @@ router.post("/cart/", async(req,res) => {
         })
         return;
     }
-
 })
+
+// remove product from user's cart
 router.delete("/cart/", async(req, res) => {
     const {username, product_id } = req.query
     if(!username || !parseInt(product_id)){
@@ -328,6 +278,75 @@ router.delete("/cart/", async(req, res) => {
     }
 })
 
+// get all products or categorized products
+router.get("/products", async(req,res) => {
+    const query = req.query
+    if(Object.keys(query).length > 0){
+        if(req.query.category == ""){
+            res.status(400).json({
+                error: "Bad Request"
+            })
+            return;
+        }
+        const productData = await getCategorizedProducts(query.category)
+        res.send(productData);
+    }
+    else{
+        const productData = await getProducts();
+        res.send(productData);
+    }
+})
+
+// update products
+router.put("/products", async(req, res)=>{
+    const {username, productid, stock} = req.query
+    if(!username || !productid || !stock){
+        res.status(400).json({
+            "status_code": 400,
+            "status_message": "Invalid values"
+        })
+        return;
+    }
+    if(await isSupplier(username)){
+        await updateProductStock(productid, stock);
+        res.status(200).json({
+            "status_code": 200,
+            "status_message": "Sucessfully updated product stock"
+        })
+    } 
+    else{
+        res.status(400).json({
+            "status_code": 400,
+            "status_message": "Invalid Username"
+        })
+        return;
+    }
+})
+
+// delete products
+router.delete("/products", async(req, res) => {
+    const {product_id, amount} = req.query;
+    if(!parseInt(product_id) || !parseInt(amount)){
+        res.status(400).json({
+            "status_code": 400,
+            "status_message": "Invalid values"
+        })
+        return;
+    }
+    await decreaseProductStock(product_id, amount)
+    res.status(200).json({
+        "status_code": 200,
+        "status_message": "Sucessfully deleted product stock"
+    })
+})
+
+// get categories
+router.get("/categories", async(req,res) => {
+    const categories = await getCategories();
+    res.send(categories);
+})
+
+// supplier login
 router.get("/supplier", async(req, res) => {
     const {username} = req.query
     if(!username){
@@ -350,6 +369,8 @@ router.get("/supplier", async(req, res) => {
         return;
     }
 })
+
+// supplier requests
 router.put("/supplier", async(req,res) => {
     const {username, reqid} = req.query
     if(!username || !parseInt(reqid)){
@@ -374,6 +395,8 @@ router.put("/supplier", async(req,res) => {
         return;
     }
 })
+
+// review validation
 router.get("/reviews", async(req, res) => {
     const {product_id} = req.query;
     if(!product_id){
@@ -386,6 +409,8 @@ router.get("/reviews", async(req, res) => {
     const reviews = await getReviews(product_id)
     res.send(reviews)
 })
+
+// save product ratings
 router.post("/reviews", async(req, res) => {
     const {username, product_id, rating, description} = req.query;
     if(!parseInt(product_id) || !username || !parseInt(rating || !description)){
@@ -411,6 +436,8 @@ router.post("/reviews", async(req, res) => {
     }
     
 })
+
+// get product ratings
 router.get("/rating", async(req, res) => {
     const {product_id} = req.query;
     if(!parseInt(product_id)){

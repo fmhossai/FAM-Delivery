@@ -1,5 +1,10 @@
 # FAM Delivery Application
 
+## Group Members:
+- Faisal Hossain
+- Ahmed Abbas
+- Michele Esercitato
+
 ## Initial Setup:
 
 Create the database in MySQL with the name "fam_delivery" and defined with the tables and values in the `fam.sql` file. Use the following SQL commands to help you setup the database.
